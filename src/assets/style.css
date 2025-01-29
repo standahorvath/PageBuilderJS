@@ -1,0 +1,62 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+/* Base styles */
+:root {
+	--bb-border-color: #e2e2e2;
+	--bb-section-padding: 10px;
+	--bb-toolbar-tools-bg: #f7f7f7;
+}
+.bb-container {
+	width: 100%;
+	border: 1px solid var(--bb-border-color);
+	box-sizing: border-box;
+	font-family: "PT Sans", serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+/* Toolbar styles */
+.bb-toolbar {
+	padding-bottom: var(--bb-section-padding);
+}
+.bb-toolbar__tools {
+	display: grid;
+	grid-template-columns: repeat(16, 1fr);
+	gap: 10px;
+	padding: var(--bb-section-padding);
+	background: var(--bb-toolbar-tools-bg);
+	margin: 0px var(--bb-section-padding);
+	border: 1px solid var(--bb-border-color);
+}
+.bb-toolbar__button {
+	padding: var(--bb-section-padding);
+	border: 1px solid var(--bb-border-color);
+	background: var(--bb-toolbar-tools-bg);
+}
+.bb-toolbar__tabs {
+	padding: var(--bb-section-padding) var(--bb-section-padding) 0 var(--bb-section-padding);
+}
+.bb-toolbar__tab {
+	padding: 8px 16px;
+	background: transparent;
+	border: transparent 1px solid;
+	cursor: pointer;
+	font-size: 16px;
+}
+.bb-toolbar__tab:hover {
+	background: var(--bb-toolbar-tools-bg);
+}
+.bb-toolbar__tab--active {
+	background: var(--bb-toolbar-tools-bg);
+	border: 1px solid var(--bb-border-color);
+	border-bottom: transparent 1px solid;
+	transform: translateY(1px);
+}
+.bb-header {
+	border-bottom: 1px solid var(--bb-border-color);
+	padding: var(--bb-section-padding);
+}
+.bb-header__title {
+	font-size: 14px;
+	font-weight: 700;
+}
