@@ -35,7 +35,8 @@
     "rollup-plugin-postcss": "^4.0.2",
     "vue": "^3.4.27",
     "vue-cli-service": "^5.0.10",
-    "vue-custom-element": "^3.3.0"
+    "vue-custom-element": "^3.3.0",
+    "vue-i18n": "^10.0.5"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.10.3",

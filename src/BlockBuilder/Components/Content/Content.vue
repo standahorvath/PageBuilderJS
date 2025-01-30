@@ -8,12 +8,15 @@
 		<ModuleColumn :col="5" :cols="12" title="Column" />
 		<ModuleColumn :col="6" :cols="12" title="Column" />
 		<ModuleColumn :col="6" :cols="12" title="Column" />
+		<ModuleSpace />
 		<ModuleColumn :col="6" :cols="12" title="Column" />
 		<ModuleColumn :col="7" :cols="12" title="Column" />
 		<ModuleColumn :col="5" :cols="12" title="Column" />
 		<ModuleColumn :col="8" :cols="12" title="Column" />
 		<ModuleColumn :col="4" :cols="12" title="Column" />
-		<ModuleColumn :col="9" :cols="12" title="Column" />
+		<ModuleColumn :col="9" :cols="12" title="Column">
+		<ModuleColumn :col="12" :cols="12" title="Column" />
+		</ModuleColumn>
 		<ModuleColumn :col="3" :cols="12" title="Column" />
 		<ModuleColumn :col="10" :cols="12" title="Column" />
 		<ModuleColumn :col="2" :cols="12" title="Column" />
@@ -24,4 +27,5 @@
 </template>
 <script setup lang="ts">
 import ModuleColumn from "@/BlockBuilder/Components/Modules/Column.vue";
+import ModuleSpace from "@/BlockBuilder/Components/Modules/Space.vue";
 </script>

@@ -2,7 +2,7 @@
 	<div class="bb-module" :style="columnStyles">
 	<ModuleHeader :title="`${title} ${col}/${cols}`" />
 	<ModuleContent>
-		Columnn
+		<slot />
 	</ModuleContent>
 	</div>
 </template>

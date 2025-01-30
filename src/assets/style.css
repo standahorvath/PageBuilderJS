@@ -9,6 +9,7 @@
 	--bb-content-min-height: 200px;
 	--bb-module-header-bg: #e7e7e7;
 	--bb-module-gap-between: 16px;
+	--bb-module-content-min-height: 50px;
 }
 .bb-container {
 	width: 100%;
@@ -17,6 +18,43 @@
 	font-family: "PT Sans", serif;
 	font-weight: 400;
 	font-style: normal;
+}
+
+.bb-container * {
+	box-sizing: border-box;
+}
+
+/* Utility classes */
+.bb-flex {
+	display: flex;
+}
+.bb-flex__column {
+	flex-direction: column;
+}
+.bb-flex__row {
+	flex-direction: row;
+}
+.bb-flex__center {
+	justify-content: center;
+	align-items: center;
+}
+.bb-flex__space-between {
+	justify-content: space-between;
+}
+.bb-w-full {
+	width: 100%;
+}
+.bb-h-full {
+	height: 100%;
+}
+.bb-m-0 {
+	margin: 0;
+}
+.bb-p-0 {
+	padding: 0;
+}
+.bb-min-h-0 {
+	min-height: 0 !important;
 }
 
 /* Toolbar styles */
@@ -107,6 +145,9 @@
 }
 
 /* Module styles */
+.bb-module {
+	width: calc(100% - var(--bb-module-gap-between) / 2);
+}
 .bb-module__header {
 	background: var(--bb-module-header-bg);
 	padding: 2px 8px;
@@ -116,11 +157,32 @@
 	flex-direction: row;
 	font-weight: 600;
 	cursor: move;
+	align-items: center;
+}
+.bb-module__header span {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 4px;
+}
+.bb-module__header__edit {
+	cursor: pointer;
+	border: none;
+	background: transparent;
+	margin-right: calc(var(--bb-section-padding) / 2 * -1);
+	display: flex;
+	align-items: center;
+}
+.bb-module__header__edit:hover {
+	background: #d6d6d6;
 }
 .bb-module__header__remove {
 	cursor: pointer;
 	border: none;
 	background: transparent;
+	margin-right: calc(var(--bb-section-padding) / 2 * -1);
+	display: flex;
+	align-items: center;
 }
 .bb-module__header__remove:hover {
 	background: #d6d6d6;
@@ -129,4 +191,15 @@
 	padding: var(--bb-section-padding);
 	background: #f7f7f7;
 	border: 1px solid var(--bb-border-color);
+	min-height: var(--bb-module-content-min-height);
+	box-sizing: border-box;
+}
+
+.bb-module__space {
+	width: calc(100% + var(--bb-section-padding) * 2);
+	height: 30px;
+	background-color: transparent;
+	opacity: 1;
+	background: repeating-linear-gradient( 45deg, #898989, #898989 5px, transparent 5px, transparent 25px );
+	margin: calc(var(--bb-section-padding) * -1);
 }
