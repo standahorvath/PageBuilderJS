@@ -19,6 +19,7 @@ export type ModuleSection = {
 	order?: number;
 }
 export type ModuleAttribute = {
+	id: string;
 	name: string;
 	description?: string;
 	tooltip?: string;

@@ -1,5 +1,9 @@
 <template>
 	<div class="bb-content">
+
+		<EmptyContent v-if="!instances.length" />
+		<component v-for="instance in instances" :key="instance.nonce" :is="instance.component" :instance="instance" />
+		<!--
 		<ModuleColumn :col="1" :cols="12" title="Column" />
 		<ModuleColumn :col="2" :cols="12" title="Column" />
 		<ModuleColumn :col="3" :cols="12" title="Column" />
@@ -23,9 +27,20 @@
 		<ModuleColumn :col="11" :cols="12" title="Column" />
 		<ModuleColumn :col="1" :cols="12" title="Column" />
 		<ModuleColumn :col="12" :cols="12" title="Column" />
+		-->
 	</div>
 </template>
 <script setup lang="ts">
 import ModuleColumn from "@/BlockBuilder/Components/Modules/Column.vue";
 import ModuleSpace from "@/BlockBuilder/Components/Modules/Space.vue";
+import EmptyContent from "@/BlockBuilder/Components/Content/Common/Empty.vue";
+import { InstanceModule } from "@/types";
+import { PropType } from "vue";
+
+const props = defineProps({
+	instances: {
+		type: Array as PropType<InstanceModule[]>,
+		required: true,
+	},
+})
 </script>

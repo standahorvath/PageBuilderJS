@@ -12,3 +12,11 @@ export type ToolbarTool = {
 export type ToolbarTools = {
   [key: string]: ToolbarTool;
 }
+
+export type ToolbarTabTools = ToolbarTab &{
+  tools: string[];
+}
+
+export type Toolbar = {
+  tabs: ToolbarTabTools[];
+}
