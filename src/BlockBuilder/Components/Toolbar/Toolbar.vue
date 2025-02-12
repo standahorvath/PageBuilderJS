@@ -1,7 +1,7 @@
 <template>
 	<div class="bb-toolbar">
 		<ToolbarTabs :tabs="tabs" v-model="activeTab" />
-		<ToolbarTools :tools="tools[activeTab as keyof typeof tools]" />
+		<ToolbarTools :tools="tools[activeTab as keyof typeof tools]" @click="onToolClick" />
 	</div>
 </template>
 <script setup lang="ts">
@@ -20,6 +20,8 @@ const props = defineProps({
 		required: true,
 	}
 })
+
+const emits = defineEmits(["toolClick"]);
 
 const tabs = computed(() => props.toolbar.tabs.map(tab => ({ title: tab.title, id: tab.id, icon: tab.icon })));
 
@@ -50,5 +52,9 @@ const tools = computed(() => {
 	});
 	return tools;
 });
+
+const onToolClick = (tool: ToolbarTool) => {
+	emits("toolClick", tool);
+}
 
 </script>

@@ -10,5 +10,5 @@ export type AttributeData = {
 export type ModuleData = {
 	id: string;
 	structureData: AttributeData[];
-	children?: ModuleData[];
+	children?: InstanceModule[];
 }

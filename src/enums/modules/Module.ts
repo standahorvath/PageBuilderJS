@@ -8,3 +8,9 @@ export enum SectionAttributeType {
 	DateTime = 'datetime',
 	FontSize = 'font-size',
 }
+
+export enum ModuleInstanceId {
+	Space = 'space',
+	Column = 'column',
+	Custom = 'custom',
+}
