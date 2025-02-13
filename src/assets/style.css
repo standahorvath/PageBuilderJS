@@ -410,3 +410,24 @@
 	border-bottom: transparent 1px solid;
 	transform: translateY(1px);
 }
+
+/* Accordition */
+.bb-accordition {
+	border-top: 1px solid var(--bb-border-color);
+	border-bottom: 1px solid var(--bb-border-color);
+	display: flex;
+	flex-direction: column;
+}
+.bb-accordition--open .bb-accordition__header {
+	background: var(--bb-primary-color);
+	border: 1px solid var(--bb-module-header-border-color);
+}
+.bb-accordition__header {
+	padding: var(--bb-section-padding);
+	background: var(--bb-module-header-bg);
+	border: 1px solid var(--bb-module-header-border-color);
+	display: flex;
+	justify-content: space-between;
+	font-weight: 600;
+	cursor: pointer;
+}
