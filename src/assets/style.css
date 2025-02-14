@@ -33,6 +33,8 @@
 	--bb-modal-button-text-color: #ffffff;
 	--bb-modal-border-radius: 8px;
 	--bb-modal-tab-bg: #f8fcff;
+	--bb-error-color: #ff0000;
+	--bb-label-color: #4b5563;
 }
 
 .bb-container {
@@ -431,3 +433,255 @@
 	font-weight: 600;
 	cursor: pointer;
 }
+
+/* Attribute */
+.bb-attribute {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 8px;
+	padding: calc(var(--bb-section-padding) / 2);
+	border-bottom: 1px solid var(--bb-border-color);
+}
+
+/* Text Input */
+.bb-text-input {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+  }
+  
+  .bb-text-input__label {
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--bb-label-color);
+  }
+  
+  .bb-text-input__input {
+	padding: 8px 12px;
+	border: 1px solid var(--bb-border-color);
+	border-radius: 4px;
+	font-size: 16px;
+	outline: none;
+	transition: border 0.2s ease-in-out;
+  }
+  
+  .bb-text-input__input:focus {
+	border-color: var(--bb-primary-color);
+  }
+  
+  .bb-text-input__input--error {
+	border-color: var(--bb-error-color);
+  }
+  
+  .bb-text-input__error {
+	font-size: 12px;
+	color: var(--bb-error-color);
+  }
+
+  /* Select Input */
+  .bb-select-input {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+  }
+  
+  .bb-select-input__label {
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--bb-label-color);
+  }
+  
+  .bb-select-input__select {
+	padding: 8px 12px;
+	border: 1px solid var(--bb-border-color);
+	border-radius: 4px;
+	font-size: 16px;
+	outline: none;
+	transition: border 0.2s ease-in-out;
+	background: white;
+	cursor: pointer;
+  }
+  
+  .bb-select-input__select:focus {
+	border-color: var(--bb-primary-color);
+  }
+  
+  .bb-select-input__select--error {
+	border-color: var(--bb-error-color);
+  }
+  
+  .bb-select-input__error {
+	font-size: 12px;
+	color: var(--bb-error-color);
+  }
+  
+  /* Number Input */
+  .bb-number-input {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+  }
+  
+  .bb-number-input__label {
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--bb-label-color);
+  }
+  
+  .bb-number-input__input {
+	padding: 8px 12px;
+	border: 1px solid var(--bb-border-color);
+	border-radius: 4px;
+	font-size: 16px;
+	outline: none;
+	transition: border 0.2s ease-in-out;
+	background: white;
+	appearance: textfield;
+  }
+  
+  .bb-number-input__input:focus {
+	border-color: var(--bb-primary-color);
+  }
+  
+  .bb-number-input__input--error {
+	border-color: var(--bb-error-color);
+  }
+  
+  .bb-number-input__error {
+	font-size: 12px;
+	color: var(--bb-error-color);
+  }
+  
+  .bb-number-input__input::-webkit-outer-spin-button,
+  .bb-number-input__input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+  }
+  
+  /* Textarea Input */
+  .bb-textarea-input {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+  }
+  
+  .bb-textarea-input__label {
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--bb-label-color);
+  }
+  
+  .bb-textarea-input__textarea {
+	padding: 8px 12px;
+	border: 1px solid var(--bb-border-color);
+	border-radius: 4px;
+	font-size: 16px;
+	outline: none;
+	resize: vertical;
+	min-height: 40px;
+	transition: border 0.2s ease-in-out;
+  }
+  
+  .bb-textarea-input__textarea:focus {
+	border-color: var(--bb-primary-color);
+  }
+  
+  .bb-textarea-input__textarea--error {
+	border-color: var(--bb-error-color);
+  }
+  
+  .bb-textarea-input__error {
+	font-size: 12px;
+	color: var(--bb-error-color);
+  }
+  
+  /* Checkbox Input */
+  .bb-checkbox-input {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+  }
+  
+  .bb-checkbox-input__label {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	font-size: 14px;
+	color: var(--bb-label-color);
+  }
+  
+  .bb-checkbox-input__checkbox {
+	display: none;
+  }
+  
+  .bb-checkbox-input__custom {
+	width: 14px;
+	height: 14px;
+	border: 2px solid var(--bb-border-color);
+	border-radius: 4px;
+	display: inline-block;
+	position: relative;
+	transition: border-color 0.2s ease-in-out, background 0.2s ease-in-out;
+  }
+  
+  .bb-checkbox-input__checkbox:checked + .bb-checkbox-input__custom {
+	background: var(--bb-primary-color);
+	border-color: var(--bb-primary-color);
+  }
+  
+  .bb-checkbox-input__checkbox:checked + .bb-checkbox-input__custom::after {
+	content: "";
+	position: absolute;
+	left: 4px;
+	top: 1px;
+	width: 4px;
+	height: 8px;
+	border: solid white;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+  }
+  
+  .bb-checkbox-input__text {
+	margin-left: 8px;
+  }
+  
+  .bb-checkbox-input__error {
+	font-size: 12px;
+	color: var(--bb-error-color);
+  }
+  
+  /* DateTime Input */
+  .bb-datetime-input {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+  }
+  
+  .bb-datetime-input__label {
+	font-size: 14px;
+	color: var(--bb-label-color);
+  }
+  
+  .bb-datetime-input__input {
+	padding: 8px;
+	font-size: 14px;
+	border: 1px solid var(--bb-border-color);
+	border-radius: 4px;
+	outline: none;
+	transition: border-color 0.2s ease-in-out;
+  }
+  
+  .bb-datetime-input__input:focus {
+	border-color: var(--bb-primary-color);
+  }
+  
+  .bb-datetime-input__input--error {
+	border-color: var(--bb-error-color);
+  }
+  
+  .bb-datetime-input__error {
+	font-size: 12px;
+	color: var(--bb-error-color);
+  }
+  

@@ -7,6 +7,11 @@ export enum SectionAttributeType {
 	Checkbox = 'checkbox',
 	DateTime = 'datetime',
 	FontSize = 'font-size',
+	Link = 'link',
+
+	Image = 'image',
+	Radio = 'radio',
+	Range = 'range',
 }
 
 export enum ModuleInstanceId {

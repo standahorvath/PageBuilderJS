@@ -3,7 +3,7 @@
 		<Tabs :tabs="tabs" v-model:modelValue="activeTab" />
 		<Accordition v-for="section in activeTabData?.sections" :key="section.name" :title="section.name">
 			<div v-for="attribute in section.attributes">
-				{{  attribute.name }}
+				<Attribute :attribute="attribute" />
 			</div>
 		</Accordition>
 	</Base>
@@ -14,6 +14,7 @@ import { InstanceModule, Module } from "@/types";
 import { computed, onMounted, PropType, ref } from "vue";
 import Tabs from "@/BlockBuilder/Components/Modal/Common/Tabs.vue";
 import Accordition from "@/BlockBuilder/Components/Modal/Common/Accordition.vue";
+import Attribute from "@/BlockBuilder/Components/Modal/Common/Attribute.vue";
 
 const props = defineProps({
 	instance: {
