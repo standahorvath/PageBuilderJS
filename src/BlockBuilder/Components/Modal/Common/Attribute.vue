@@ -4,13 +4,14 @@
 			{{ attribute.name }}
 		</div>
 		<div class="bb-attribute__content">
-			<LinkInput v-model="attribute.value" />
+			<component :is="inputComponent" v-model="data.value" :options="attribute.options" v-if="data" />
 		</div>
 	</div>
 </template>
+
 <script setup lang="ts">
-import { ModuleAttribute } from "@/types";
-import { defineProps, PropType } from "vue";
+import { ModuleAttribute, AttributeData } from "@/types";
+import { defineProps, PropType, computed } from "vue";
 import TextInput from "@/BlockBuilder/Components/Input/TextInput.vue";
 import SelectInput from "@/BlockBuilder/Components/Input/SelectInput.vue";
 import NumberInput from "@/BlockBuilder/Components/Input/NumberInput.vue";
@@ -25,5 +26,32 @@ const props = defineProps({
 		type: Object as PropType<ModuleAttribute>,
 		required: true,
 	},
-})
+	data: {
+		type: Object as PropType<AttributeData | null>,
+		required: true,
+	}
+});
+
+const inputComponent = computed(() => {
+	switch (props.attribute.type) {
+		case 'text':
+			return TextInput;
+		case 'select':
+			return SelectInput;
+		case 'number':
+			return NumberInput;
+		case 'textarea':
+			return TextareaInput;
+		case 'checkbox':
+			return CheckboxInput;
+		case 'datetime':
+			return DateTimeInput;
+		case 'color':
+			return ColorInput;
+		case 'link':
+			return LinkInput;
+		default:
+			return TextInput; 
+	}
+});
 </script>
