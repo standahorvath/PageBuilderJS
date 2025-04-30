@@ -227,7 +227,7 @@
 }
 
 /* Content styles */
-.bb-content {
+.bb-content>div {
 	border-top: 1px solid var(--bb-border-color);
 	padding: var(--bb-section-padding);
 	min-height: var(--bb-content-min-height);
