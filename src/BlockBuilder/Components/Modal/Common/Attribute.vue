@@ -9,9 +9,10 @@
 		</div>
 	</div>
 </template>
+
 <script setup lang="ts">
-import { ModuleAttribute } from "@/types";
-import { defineProps, PropType } from "vue";
+import { ModuleAttribute, AttributeData } from "@/types";
+import { defineProps, PropType, computed } from "vue";
 import TextInput from "@/BlockBuilder/Components/Input/TextInput.vue";
 import SelectInput from "@/BlockBuilder/Components/Input/SelectInput.vue";
 import NumberInput from "@/BlockBuilder/Components/Input/NumberInput.vue";

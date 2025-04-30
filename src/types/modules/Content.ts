@@ -3,7 +3,7 @@ export type InstanceModule = ModuleData & {
 }
 
 export type AttributeData = {
-	name: string;
+	id: string;
 	value: any;
 }
 
