@@ -2,9 +2,9 @@
 	<Base :title="module.title" @save="onSave" @close="onClose">
 		<Tabs :tabs="tabs" v-model:modelValue="activeTab" />
 		<div class="bb-modal__content__inner">
-		<Accordition v-for="section in activeTabData?.sections" :key="section.name" :title="section.name">
-			<div v-for="attribute in section.attributes" :key="attribute.name">
-				<Attribute :attribute="attribute" :data="getAttributeData(attribute.id) ?? null" />
+		<Accordition v-for="section in activeTabData?.sections" :key="section.name" :title="section.name" v-model="openedSections[section.name]">
+			<div v-for="attribute in section.attributes"  :key="attribute.id + '_' + instanceCopy.id">
+				<Attribute  :attribute="attribute" :data="attributeDataMap[attribute.id] ?? null" @update:modelValue="onAttributeUpdate(attribute, $event)"  />
 			</div>
 		</Accordition>
 		</div>
@@ -12,7 +12,7 @@
 </template>
 <script setup lang="ts">
 import Base from "@/BlockBuilder/Components/Modal/Base.vue";
-import { InstanceModule, Module, ModuleTab } from "@/types";
+import { AttributeData, InstanceModule, Module, ModuleAttribute, ModuleTab } from "@/types";
 import { computed, onMounted, PropType, ref } from "vue";
 import Tabs from "@/BlockBuilder/Components/Modal/Common/Tabs.vue";
 import Accordition from "@/BlockBuilder/Components/Modal/Common/Accordition.vue";
@@ -31,6 +31,8 @@ const props = defineProps({
 	},
 })
 
+const instanceCopy = ref(JSON.parse(JSON.stringify(props.instance)) as InstanceModule)
+
 const tabs = computed(() => {
 	return props.module.structure.tabs.map(tab => ({
 		id: tab.name,
@@ -44,9 +46,13 @@ const activeTabData = computed((): ModuleTab | undefined => {
 
 const activeTab = ref(null as string | null)
 
-const getAttributeData = (attributeName: string) => {
-	return props.instance.structureData.find(data => data.id === attributeName)
-}
+const attributeDataMap = computed((): Record<string, AttributeData> => {
+  const map: Record<string, any> = {};
+  for (const item of instanceCopy.value.structureData) {
+    map[item.id] = item;
+  }
+  return map;
+});
 
 onMounted(() => {
 	tabs.value.forEach(ftab => {
@@ -64,7 +70,25 @@ const onClose = () => {
 	emits("close");
 }
 const onSave = () => {
-	emits("save");
+	emits("save", instanceCopy.value);
+}
+
+const onAttributeUpdate = (attribute: ModuleAttribute, value: any) => {
+	if(!attribute){
+		return
+	}
+	if (typeof attributeDataMap.value[attribute.id] !== 'undefined') {
+		for(const tData in instanceCopy.value.structureData){
+			if(instanceCopy.value.structureData[tData].id === attribute.id){
+				instanceCopy.value.structureData[tData].value = value
+			}
+		}
+	} else {
+		instanceCopy.value.structureData.push({
+			id: attribute.id,
+			value: value,
+		})
+	}
 }
 
 </script>

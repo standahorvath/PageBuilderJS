@@ -12,6 +12,14 @@ export const useContentStore = defineStore('content', {
 		},
 	},
 	actions: {
+		updateInstance(instance: InstanceModule) {
+			const index = this.instances.findIndex((i) => i.nonce === instance.nonce)
+			if (index !== -1) {
+				this.instances[index] = instance
+			} else {
+				this.instances.push(instance)
+			}
+		},
 		removeInstance(instance: InstanceModule) {
 			const index = this.instances.findIndex((i) => i.nonce === instance.nonce)
 			if (index !== -1) {

@@ -4,7 +4,7 @@
 			{{ attribute.name }}
 		</div>
 		<div class="bb-attribute__content">
-			<component :is="components[attribute.type]" v-model="attribute.value" v-if="components[attribute.type]" :options="attribute.options" />
+			<component :is="components[attribute.type]" v-model="value" v-if="components[attribute.type]" :options="attribute.options" />
 			<span v-else>Undefined attribute type</span>
 		</div>
 	</div>
@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { ModuleAttribute, AttributeData } from "@/types";
-import { defineProps, PropType, computed } from "vue";
+import { defineProps, PropType, computed, ref, watch } from "vue";
 import TextInput from "@/BlockBuilder/Components/Input/TextInput.vue";
 import SelectInput from "@/BlockBuilder/Components/Input/SelectInput.vue";
 import NumberInput from "@/BlockBuilder/Components/Input/NumberInput.vue";
@@ -23,11 +23,30 @@ import ColorInput from "@/BlockBuilder/Components/Input/ColorInput.vue";
 import LinkInput from "@/BlockBuilder/Components/Input/LinkInput.vue";
 import { SectionAttributeType } from "@/enums";
 
+const emits = defineEmits(["update:modelValue"])
+
 const props = defineProps({
 	attribute: {
 		type: Object as PropType<ModuleAttribute>,
 		required: true,
 	},
+	data: {
+		type: Object as PropType<AttributeData>,
+		required: true,
+	},
+})
+
+const defaultValue = computed(() => {
+	if (props.data) {
+		return props.data.value
+	}
+	return props.attribute.value ?? false
+})
+
+const value = ref<any>(defaultValue.value)
+
+watch(() => value.value, (newValue) => {
+	emits("update:modelValue", newValue)
 })
 
 const components = {

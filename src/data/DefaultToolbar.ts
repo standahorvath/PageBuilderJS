@@ -20,3 +20,25 @@ export const DefaultToolbar = {
 		},
 	]
 } as Toolbar;
+
+export const ExtendedToolbar = {
+	tabs: [
+		{
+			id: "AdvancedTab",
+			icon: "AdvancedTab",
+			title: "AdvancedTab",
+			tools: [
+				"text",
+				"richtext",
+				"image",
+				"video",
+				"audio",
+				"button",
+				"icon",
+				"list",
+				"table",
+				"spacer",
+			]
+		},
+	]
+} as Toolbar;
