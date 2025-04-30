@@ -1,8 +1,11 @@
 <template>
-	<div class="bb-modal__tabs">
+<div class="bb-modal__tabs">
 	<button class="bb-modal__tab" :class="modelValue == tab.id ? ['bb-modal__tab--active'] : []" v-for="tab in tabs" :key="tab.id" @click="onClick(tab)">
 		{{ tab.title }}
 	</button>
+</div>
+<div class="bb-modal__tabs__content">
+	<slot />
 </div>
 </template>
 <script setup lang="ts">

@@ -4,7 +4,8 @@
 			{{ attribute.name }}
 		</div>
 		<div class="bb-attribute__content">
-			<LinkInput v-model="attribute.value" />
+			<component :is="components[attribute.type]" v-model="attribute.value" v-if="components[attribute.type]" :options="attribute.options" />
+			<span v-else>Undefined attribute type</span>
 		</div>
 	</div>
 </template>
@@ -19,6 +20,7 @@ import CheckboxInput from "@/BlockBuilder/Components/Input/CheckboxInput.vue";
 import DateTimeInput from "@/BlockBuilder/Components/Input/DateTimeInput.vue";
 import ColorInput from "@/BlockBuilder/Components/Input/ColorInput.vue";
 import LinkInput from "@/BlockBuilder/Components/Input/LinkInput.vue";
+import { SectionAttributeType } from "@/enums";
 
 const props = defineProps({
 	attribute: {
@@ -26,4 +28,15 @@ const props = defineProps({
 		required: true,
 	},
 })
+
+const components = {
+	[SectionAttributeType.Text]: TextInput,
+	[SectionAttributeType.Select]: SelectInput,
+	[SectionAttributeType.Number]: NumberInput,
+	[SectionAttributeType.Textarea]: TextareaInput,
+	[SectionAttributeType.Checkbox]: CheckboxInput,
+	[SectionAttributeType.DateTime]: DateTimeInput,
+	[SectionAttributeType.Color]: ColorInput,
+	[SectionAttributeType.Link]: LinkInput,
+} as Record<SectionAttributeType, any>
 </script>

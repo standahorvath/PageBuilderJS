@@ -13,7 +13,7 @@ export const DefaultModules = [
 					name: 'General',
 					sections: [
 						{
-							name: 'Type of space',
+							name: 'Appearance',
 							attributes: [
 								{
 									id: 'type',
@@ -26,11 +26,6 @@ export const DefaultModules = [
 										space: 'Space',
 									}
 								},
-							],
-						},
-						{
-							name: 'Size',
-							attributes: [
 								{
 									id: 'size',
 									name: 'Size',
@@ -38,11 +33,6 @@ export const DefaultModules = [
 									type: SectionAttributeType.Number,
 									value: 1,
 								},
-							],
-						},
-						{
-							name: 'Color',
-							attributes: [
 								{
 									id: 'color',
 									name: 'Color',
