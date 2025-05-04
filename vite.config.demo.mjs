@@ -5,6 +5,7 @@ import stringPlugin from 'vite-plugin-string'
 
 export default defineConfig(({ mode }) => {
   return {
+    base: './',
     define: {
       'process.env.NODE_ENV': JSON.stringify('production'),
     },
