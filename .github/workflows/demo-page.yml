@@ -1,4 +1,4 @@
-name: Deploy Static Site to GitHub Pages
+name: Deploy Demo Site to GitHub Pages
 
 on:
   push:
@@ -31,8 +31,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: dist  # cesta ke složce s výsledkem buildu
-
+          path: dist
   deploy:
     needs: build
 
