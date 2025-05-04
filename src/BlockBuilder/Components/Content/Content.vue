@@ -7,6 +7,7 @@
 			ghost-class="drag-ghost" 
 			chosen-class="drag-chosen" 
 			drag-class="drag-drag"
+			@end="onMoveInstance"
 			>
 			<template #item="{ element: instance }">
 				<component :is="getComponent(instance.id)" :data="instance.structureData" :title="instance.id"
@@ -69,6 +70,11 @@ const onRemove = (instance: InstanceModule) => {
 
 const onEdit = (instance: InstanceModule) => {
 	emits("edit", instance);
+};
+const onMoveInstance = (event: any) => {
+	const newIndex = event.newIndex;
+	const oldIndex = event.oldIndex;
+	useContentStore().moveInstance(oldIndex, newIndex);
 };
 </script>
 <style>

@@ -2,7 +2,9 @@
 	<div class="bb-module">
 	<ModuleHeader :title="title" @remove="onRemove" @edit="onEdit" />
 	<ModuleContent class="bb-min-h-0">
-		<div class="bb-module__space"></div>
+		<div class="bb-module__custom">
+			{{ title }}
+		</div>
 	</ModuleContent>
 	</div>
 </template>

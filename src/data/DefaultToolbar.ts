@@ -29,6 +29,7 @@ export const ExtendedToolbar = {
 			title: "AdvancedTab",
 			tools: [
 				"text",
+				"column",
 				"richtext",
 				"image",
 				"video",

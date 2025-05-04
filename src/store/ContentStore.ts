@@ -12,6 +12,15 @@ export const useContentStore = defineStore('content', {
 		},
 	},
 	actions: {
+		moveInstance(oldIndex: number, newIndex: number) {
+			if (newIndex >= this.instances.length) {
+				let i = newIndex - this.instances.length + 1
+				while (i--) {
+					this.instances.push(undefined as any)
+				}
+			}
+			this.instances.splice(newIndex, 0, this.instances.splice(oldIndex, 1)[0])
+		},
 		updateInstance(instance: InstanceModule) {
 			const index = this.instances.findIndex((i) => i.nonce === instance.nonce)
 			if (index !== -1) {
