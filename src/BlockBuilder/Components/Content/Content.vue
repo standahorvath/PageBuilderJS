@@ -83,7 +83,6 @@ const onMoveInstance = (event: any) => {
 }
 
 .drag-chosen {
-  transform: scale(0.97);
   transition: transform 0.3s ease;
 }
 

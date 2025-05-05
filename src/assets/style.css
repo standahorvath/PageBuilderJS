@@ -285,6 +285,17 @@
 .bb-module__header__remove:hover {
 	background: #d6d6d6;
 }
+.bb-module__header__button {
+	cursor: pointer;
+	border: none;
+	background: transparent;
+	margin-right: calc(var(--bb-section-padding) / 2 * -1);
+	display: flex;
+	align-items: center;
+}
+.bb-module__header__button:hover {
+	background: #d6d6d6;
+}
 .bb-module__content{
 	padding: var(--bb-section-padding);
 	background: var(--bb-module-content-background-color);
