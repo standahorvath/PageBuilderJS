@@ -1,7 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import stringPlugin from 'vite-plugin-string'
 
 export default defineConfig(({ mode }) => {
   return {
@@ -14,13 +13,6 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       vue(),
-      ...(mode === 'production'
-        ? [
-            stringPlugin({
-              include: '**/*.css',
-            }),
-          ]
-        : []),
     ],
     resolve: {
       alias: {
