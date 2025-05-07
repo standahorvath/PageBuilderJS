@@ -30,15 +30,18 @@ export const useContentStore = defineStore('content', {
 			}
 		},
 		removeInstance(instance: InstanceModule) {
+			console.log(this.instances)
 			const index = this.instances.findIndex((i) => i.nonce === instance.nonce)
 			if (index !== -1) {
 				this.instances.splice(index, 1)
 			}
+			console.log(this.instances)
 		},
 		addInstance(instance: InstanceModule | ModuleData) {
 			this.instances.push({
 				...instance,
 				nonce: Math.random().toString(36).substring(2),
+				children: [],
 			})
 		},
 		addInstanceFromModule(module: Module){
@@ -46,11 +49,13 @@ export const useContentStore = defineStore('content', {
 				id: module.id,
 				structureData: [], // TODO: Default module data
 				nonce: Math.random().toString(36).substring(2),
+				children: [],
 			})
 		},
 		initInstances(instances: InstanceModule[] | ModuleData[]) {
 			this.instances = instances.map((instance) => {
 				return {
+					children: [],
 					...instance,
 					nonce: Math.random().toString(36).substring(2),
 				}

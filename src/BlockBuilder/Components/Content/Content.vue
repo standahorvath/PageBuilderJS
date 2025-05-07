@@ -3,22 +3,23 @@
 		<EmptyContent v-if="!instances.length" />
 
 		<Draggable v-model="internalInstances" item-key="nonce" :group="{ name: 'blocks', pull: true, put: true }"
-			:animation="200" 
-			ghost-class="drag-ghost" 
-			chosen-class="drag-chosen" 
-			drag-class="drag-drag"
-			@end="onMoveInstance"
-			>
+			:animation="200" ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="drag-drag"
+			@end="onMoveInstance">
 			<template #item="{ element: instance }">
 				<component :is="getComponent(instance.id)" :data="instance.structureData" :title="instance.id"
 					@remove="onRemove(instance)" @edit="onEdit(instance)">
+					<div class="bb-content">
 					<!-- Nested children -->
-					<Draggable v-if="instance.children" v-model="instance.children" item-key="nonce"
-						:group="{ name: 'blocks', pull: true, put: true }">
+					<Draggable v-model="instance.children" item-key="nonce" :animation="200" ghost-class="drag-ghost"
+					:data-nonce="instance.nonce"
+						chosen-class="drag-chosen" drag-class="drag-drag"
+						:group="{ name: 'blocks', pull: true, put: true }"
+  						@change="onNestedMove($event, instance)">
 						<template #item="{ element: child }">
 							<component :is="getComponent(child.id)" :data="child.structureData" :title="child.id" />
 						</template>
 					</Draggable>
+				</div>
 				</component>
 			</template>
 		</Draggable>
@@ -72,21 +73,71 @@ const onEdit = (instance: InstanceModule) => {
 	emits("edit", instance);
 };
 const onMoveInstance = (event: any) => {
+	if(event.pullMode){
+		return;
+	}
 	const newIndex = event.newIndex;
 	const oldIndex = event.oldIndex;
+	console.log(event);
 	useContentStore().moveInstance(oldIndex, newIndex);
 };
+
+const onNestedMove = (event: any, instance: InstanceModule) => {
+	const { from, to, item, added, removed } = event;
+	console.log(event);
+
+	const fromParent = findParentByChildren(from);
+	const toParent = findParentByChildren(to);
+
+	if(added){
+		const instance = added.element as InstanceModule
+		useContentStore().removeInstance(instance);
+		useContentStore().instances = useContentStore().instances.filter(i => i);
+	}
+
+	if(removed){
+		const instance = removed.element as InstanceModule
+		console.log(instance);
+		useContentStore().addInstance(instance);
+	}
+
+	if(fromParent && fromParent) {
+		return;
+	}
+
+	console.log(fromParent);
+	console.log(toParent);
+};
+
+function findParentByChildren(containerEl: HTMLElement): InstanceModule | null {
+	const parentNonce = containerEl?.dataset?.nonce as string | null;
+	if (!parentNonce) return null;
+
+	const findRecursive = (list: InstanceModule[]): InstanceModule | null => {
+		for (const instance of list) {
+			if (instance.nonce === parentNonce) return instance;
+			if (instance.children?.length) {
+				const found = findRecursive(instance.children);
+				if (found) return found;
+			}
+		}
+		return null;
+	};
+
+	return findRecursive(internalInstances.value);
+}
+
 </script>
 <style>
 .drag-ghost {
-  opacity: 0.4;
+	opacity: 0.4;
 }
 
 .drag-chosen {
-  transition: transform 0.3s ease;
+	transition: transform 0.3s ease;
 }
 
 .drag-drag {
-  opacity: 0.8;
+	opacity: 0.8;
 }
 </style>
