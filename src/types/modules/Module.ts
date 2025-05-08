@@ -3,6 +3,7 @@ import { SectionAttributeType } from "@/enums";
 export type Module = {
 	title: string;
 	id: string;
+	render?: string;
 	structure: {
 		tabs: ModuleTab[];
 	};
@@ -25,6 +26,7 @@ export type ModuleAttribute = {
 	tooltip?: string;
 	type: SectionAttributeType;
 	value: any;
+	default?: any;
 	order?: number;
 	options?: Record<string, string>;
 }

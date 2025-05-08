@@ -38,7 +38,7 @@ export const ExtendedToolbar = {
 				"icon",
 				"list",
 				"table",
-				"spacer",
+				"space",
 			]
 		},
 	]

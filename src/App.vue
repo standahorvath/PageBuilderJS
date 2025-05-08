@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BlockBuilder :modules="ExtendedModules" :toolbar="ExtendedToolbar" :content="blocks" ref="builderRef" />
+    <BlockBuilder :modules="ExtendedModules" :toolbar="ExtendedToolbar" :content="blocks" ref="builderRef" @onUpdate="handleUpdate" />
   </div>
 </template>
 <script setup lang="ts">

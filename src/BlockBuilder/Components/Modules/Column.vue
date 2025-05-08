@@ -1,12 +1,12 @@
 <template>
 	<div class="bb-module" :style="columnStyles">
-		<ModuleHeader :title="`${title} ${col}/${cols}`" @remove="onRemove" @edit="onEdit">
+		<ModuleHeader @remove="onRemove" @edit="onEdit">
 			<template #title>
 				<span class="bb-module__header__title">
 				<button @click="onColumnChange(-1)" v-if="col > 1" class="bb-module__header__button">
 					<IconChevronLeft class="bb-module__header__chevron" />
 				</button>
-				<span class="bb-module__header__name">{{ title }} {{ col }}/{{ cols }}</span>
+				<span class="bb-module__header__name">{{ module.title }} {{ col }}/{{ cols }}</span>
 				<button @click="onColumnChange(1)" v-if="col < cols" class="bb-module__header__button">
 					<IconChevronRight class="bb-module__header__chevron" />
 				</button>
@@ -25,17 +25,17 @@ import IconChevronRight from "@/BlockBuilder/Icons/ChevronRight.vue";
 import IconChevronLeft from "@/BlockBuilder/Icons/ChevronLeft.vue";
 
 import { computed, PropType } from "vue";
-import { AttributeData } from "@/types";
+import { AttributeData, Module } from "@/types";
 
 const emits = defineEmits(["remove", "edit"]);
 const props = defineProps({
-	title: {
-		type: String,
-		required: true,
-	},
 	data: {
 		type: Array as PropType<AttributeData[]>,
 		default: () => [],
+	},
+	module: {
+		type: Object as PropType<Module>,
+		required: true,
 	},
 })
 const cols = 12

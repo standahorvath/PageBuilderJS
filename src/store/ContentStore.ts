@@ -1,5 +1,6 @@
 import { ModuleInstanceId } from '@/enums/modules/Module'
-import { InstanceModule, Module, ModuleData } from '@/types'
+import { getDefaultData } from '@/helpers/Module'
+import { ModuleData, InstanceModule, Module } from '@/types'
 import { defineStore } from 'pinia'
 
 export const useContentStore = defineStore('content', {
@@ -22,44 +23,68 @@ export const useContentStore = defineStore('content', {
 			this.instances.splice(newIndex, 0, this.instances.splice(oldIndex, 1)[0])
 		},
 		updateInstance(instance: InstanceModule) {
-			const index = this.instances.findIndex((i) => i.nonce === instance.nonce)
-			if (index !== -1) {
-				this.instances[index] = instance
-			} else {
-				this.instances.push(instance)
+			for (let i = 0; i < this.instances.length; i++) {
+				if (this.instances[i].nonce === instance.nonce) {
+					this.instances[i] = instance
+					return
+				}
+				const children = this.instances[i].children
+				if (!children) continue
+				for (let j = 0; j < children.length; j++) {
+					if (children[j].nonce === instance.nonce) {
+						children[j] = instance
+						return
+					}
+				}
 			}
 		},
 		removeInstance(instance: InstanceModule) {
-			console.log(this.instances)
 			const index = this.instances.findIndex((i) => i.nonce === instance.nonce)
 			if (index !== -1) {
 				this.instances.splice(index, 1)
 			}
-			console.log(this.instances)
 		},
-		addInstance(instance: InstanceModule | ModuleData) {
+		addInstance(instance: InstanceModule) {
 			this.instances.push({
 				...instance,
+				module: instance.module,
 				nonce: Math.random().toString(36).substring(2),
 				children: [],
 			})
 		},
-		addInstanceFromModule(module: Module){
+		addInstanceFromModule(module: Module) {
 			this.instances.push({
 				id: module.id,
-				structureData: [], // TODO: Default module data
+				structureData: getDefaultData(module),
+				module: module,
 				nonce: Math.random().toString(36).substring(2),
 				children: [],
 			})
 		},
-		initInstances(instances: InstanceModule[] | ModuleData[]) {
+		initInstances(instances: InstanceModule[] | ModuleData[], modules: Module[]) {
 			this.instances = instances.map((instance) => {
 				return {
-					children: [],
+					children: [] as InstanceModule[],
+					module: modules.find((m) => m.id === instance.id) as Module,
 					...instance,
 					nonce: Math.random().toString(36).substring(2),
-				}
+				} as InstanceModule
 			})
 		},
+		export(): ModuleData[]{
+			const exportInstance = (instance: InstanceModule): ModuleData => {
+				return {
+					id: instance.id,
+					structureData: instance.structureData,
+					children: instance.children?.map((child: InstanceModule): ModuleData => {
+						return exportInstance(child)
+					}),
+				}
+			}
+
+			return this.instances.map((instance) => {
+				return exportInstance(instance)
+			})
+		}
 	},
 })

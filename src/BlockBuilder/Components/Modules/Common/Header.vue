@@ -1,7 +1,7 @@
 <template>
 	<div class="bb-module__header">
 		<span>
-			<span v-if="!$slots.title">{{ title }}</span>
+			<span v-if="!$slots.title">{{ title ?? '' }}</span>
 			<slot name="title" v-else /> 
 			<button class="bb-module__header__edit" @click="onEdit" title="Edit">
 				<IconEdit />
@@ -18,7 +18,7 @@ import IconEdit from "@/BlockBuilder/Icons/Edit.vue";
 defineProps({
 	title: {
 		type: String,
-		required: true,
+		required: false,
 	},
 })
 const emits = defineEmits(["remove", "edit"]);

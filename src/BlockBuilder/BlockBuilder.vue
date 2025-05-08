@@ -36,11 +36,10 @@ const props = defineProps({
 	},
 })
 
-defineExpose({
-	onUpdate: (data: any) => {
-		console.log("default onUpdate (exposed)", data);
-	}
-})
+const emits = defineEmits([
+	"onModalSave",
+	"onUpdate",
+])
 
 const modalOpened = ref(false)
 const editInstance = ref<InstanceModule | null>(null)
@@ -51,7 +50,10 @@ const editInstanceModule = computed(() => {
 	return props.modules.find(module => editInstance.value && module.id === editInstance.value.id)
 })
 
-useContentStore().initInstances(props.content)
+useContentStore().initInstances(props.content, props.modules)
+useContentStore().$subscribe(() => {
+	emits('onUpdate', useContentStore().export())
+})
 
 const instances = computed(() => {
 	return useContentStore().instances
@@ -80,41 +82,8 @@ const onModalSave = (newVersion: InstanceModule) => {
 	modalOpened.value = false
 	editInstance.value = null
 	useContentStore().updateInstance(newVersion)
-	externalEmit('onUpdate', newVersion)
+	emits('onModalSave', newVersion)
 }
-
-const externalEmit = (fnName: string, data: any) => {
-	if (!fnName || !rootEl.value) return;
-
-	let host = getHostElement() as any;
-	if (host && typeof host[fnName] === 'function') {
-		host[fnName](data);
-		return;
-	}
-	const exposed = (getCurrentInstance() as any)?.exposed;
-	if (exposed && typeof exposed[fnName] === 'function') {
-		exposed[fnName](data);
-		return;
-	}
-
-	console.warn(`externalEmit: Funkce "${fnName}" nebyla nalezena. Emituji jako CustomEvent.`);
-	rootEl.value?.dispatchEvent(new CustomEvent(fnName, {
-		detail: data,
-		bubbles: true,
-		composed: true
-	}));
-};
-
-const getHostElement = (): HTMLElement | null => {
-	if (!rootEl.value) return null;
-
-	const rootNode = rootEl.value.getRootNode?.();
-	if (rootNode && 'host' in rootNode) {
-		return (rootNode as ShadowRoot).host as HTMLElement;
-	}
-
-	return rootEl.value as HTMLElement;
-};
 
 
 </script>

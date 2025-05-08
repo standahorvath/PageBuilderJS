@@ -37,7 +37,7 @@ export const ExtendedModules = [
 									name: 'Size',
 									description: 'Size of the space in pixels',
 									type: SectionAttributeType.Number,
-									value: 1,
+									value: 6,
 								},
 							],
 						},
@@ -382,6 +382,7 @@ export const ExtendedModules = [
 	  title: "Button",
 	  icon: "button",
 	  id: "button",
+	  render: `<button style="background-color: {{backgroundColor}}; color: {{textColor}}; {{developer-css-attribute}}">{{label}}</button>`,
 	  structure: {
 		tabs: [
 		  {
@@ -566,7 +567,7 @@ export const ExtendedModules = [
 	{
 	  title: "Spacer",
 	  icon: "spacer",
-	  id: "spacer",
+	  id: "space",
 	  structure: {
 		tabs: [
 		  {

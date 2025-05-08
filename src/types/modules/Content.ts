@@ -1,5 +1,9 @@
+import { Module } from "./Module";
+
 export type InstanceModule = ModuleData & {
 	nonce: string;
+	module: Module;
+	children?: InstanceModule[];
 }
 
 export type AttributeData = {
@@ -10,5 +14,5 @@ export type AttributeData = {
 export type ModuleData = {
 	id: string;
 	structureData: AttributeData[];
-	children?: InstanceModule[];
+	children?: ModuleData[];
 }

@@ -6,8 +6,13 @@
 			:animation="200" ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="drag-drag"
 			@end="onMoveInstance">
 			<template #item="{ element: instance }">
-				<component :is="getComponent(instance.id)" :data="instance.structureData" :title="instance.id"
-					@remove="onRemove(instance)" @edit="onEdit(instance)">
+				<component 
+				:is="getComponent(instance.id)" 
+				:data="instance.structureData"
+				:module="instance.module"
+				@remove="onRemove(instance)" 
+				@edit="onEdit(instance)"
+				>
 					<div class="bb-content">
 					<!-- Nested children -->
 					<Draggable v-model="instance.children" item-key="nonce" :animation="200" ghost-class="drag-ghost"
@@ -16,7 +21,13 @@
 						:group="{ name: 'blocks', pull: true, put: true }"
   						@change="onNestedMove($event, instance)">
 						<template #item="{ element: child }">
-							<component :is="getComponent(child.id)" :data="child.structureData" :title="child.id" />
+							<component 
+							:is="getComponent(child.id)" 
+							:data="child.structureData" 
+							:module="child.module"
+							@remove="onRemove(child)" 
+							@edit="onEdit(child)" 
+							/>
 						</template>
 					</Draggable>
 				</div>
@@ -78,13 +89,11 @@ const onMoveInstance = (event: any) => {
 	}
 	const newIndex = event.newIndex;
 	const oldIndex = event.oldIndex;
-	console.log(event);
 	useContentStore().moveInstance(oldIndex, newIndex);
 };
 
 const onNestedMove = (event: any, instance: InstanceModule) => {
 	const { from, to, item, added, removed } = event;
-	console.log(event);
 
 	const fromParent = findParentByChildren(from);
 	const toParent = findParentByChildren(to);
@@ -104,9 +113,6 @@ const onNestedMove = (event: any, instance: InstanceModule) => {
 	if(fromParent && fromParent) {
 		return;
 	}
-
-	console.log(fromParent);
-	console.log(toParent);
 };
 
 function findParentByChildren(containerEl: HTMLElement): InstanceModule | null {

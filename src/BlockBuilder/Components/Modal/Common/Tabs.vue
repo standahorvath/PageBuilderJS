@@ -4,9 +4,6 @@
 		{{ tab.title }}
 	</button>
 </div>
-<div class="bb-modal__tabs__content">
-	<slot />
-</div>
 </template>
 <script setup lang="ts">
 import { PropType } from "vue";

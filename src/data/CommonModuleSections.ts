@@ -12,6 +12,13 @@ export const DeveloperSection = {
 			value: '',
 		},
 		{
+			id: 'developer-class-attribute',
+			name: 'Element Class',
+			description: 'Class attribute for a root element of this module',
+			type: SectionAttributeType.Textarea,
+			value: '',
+		},
+		{
 			id: 'developer-css-attribute',
 			name: 'Custom CSS',
 			description: 'Custom CSS for this module',
