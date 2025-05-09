@@ -2,11 +2,13 @@
 	<div class="bb-container" ref="rootEl">
 		<Title />
 		<ToolBar :toolbar="toolbar" :modules="modules" @toolClick="onToolClick" />
-		<ControlPanel />
+		<ControlPanel @templatesClick="templatesModalOpened=true" @templatesAddClick="addTemplateModalOpened=true" />
 		<Content :instances="instances" @edit="onEdit" />
 		<FadeTrasition>
 			<EditInstanceModal v-if="modalOpened && editInstance && editInstanceModule" :instance="editInstance"
 				:module="editInstanceModule" @close="onModalClose" @save="onModalSave" />
+			<TemplatesModal v-if="templatesModalOpened" @close="templatesModalOpened=false" @delete="onTemplateDelete" @append="onTemplateAppend" />
+			<AddTemplateModal v-if="addTemplateModalOpened" @close="addTemplateModalOpened=false" @save="onTemplateCreate" />
 		</FadeTrasition>
 	</div>
 </template>
@@ -16,10 +18,13 @@ import Title from "@/BlockBuilder/Components/Title.vue";
 import ControlPanel from "@/BlockBuilder/Components/ControlPanel.vue";
 import Content from "@/BlockBuilder/Components/Content/Content.vue";
 import { computed, defineProps, getCurrentInstance, PropType, ref } from "vue";
-import { InstanceModule, Module, ModuleData, Toolbar, ToolbarTool } from "@/types";
+import { InstanceModule, Module, ModuleData, Template, Toolbar, ToolbarTool } from "@/types";
 import { useContentStore } from "@/store/ContentStore";
 import EditInstanceModal from "@/BlockBuilder/Components/Modal/EditInstance.vue";
+import TemplatesModal from "@/BlockBuilder/Components/Modal/Templates.vue";
+import AddTemplateModal from "@/BlockBuilder/Components/Modal/AddTemplate.vue";
 import FadeTrasition from "@/BlockBuilder/Components/Transitions/FadeTransition.vue";
+import { useTemplateStore } from "@/store/TemplateStore";
 
 const props = defineProps({
 	modules: {
@@ -39,9 +44,15 @@ const props = defineProps({
 const emits = defineEmits([
 	"onModalSave",
 	"onUpdate",
+	"onTemplateCreate",
+	"onTemplateDelete",
+	"onTemplatesUpdate",
+	"onTemplateAppend",
 ])
 
 const modalOpened = ref(false)
+const addTemplateModalOpened = ref(false)
+const templatesModalOpened = ref(false)
 const editInstance = ref<InstanceModule | null>(null)
 const rootEl = ref<HTMLElement | null>(null)
 
@@ -52,7 +63,11 @@ const editInstanceModule = computed(() => {
 
 useContentStore().initInstances(props.content, props.modules)
 useContentStore().$subscribe(() => {
-	emits('onUpdate', useContentStore().export())
+	emits('onUpdate', useContentStore().export)
+})
+
+useTemplateStore().$subscribe(() => {
+	emits('onTemplatesUpdate', useTemplateStore().templates)
 })
 
 const instances = computed(() => {
@@ -85,5 +100,26 @@ const onModalSave = (newVersion: InstanceModule) => {
 	emits('onModalSave', newVersion)
 }
 
+const onTemplateCreate = (template: Template) => {
+	if (!template) return
+	useTemplateStore().templates.push(template)
+	addTemplateModalOpened.value = false
+	emits('onTemplateCreate', template)
+}
+
+const onTemplateDelete = (name: string) => {
+	if (!name) return
+	useTemplateStore().deleteTemplate(name)
+	emits('onTemplateDelete', name)
+}
+
+const onTemplateAppend = (name: string) => {
+	if (!name) return
+	const template = useTemplateStore().getTemplate(name)
+	if (!template) return
+	useContentStore().import(template.data, props.modules)
+	templatesModalOpened.value = false
+	emits('onTemplateAppend', name)
+}
 
 </script>

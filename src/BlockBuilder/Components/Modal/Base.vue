@@ -2,7 +2,7 @@
 	<teleport to="body">
 		<div class="bb-modal">
 			<div class="bb-modal__overlay"></div>
-			<div class="bb-modal__container">
+			<div class="bb-modal__container" :style="{ width, height }">
 
 				<!-- Modal Header -->
 				<div class="bb-modal__header" v-if="$slots.header">
@@ -43,6 +43,14 @@ defineProps({
 	title: {
 		type: String,
 		required: true,
+	},
+	width: {
+		type: String,
+		default: undefined,
+	},
+	height: {
+		type: String,
+		default: undefined,
 	},
 })
 const emits = defineEmits(["close", "save"]);

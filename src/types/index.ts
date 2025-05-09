@@ -2,6 +2,7 @@ import { ToolbarTab, ToolbarTools, ToolbarTool, Toolbar } from './modules/Toolba
 import { Module, ModuleTab, ModuleSection, ModuleAttribute } from './modules/Module';
 import { InstanceModule, AttributeData, ModuleData } from './modules/Content';
 import { ModalTab } from './modules/Modal';
+import { Template } from './modules/Template';
 
 export type { 
 	ToolbarTab, 
@@ -16,4 +17,5 @@ export type {
 	AttributeData,
 	ModuleData,
 	ModalTab,
+	Template,
 };

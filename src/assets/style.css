@@ -30,6 +30,7 @@
 	--bb-modal-button-bg: rgb(59, 130, 246);
 	--bb-modal-button-hover-bg: rgb(37, 99, 235);
 	--bb-modal-button-border-color: rgb(37, 99, 235);
+	--bb-modal-button-danger-hover-bg: #d80606;
 	--bb-modal-button-text-color: #ffffff;
 	--bb-modal-border-radius: 8px;
 	--bb-modal-tab-bg: #ffffff;
@@ -178,6 +179,10 @@
 	align-items: center;
 	gap: 4px;
 	color: var(--bb-control-panel-button-text-color);
+}
+.bb-control-panel__button--disabled {
+	opacity: 0.5;
+	pointer-events: none;
 }
 .bb-control-panel__button:hover {
 	background: var(--bb-control-panel-button-hover-bg);
@@ -463,6 +468,73 @@
 	padding: var(--bb-section-padding);
 	background: var(--bb-modal-tab-bg);
 	border: 1px solid var(--bb-border-color);
+}
+
+.bb-modal__form {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: var(--bb-section-padding);
+}
+.bb-modal__form__button {
+	cursor: pointer;
+	padding: 8px 32px;
+	border-radius: 4px;
+	align-items: center;
+	background: var(--bb-modal-button-bg);
+	border: 1px solid var(--bb-modal-button-border-color);
+	color: var(--bb-modal-button-text-color);
+	transition: 0.3s all;
+	text-align: center;
+}
+.bb-modal__form__button:hover {
+	background: var(--bb-modal-button-hover-bg);
+}
+.bb-modal__form__button--disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+.bb-modal__form__button--danger {
+	background: var(--bb-error-color);
+	border: 1px solid var(--bb-error-color);
+	color: #ffffff;
+}
+.bb-modal__form__button--danger:hover {
+	background: var(--bb-modal-button-danger-hover-bg);
+}
+.bb-modal__form__list {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.bb-modal__form__list__item {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 8px;
+	padding: var(--bb-section-padding);
+	border-radius: var(--bb-modal-tab-border-radius);
+	background: var(--bb-modal-tab-bg);
+	border: 1px solid var(--bb-border-color);
+}
+.bb-modal__form__list__item--template {
+	display:flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+}
+.bb-modal__form__list__item__buttons {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 8px;
+}
+.bb-modal__form__list__item__buttons button {
+	padding: 8px 16px;
 }
 
 /* Accordition */

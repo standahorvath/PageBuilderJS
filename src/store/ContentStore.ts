@@ -11,8 +11,53 @@ export const useContentStore = defineStore('content', {
 		getBuildInComponentIds() {
 			return Object.keys(ModuleInstanceId).map((key) => ModuleInstanceId[key as keyof typeof ModuleInstanceId])
 		},
+		export(): ModuleData[]{
+			const exportInstance = (instance: InstanceModule): ModuleData => {
+				return {
+					id: instance.id,
+					structureData: instance.structureData,
+					children: instance.children?.map((child: InstanceModule): ModuleData => {
+						return exportInstance(child)
+					}),
+				}
+			}
+
+			return this.instances.map((instance) => {
+				return exportInstance(instance)
+			})
+		},
+		instanceCount(): number {
+			if(!this.instances) {
+				return 0
+			}
+
+			return this.instances.reduce((count, instance) => {
+				if (instance.children) {
+					count += instance.children.length
+				}
+				return count + 1
+			}, 0)
+		}
 	},
 	actions: {
+		import(templateData: ModuleData[], modules: Module[]) {
+			const createInstance = (data: ModuleData): InstanceModule => {
+				const module = modules.find((m) => m.id === data.id)
+				if (!module) {
+					throw new Error(`Module with id ${data.id} not found`)
+				}
+				return {
+					nonce: Math.random().toString(36).substring(2),
+					id: data.id,
+					children: data.children?.map((child) => createInstance(child)) as InstanceModule[],
+					structureData: JSON.parse(JSON.stringify(data.structureData)),
+					module: module,
+				}
+			}
+			for (const instance of templateData) {
+				this.instances.push(createInstance(instance))
+			}
+		},
 		moveInstance(oldIndex: number, newIndex: number) {
 			if (newIndex >= this.instances.length) {
 				let i = newIndex - this.instances.length + 1
@@ -71,20 +116,5 @@ export const useContentStore = defineStore('content', {
 				} as InstanceModule
 			})
 		},
-		export(): ModuleData[]{
-			const exportInstance = (instance: InstanceModule): ModuleData => {
-				return {
-					id: instance.id,
-					structureData: instance.structureData,
-					children: instance.children?.map((child: InstanceModule): ModuleData => {
-						return exportInstance(child)
-					}),
-				}
-			}
-
-			return this.instances.map((instance) => {
-				return exportInstance(instance)
-			})
-		}
 	},
 })
