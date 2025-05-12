@@ -25,6 +25,7 @@ import TemplatesModal from "@/BlockBuilder/Components/Modal/Templates.vue";
 import AddTemplateModal from "@/BlockBuilder/Components/Modal/AddTemplate.vue";
 import FadeTrasition from "@/BlockBuilder/Components/Transitions/FadeTransition.vue";
 import { useTemplateStore } from "@/store/TemplateStore";
+import { useHistoryStore } from "@/store/HistoryStore";
 
 const props = defineProps({
 	modules: {
@@ -55,6 +56,7 @@ const addTemplateModalOpened = ref(false)
 const templatesModalOpened = ref(false)
 const editInstance = ref<InstanceModule | null>(null)
 const rootEl = ref<HTMLElement | null>(null)
+const history = useHistoryStore()
 
 const editInstanceModule = computed(() => {
 	if (!editInstance.value) return null
@@ -64,6 +66,7 @@ const editInstanceModule = computed(() => {
 useContentStore().initInstances(props.content, props.modules)
 useContentStore().$subscribe(() => {
 	emits('onUpdate', useContentStore().export)
+	history.saveState(useContentStore().instances)
 })
 
 useTemplateStore().$subscribe(() => {

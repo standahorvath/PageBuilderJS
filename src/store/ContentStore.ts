@@ -89,13 +89,15 @@ export const useContentStore = defineStore('content', {
 				this.instances.splice(index, 1)
 			}
 		},
-		addInstance(instance: InstanceModule) {
-			this.instances.push({
+		addInstance(instance: InstanceModule, newIndex: number) {
+			const newInstance = {
 				...instance,
 				module: instance.module,
 				nonce: Math.random().toString(36).substring(2),
 				children: [],
-			})
+			};
+			
+			this.instances.splice(newIndex, 0, newInstance);
 		},
 		addInstanceFromModule(module: Module) {
 			this.instances.push({

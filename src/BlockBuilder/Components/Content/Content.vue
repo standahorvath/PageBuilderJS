@@ -4,7 +4,8 @@
 
 		<Draggable v-model="internalInstances" item-key="nonce" :group="{ name: 'blocks', pull: true, put: true }"
 			:animation="200" ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="drag-drag"
-			@end="onMoveInstance">
+			@end="onMoveInstance"
+			@change="onChangeInstance($event, instance)">
 			<template #item="{ element: instance }">
 				<component 
 				:is="getComponent(instance.id)" 
@@ -18,8 +19,7 @@
 					<Draggable v-model="instance.children" item-key="nonce" :animation="200" ghost-class="drag-ghost"
 					:data-nonce="instance.nonce"
 						chosen-class="drag-chosen" drag-class="drag-drag"
-						:group="{ name: 'blocks', pull: true, put: true }"
-  						@change="onNestedMove($event, instance)">
+						:group="{ name: 'blocks', pull: true, put: true }">
 						<template #item="{ element: child }">
 							<component 
 							:is="getComponent(child.id)" 
@@ -87,31 +87,27 @@ const onMoveInstance = (event: any) => {
 	if(event.pullMode){
 		return;
 	}
-	const newIndex = event.newIndex;
-	const oldIndex = event.oldIndex;
-	useContentStore().moveInstance(oldIndex, newIndex);
+	
+	useContentStore().moveInstance(event.oldIndex, event.newIndex);
 };
 
-const onNestedMove = (event: any, instance: InstanceModule) => {
-	const { from, to, item, added, removed } = event;
-
+const onChangeInstance = (event: any, instance: InstanceModule) => {
+	const { from, to, item, removed, added } = event;
 	const fromParent = findParentByChildren(from);
 	const toParent = findParentByChildren(to);
 
+	if (fromParent && toParent) {
+		return;
+	}
+
 	if(added){
 		const instance = added.element as InstanceModule
-		useContentStore().removeInstance(instance);
-		useContentStore().instances = useContentStore().instances.filter(i => i);
+		useContentStore().addInstance(instance, added.newIndex);
 	}
-
 	if(removed){
 		const instance = removed.element as InstanceModule
-		console.log(instance);
-		useContentStore().addInstance(instance);
-	}
-
-	if(fromParent && fromParent) {
-		return;
+		useContentStore().removeInstance(instance);
+		useContentStore().instances = useContentStore().instances.filter(i => i);
 	}
 };
 

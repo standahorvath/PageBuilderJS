@@ -3,6 +3,7 @@ import { Module, ModuleTab, ModuleSection, ModuleAttribute } from './modules/Mod
 import { InstanceModule, AttributeData, ModuleData } from './modules/Content';
 import { ModalTab } from './modules/Modal';
 import { Template } from './modules/Template';
+import { HistoryEntry } from './modules/History';
 
 export type { 
 	ToolbarTab, 
@@ -18,4 +19,5 @@ export type {
 	ModuleData,
 	ModalTab,
 	Template,
+	HistoryEntry,
 };

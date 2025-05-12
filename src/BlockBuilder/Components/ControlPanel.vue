@@ -1,8 +1,8 @@
 <template>
 	<div class="bb-control-panel">
 		<div class="bb-control-panel__column">
-		<button class="bb-control-panel__button"><IconBack /></button>
-		<button class="bb-control-panel__button"><IconForward /></button>
+		<button class="bb-control-panel__button" :class="[canActions.canUndo ? '' : 'bb-control-panel__button--disabled']"><IconBack /></button>
+		<button class="bb-control-panel__button" :class="[canActions.canRedo ? '' : 'bb-control-panel__button--disabled']"><IconForward /></button>
 		</div>
 		
 		<div class="bb-control-panel__column">
@@ -19,8 +19,17 @@ import IconPlus from "@/BlockBuilder/Icons/Plus.vue";
 import { computed } from "vue";
 import { useContentStore } from "@/store/ContentStore";
 import { useTemplateStore } from "@/store/TemplateStore";
+import { useHistoryStore } from "@/store/HistoryStore";
 
 const emits = defineEmits(["templatesClick", "templatesAddClick"]);
+
+const canActions = computed(() => {
+	const historyStore = useHistoryStore();
+	return {
+		canUndo: historyStore.canUndo,
+		canRedo: historyStore.canRedo,
+	};
+});
 
 const onTemplatesClick = () => {
 	emits("templatesClick");
