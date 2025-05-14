@@ -8,10 +8,15 @@ export const useHistoryStore = defineStore('history', {
         currentIndex: -1, // index aktuálního snapshotu
     }),
     getters: {
-        canUndo: (state) => state.currentIndex > 0,
+        canUndo: (state) => state.currentIndex > -1,
         canRedo: (state) => state.currentIndex < state.history.length - 1,
     },
     actions: {
+        removeFutureSnapshots() {
+            if (this.currentIndex < this.history.length - 1) {
+                this.history.splice(this.currentIndex + 1)
+            }
+        },
         saveState(currentInstances: InstanceModule[], action?: string) {
             const snapshot = JSON.parse(JSON.stringify(currentInstances)) as InstanceModule[]
 
@@ -30,6 +35,9 @@ export const useHistoryStore = defineStore('history', {
         undo(): InstanceModule[] | null {
             if (this.canUndo) {
                 this.currentIndex--
+                if(this.currentIndex < 0) {
+                    return []
+                }
                 return this.history[this.currentIndex].snapshot
             }
             return null

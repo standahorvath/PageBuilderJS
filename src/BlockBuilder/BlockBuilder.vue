@@ -26,6 +26,7 @@ import AddTemplateModal from "@/BlockBuilder/Components/Modal/AddTemplate.vue";
 import FadeTrasition from "@/BlockBuilder/Components/Transitions/FadeTransition.vue";
 import { useTemplateStore } from "@/store/TemplateStore";
 import { useHistoryStore } from "@/store/HistoryStore";
+import { MutationType } from "pinia";
 
 const props = defineProps({
 	modules: {
@@ -64,9 +65,10 @@ const editInstanceModule = computed(() => {
 })
 
 useContentStore().initInstances(props.content, props.modules)
-useContentStore().$subscribe(() => {
-	emits('onUpdate', useContentStore().export)
+useContentStore().$subscribe((mutation) => {
+	if(history.currentIndex === history.history.length - 1 || mutation.events.type === 'add'){
 	history.saveState(useContentStore().instances)
+	}
 })
 
 useTemplateStore().$subscribe(() => {

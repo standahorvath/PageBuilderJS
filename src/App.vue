@@ -1,14 +1,13 @@
 <template>
   <div>
-    <BlockBuilder :modules="ExtendedModules" :toolbar="ExtendedToolbar" :content="blocks" ref="builderRef" @onUpdate="handleUpdate" />
+    <BlockBuilder :modules="DefaultModules" :toolbar="DefaultToolbar" :content="blocks" ref="builderRef" @onUpdate="handleUpdate" />
   </div>
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import BlockBuilder from "@/BlockBuilder/BlockBuilder.vue";
 import { DefaultModules } from "@/data/DefaultModules";
-import { ExtendedModules } from "@/data/ExtendedModules";
-import { DefaultToolbar, ExtendedToolbar } from "./data/DefaultToolbar";
+import { DefaultToolbar } from "./data/DefaultToolbar";
 import { ModuleData } from "@/types";
 
 const builderRef = ref();

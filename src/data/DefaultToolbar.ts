@@ -1,45 +1,42 @@
 import { Toolbar } from "@/types";
 
-export const DefaultToolbar = {
-	tabs: [
-		{
-			id: "layout",
-			icon: "layout",
-			title: "Layout",
-			tools: [
-				"column",
-			]
-		},
-		{
-			id: "main",
-			icon: "main",
-			title: "Main",
-			tools: [
-				"space"
-			]
-		},
-	]
-} as Toolbar;
-
-export const ExtendedToolbar = {
-	tabs: [
-		{
-			id: "AdvancedTab",
-			icon: "AdvancedTab",
-			title: "AdvancedTab",
-			tools: [
-				"text",
-				"column",
-				"richtext",
-				"image",
-				"video",
-				"audio",
-				"button",
-				"icon",
-				"list",
-				"table",
-				"space",
-			]
-		},
-	]
+export const DefaultToolbar: Toolbar = {
+  tabs: [
+    {
+      id: "content",
+      title: "Content",
+      icon: "text",
+      tools: [
+        "text",        // Title
+        "richtext",    // Rich Text
+        "quote",       // Quote
+        "list",        // List
+        "table",       // Table
+        "button",      // Button
+        "badge"        // Badge
+      ]
+    },
+    {
+      id: "media",
+      title: "Media",
+      icon: "image",
+      tools: [
+        "image",
+        "gallery",
+        "video",
+        "audio",
+        "slider",
+        "spacer"
+      ]
+    },
+    {
+      id: "structure",
+      title: "Structure",
+      icon: "column",
+      tools: [
+        "column",
+        //"container",
+      ]
+    }
+  ]
 } as Toolbar;

@@ -1,125 +1,224 @@
 # PageBuilderJS
 
-PageBuilderJS is a web block builder built in Vue.js. It leverages modern tools like Vite, Tailwind CSS, and Vitest to deliver a seamless and developer-friendly experience for building dynamic and customizable web pages.
+[![npm version](https://img.shields.io/npm/v/pagebuilderjs?color=%2300C853\&label=pagebuilderjs%20on%20npm\&logo=npm)](https://www.npmjs.com/package/pagebuilderjs)
 
-## Features
+PageBuilderJS is a fully self-contained **Web Component page builder** designed to be easily integrated into any web platform. It allows developers to provide an intuitive block-based page editing experience to their users with minimal setup.
 
-- Built with **Vue 3** for modern reactive web development.
-- Includes **Tailwind CSS** with support for forms and typography plugins.
-- Development powered by **Vite** for fast builds and hot module replacement.
-- Unit testing using **Vitest** and **happy-dom**.
-- Pre-configured ESLint and Prettier for code linting and formatting.
+👉👉👉 **🔥 LIVE DEMO → [https://standahorvath.github.io/PageBuilderJS/](https://standahorvath.github.io/PageBuilderJS/)** 👈👈👈
 
-## Getting Started
+---
 
-### Prerequisites
+## ✨ Key Features
 
-- **Node.js** version 18 or higher.
+* Distributed as **npm package** for easy integration
+* Works anywhere via **WebComponent** (`<block-builder>` tag)
+* Drag & Drop visual block builder
+* Create and manage reusable **modules (blocks)**
+* Dynamic template rendering with integrated **TemplifyJS** engine
+* Fully customizable toolbar actions
+* Fast and lightweight (internally built with Vue 3 + Vite + Tailwind CSS)
 
-### Installation
+---
 
-1. Clone the repository:
+## 🚀 How to Use
 
-   ```bash
-   git clone https://github.com/standahorvath/PageBuilderJS.git
-   cd PageBuilderJS
-   ```
+### 1️⃣ Install via npm
 
-2. Install dependencies:
+```bash
+npm i pagebuilderjs
+```
 
-   ```bash
-   npm install
-   ```
+### 2️⃣ Add to your project
 
-### Scripts
+The library exposes the `block-builder` web component.
 
-- **Development server:**
+Example usage in any web application:
 
-  ```bash
-  npm run dev
-  ```
+```html
+<script src="/path/to/block-builder.umd.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const builder = document.querySelector("block-builder");
+    // builder is ready
+});
+</script>
 
-  Starts the development server with hot module replacement.
+<block-builder></block-builder>
+```
 
-- **Build for production:**
+You can use it in any modern frontend or backend system (Laravel, Symfony, Node.js, plain HTML etc.).
 
-  ```bash
-  npm run build
-  ```
 
-  Creates an optimized production build.
 
-- **Preview production build:**
+---
 
-  ```bash
-  npm run preview
-  ```
+## 🧱 Core Concepts
 
-  Serves the production build locally on port 3000.
+### ➡️ Modules (Blocks)
 
-- **Run unit tests:**
+Example module definition:
 
-  ```bash
-  npm run test:unit
-  ```
+```typescript
+const buttonModule: Module = {
+  id: 'button',
+  title: 'Button',
+  icon: '🖱️',
+  render: '<button style="background-color: {{backgroundColor}}; color: {{textColor}}">{{label}}</button>',
+  structure: {
+    tabs: [
+      {
+        name: 'Content',
+        sections: [
+          {
+            name: 'Settings',
+            attributes: [
+              { id: 'label', name: 'Label', type: 'text', value: 'Click me' },
+              { id: 'backgroundColor', name: 'Background', type: 'color', value: '#000000' },
+              { id: 'textColor', name: 'Text Color', type: 'color', value: '#ffffff' }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+````
 
-  Executes unit tests using Vitest.
+A **Module** is a configurable block the user can drag into the builder canvas.
 
-- **Lint and fix files:**
+```typescript
+export type Module = {
+  title: string;
+  id: string;
+  icon: string;
+  structure: {
+    tabs: ModuleTab[];
+  };
+  render?: string;
+};
+```
 
-  ```bash
-  npm run lint
-  ```
+### ➡️ TemplifyJS (Rendering Engine)
 
-  Lints JavaScript and Vue files, automatically fixing issues when possible.
+Modules use the **TemplifyJS** mini-template engine for live previews:
 
-## Folder Structure
+```html
+<button style="background-color: {{backgroundColor}}; color: {{textColor}}">{{label}}</button>
+```
+
+Features:
+
+* `{{ variable }}` → inject dynamic values
+* `{{ variable | pipe }}` → apply custom filters
+* `{% foreach:array %} ... {% endforeach %}` → loops
+* `{% if:condition %} ... {% endif %}` → conditionals
+
+[See full TemplifyJS docs →](./src/docs/TemplifyJS.md)
+
+### ➡️ Toolbar System
+
+You can extend the editor with your own toolbar buttons.
+
+Example toolbar action:
+
+```typescript
+const myToolbarAction: ToolbarAction = {
+  icon: '🗑️',
+  title: 'Delete block',
+  onClick: (instance) => {
+    console.log('Delete block:', instance.id);
+  }
+};
+```
+
+### ➡️ State Management
+
+Blocks and structure are handled by a built-in Pinia store (`ContentStore.ts`).
+
+---
+
+## 📝 Developer Notes
+
+Although built with **Vue 3 + Vite + Pinia + Tailwind CSS**, PageBuilderJS is shipped as a fully standalone **Web Component** → you don't need Vue or any framework to use it!
+
+This makes it perfect for integrating into any system without conflicts.
+
+---
+
+## 🛠️ Development Setup
+
+### Requirements
+
+* **Node.js** 18+
+
+### Local development
+
+```bash
+git clone https://github.com/standahorvath/PageBuilderJS.git
+cd PageBuilderJS
+npm install
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Run unit tests:
+
+```bash
+npm run test:unit
+```
+
+Lint & fix code:
+
+```bash
+npm run lint
+```
+
+---
+
+## 📁 Folder Structure
 
 ```plaintext
 PageBuilderJS/
-├── src/              # Application source code
-├── public/           # Static assets
-├── tests/            # Unit test files
-├── vite.config.js    # Vite configuration
-├── tailwind.config.js # Tailwind CSS configuration
-└── ...              # Other project files
+├── src/              # Source code
+├── public/           # Assets
+├── tests/            # Unit tests
+├── vite.config.ts    # Vite config
+├── tailwind.config.ts # Tailwind config
+└── ...
 ```
 
-## Dependencies
+---
 
-### Core
+## 📝 Contributing
 
-- [vue](https://vuejs.org) - Reactive framework for building user interfaces.
-- [@heroicons/vue](https://github.com/tailwindlabs/heroicons) - Vue components for Heroicons.
-- [@tailwindcss/forms](https://github.com/tailwindlabs/tailwindcss-forms) - Tailwind plugin for better form styles.
-- [@tailwindcss/typography](https://github.com/tailwindlabs/tailwindcss-typography) - Tailwind plugin for improved typography.
+1. Fork the repo
+2. Create a branch
+3. Open a pull request
 
-### Development
+Follow ESLint + Prettier style.
 
-- [vite](https://vitejs.dev) - Build tool for fast and optimized development.
-- [vitest](https://vitest.dev) - Unit testing framework.
-- [eslint](https://eslint.org) - Linter for JavaScript and Vue.
-- [prettier](https://prettier.io) - Code formatter.
-- [tailwindcss](https://tailwindcss.com) - Utility-first CSS framework.
+---
 
-## Contributing
+## 🐛 Issues
 
-Contributions are welcome! Please follow these steps:
+Submit issues at:
+[https://github.com/standahorvath/PageBuilderJS/issues](https://github.com/standahorvath/PageBuilderJS/issues)
 
-1. Fork the repository.
-2. Create a new branch for your feature or fix.
-3. Commit your changes and submit a pull request.
+---
 
-## Issues
+## 📄 License
 
-If you encounter any problems or have feature requests, please report them on the [issue tracker](https://github.com/standahorvath/PageBuilderJS/issues).
+PageBuilderJS is licensed under the ISC License.
 
-## License
+---
 
-This project is licensed under the ISC License.
+## 🔗 Links
 
-## Links
-
-- [Repository](https://github.com/standahorvath/PageBuilderJS)
-- [Issues](https://github.com/standahorvath/PageBuilderJS/issues)
-
+* [Live Demo](https://standahorvath.github.io/PageBuilderJS/)
+* [GitHub Repository](https://github.com/standahorvath/PageBuilderJS)
+* [Issue Tracker](https://github.com/standahorvath/PageBuilderJS/issues)

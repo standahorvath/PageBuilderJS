@@ -1,8 +1,8 @@
 <template>
 	<div class="bb-control-panel">
 		<div class="bb-control-panel__column">
-		<button class="bb-control-panel__button" :class="[canActions.canUndo ? '' : 'bb-control-panel__button--disabled']"><IconBack /></button>
-		<button class="bb-control-panel__button" :class="[canActions.canRedo ? '' : 'bb-control-panel__button--disabled']"><IconForward /></button>
+		<button class="bb-control-panel__button" :class="[canActions.canUndo ? '' : 'bb-control-panel__button--disabled']" @click="onUndo"><IconBack /></button>
+		<button class="bb-control-panel__button" :class="[canActions.canRedo ? '' : 'bb-control-panel__button--disabled']" @click="onRedo"><IconForward /></button>
 		</div>
 		
 		<div class="bb-control-panel__column">
@@ -42,6 +42,25 @@ const numOfBlock = computed(() => {
 const onTemplatesAdd = () => {
 	emits("templatesAddClick");
 }
+
+const onUndo = () => {
+	const historyStore = useHistoryStore();
+	if (historyStore.canUndo) {
+		const snapshot = historyStore.undo();
+		if(snapshot){
+			useContentStore().instances = snapshot;
+		}
+	}
+};
+const onRedo = () => {
+	const historyStore = useHistoryStore();
+	if (historyStore.canRedo) {
+		const snapshot = historyStore.redo();
+		if(snapshot){
+			useContentStore().instances = snapshot;
+		}
+	}
+};
 
 const isTemplatesEmpty = computed(() => {
 	if(!useTemplateStore()) return true;
