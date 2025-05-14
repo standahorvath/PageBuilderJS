@@ -1,12 +1,13 @@
 import { SectionAttributeType } from "@/enums";
 import { Module } from "@/types";
 import { AdvancedTab } from "./CommonModuleTabs";
+import { IconName } from "@/BlockBuilder/Utils/IconsMap";
 
 export const DefaultModules: Module[] = [
   // Content tab
   {
     title: "Title",
-    icon: "text",
+    icon: IconName.Home,
     id: "text",
     render: "<h1 style=\"font-size: {{fontSize}}px; color: {{color}}\">{{content}}</h1>",
     structure: {

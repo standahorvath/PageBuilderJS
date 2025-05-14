@@ -108,8 +108,10 @@
 	padding-bottom: var(--bb-section-padding);
 }
 .bb-toolbar__tools {
-	display: grid;
-	grid-template-columns: repeat(16, 1fr);
+	display: flex;
+	flex-wrap: wrap;
+
+	/* grid-template-columns: repeat(16, 1fr); */
 	gap: 10px;
 	padding: var(--bb-section-padding);
 	background: var(--bb-toolbar-tools-bg);
@@ -117,11 +119,15 @@
 	border: 1px solid var(--bb-border-color);
 }
 .bb-toolbar__button {
-	padding: var(--bb-section-padding);
+	padding: 6px 12px;
 	border: 1px solid var(--bb-border-color);
 	background: var(--bb-toolbar-tools-bg);
 	cursor:pointer;
 	border-radius: var(--bb-toolbar-tools-border-radius);
+	display: flex;
+	flex-direction: row;
+	gap: 6px;
+	align-items: center;
 }
 .bb-toolbar__button:hover {
 	background: var(--bb-toolbar-tools-hover-bg);

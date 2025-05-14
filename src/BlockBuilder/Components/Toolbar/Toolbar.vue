@@ -47,6 +47,7 @@ const tools = computed(() => {
 			return {
 				id: tool,
 				title: moduleTool.title,
+				icon: moduleTool.icon,
 			}
 		}).filter(tool => tool !== null) as ToolbarTool[];
 	});
