@@ -5,7 +5,7 @@
 		<Draggable v-model="internalInstances" item-key="nonce" :group="{ name: 'blocks', pull: true, put: true }"
 			:animation="200" ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="drag-drag"
 			@end="onMoveInstance"
-			@change="onChangeInstance($event, instance)">
+			@change="onChangeInstance($event)">
 			<template #item="{ element: instance }">
 				<component 
 				:is="getComponent(instance.id)" 
@@ -91,7 +91,7 @@ const onMoveInstance = (event: any) => {
 	useContentStore().moveInstance(event.oldIndex, event.newIndex);
 };
 
-const onChangeInstance = (event: any, instance: InstanceModule) => {
+const onChangeInstance = (event: any) => {
 	const { from, to, item, removed, added } = event;
 	const fromParent = findParentByChildren(from);
 	const toParent = findParentByChildren(to);
