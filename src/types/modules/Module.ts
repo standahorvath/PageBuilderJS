@@ -8,7 +8,6 @@ export type Module = {
 		tabs: ModuleTab[];
 	};
 	icon: string;
-	order?: number;
 	childrenable?: boolean;
 }
 export type ModuleTab = {
