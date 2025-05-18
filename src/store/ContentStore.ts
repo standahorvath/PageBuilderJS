@@ -1,3 +1,4 @@
+import { deepCopy, findParent } from '@/BlockBuilder/Utils/ContentUtils'
 import { ModuleInstanceId } from '@/enums/modules/Module'
 import { getDefaultData } from '@/helpers/Module'
 import { ModuleData, InstanceModule, Module } from '@/types'
@@ -11,7 +12,7 @@ export const useContentStore = defineStore('content', {
 		getBuildInComponentIds() {
 			return Object.keys(ModuleInstanceId).map((key) => ModuleInstanceId[key as keyof typeof ModuleInstanceId])
 		},
-		export(): ModuleData[]{
+		export(): ModuleData[] {
 			const exportInstance = (instance: InstanceModule): ModuleData => {
 				return {
 					id: instance.id,
@@ -27,7 +28,7 @@ export const useContentStore = defineStore('content', {
 			})
 		},
 		instanceCount(): number {
-			if(!this.instances) {
+			if (!this.instances) {
 				return 0
 			}
 
@@ -40,6 +41,20 @@ export const useContentStore = defineStore('content', {
 		}
 	},
 	actions: {
+		duplicateInstance(instance: InstanceModule) {
+			const parent = findParent(this.instances, instance)
+			const instanceCopy = deepCopy(instance)
+			if (!parent) {
+				this.instances.push(instanceCopy)
+				return
+			}
+			if(!parent.children) {
+				parent.children = []
+			}
+			const index = parent.children.findIndex((i: InstanceModule) => i.nonce === instance.nonce)
+			parent.children.splice(index + 1, 0, instanceCopy)
+
+		},
 		import(templateData: ModuleData[], modules: Module[]) {
 			const createInstance = (data: ModuleData): InstanceModule => {
 				const module = modules.find((m) => m.id === data.id)
@@ -83,10 +98,25 @@ export const useContentStore = defineStore('content', {
 				}
 			}
 		},
-		removeInstance(instance: InstanceModule) {
+		removeInstance(instance: InstanceModule, recursively: boolean = false) {
 			const index = this.instances.findIndex((i) => i.nonce === instance.nonce)
 			if (index !== -1) {
 				this.instances.splice(index, 1)
+			}
+			if (recursively) {
+				for (const i of this.instances) {
+					this.removeInChildren(i, instance)
+				}
+			}
+		},
+		removeInChildren(instance: InstanceModule, remove: InstanceModule) {
+			if (!instance.children) return
+			const index = instance.children.findIndex((i) => (i as InstanceModule).nonce === remove.nonce)
+			if (index !== -1) {
+				instance.children.splice(index, 1)
+			}
+			for (let i = 0; i < instance.children.length; i++) {
+				this.removeInChildren(instance.children[i], remove)
 			}
 		},
 		addInstance(instance: InstanceModule, newIndex: number) {
@@ -96,7 +126,7 @@ export const useContentStore = defineStore('content', {
 				nonce: Math.random().toString(36).substring(2),
 				children: [],
 			};
-			
+
 			this.instances.splice(newIndex, 0, newInstance);
 		},
 		addInstanceFromModule(module: Module) {

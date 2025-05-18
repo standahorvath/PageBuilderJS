@@ -8,7 +8,7 @@ export enum SectionAttributeType {
 	DateTime = 'datetime',
 	FontSize = 'font-size',
 	Link = 'link',
-
+	Repeater = 'repeater',
 	Image = 'image',
 	Radio = 'radio',
 	Range = 'range',

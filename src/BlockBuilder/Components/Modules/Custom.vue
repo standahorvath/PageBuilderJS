@@ -1,6 +1,6 @@
 <template>
 	<div class="bb-module">
-	<ModuleHeader :title="module.title" @remove="onRemove" @edit="onEdit" />
+	<ModuleHeader :title="module.title" :icon="module.icon" @remove="onRemove" @edit="onEdit" @duplicate="onDuplicate" />
 	<ModuleContent class="bb-min-h-0">
 		<div class="bb-module__custom" v-html="moduleContent" />
 	</ModuleContent>
@@ -13,7 +13,7 @@ import { computed, PropType } from "vue";
 import { AttributeData, InstanceModule, Module } from "@/types";
 import { Templify } from 'templify-js';
 
-const emits = defineEmits(["remove", "edit"]);
+const emits = defineEmits(["remove", "edit", "duplicate"]);
 const props = defineProps({
 	data: {
 		type: Array as PropType<AttributeData[]>,
@@ -43,6 +43,9 @@ const onRemove = () => {
 }
 const onEdit = () => {
 	emits("edit");
+}
+const onDuplicate = () => {
+	emits("duplicate");
 }
 
 </script>

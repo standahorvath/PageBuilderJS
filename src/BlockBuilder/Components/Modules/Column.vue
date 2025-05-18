@@ -1,6 +1,6 @@
 <template>
 	<div class="bb-module" :style="columnStyles">
-		<ModuleHeader @remove="onRemove" @edit="onEdit">
+		<ModuleHeader @remove="onRemove" @duplicate="onDuplicate" :icon="module.icon" @edit="onEdit">
 			<template #title>
 				<span class="bb-module__header__title">
 				<button @click="onColumnChange(-1)" v-if="col > 1" class="bb-module__header__button">
@@ -27,7 +27,7 @@ import IconChevronLeft from "@/BlockBuilder/Icons/ChevronLeft.vue";
 import { computed, PropType } from "vue";
 import { AttributeData, Module } from "@/types";
 
-const emits = defineEmits(["remove", "edit"]);
+const emits = defineEmits(["remove", "edit", "duplicate"]);
 const props = defineProps({
 	data: {
 		type: Array as PropType<AttributeData[]>,
@@ -64,6 +64,9 @@ const onColumnChange = (value: number) => {
 			props.data.push({ id: "size", value: newCol });
 		}
 	}
+}
+const onDuplicate = () => {
+	emits("duplicate");
 }
 
 </script>

@@ -9,6 +9,7 @@ export type Module = {
 	};
 	icon: string;
 	order?: number;
+	childrenable?: boolean;
 }
 export type ModuleTab = {
 	name: string;
@@ -29,4 +30,5 @@ export type ModuleAttribute = {
 	default?: any;
 	order?: number;
 	options?: Record<string, string>;
+	attributes?: ModuleAttribute[];
 }

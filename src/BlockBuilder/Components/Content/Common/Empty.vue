@@ -1,7 +1,7 @@
 <template>
 	<div class="bb-content__empty">
 		<Smile style="width:80px" />
-		<span>I feel so empty, add some blocks from the toolbar.</span>
+		<span>No content yet. Use the toolbar to add your first block.</span>
 	</div>
 </template>
 <script setup lang="ts">

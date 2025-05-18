@@ -26,7 +26,7 @@ export const DefaultToolbar: Toolbar = {
         "video",
         "audio",
         "slider",
-        "spacer"
+        "space"
       ]
     },
     {
@@ -35,7 +35,7 @@ export const DefaultToolbar: Toolbar = {
       icon: "column",
       tools: [
         "column",
-        //"container",
+        "container",
       ]
     }
   ]

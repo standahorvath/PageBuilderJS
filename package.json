@@ -1,11 +1,12 @@
 {
   "name": "pagebuilderjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/block-builder.umd.js",
   "module": "dist/block-builder.js",
   "scripts": {
     "dev": "vite",
+    "prebuild": "ts-node src/helpers/GenerateVersion.ts",
     "build": "vite build",
     "build:demo": "vite build --config vite.config.demo.mjs",
     "preview": "vite preview --port 3000",

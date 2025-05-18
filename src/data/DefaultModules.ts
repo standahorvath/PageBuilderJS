@@ -7,9 +7,9 @@ export const DefaultModules: Module[] = [
   // Content tab
   {
     title: "Title",
-    icon: IconName.Home,
+    icon: IconName.H1Icon,
     id: "text",
-    render: "<h1 style=\"font-size: {{fontSize}}px; color: {{color}}\">{{content}}</h1>",
+    render: "<h1 style=\"font-size: {{fontSize}}px; color: {{color}}; text-align: {{align}}\">{{content}}</h1>",
     structure: {
       tabs: [
         {
@@ -17,7 +17,7 @@ export const DefaultModules: Module[] = [
           sections: [
             { name: "Main", attributes: [
               { id: "content", name: "Content", type: SectionAttributeType.Textarea, value: "Page title example" },
-              { id: "fontSize", name: "Font size", type: SectionAttributeType.FontSize, value: 32 },
+              { id: "align", name: "Text Align", type: SectionAttributeType.Select, value: "left", options: { left: "Left", center: "Center", right: "Right" } },
               { id: "color", name: "Text color", type: SectionAttributeType.Color, value: "#000000" }
             ]}
           ]
@@ -28,7 +28,7 @@ export const DefaultModules: Module[] = [
   },
   {
     title: "Rich Text",
-    icon: "richtext",
+    icon: IconName.Bars3CenterLeftIcon,
     id: "richtext",
     render: "<div style=\"font-size: {{fontSize}}px; color: {{color}}\">{{content}}</div>",
     structure: {
@@ -49,7 +49,7 @@ export const DefaultModules: Module[] = [
   },
   {
     title: "Quote",
-    icon: "quote",
+    icon: IconName.BookOpenIcon,
     id: "quote",
     render: "<blockquote><p>{{quote}}</p><i>- {{author}}</i></blockquote>",
     structure: {
@@ -69,16 +69,37 @@ export const DefaultModules: Module[] = [
   },
   {
     title: "List",
-    icon: "list",
+    icon: IconName.ListBulletIcon,
     id: "list",
-    render: "<ul>{% foreach:itemsArray %}<li>{{ item }}</li>{% endforeach %}</ul>",
+    render: "<h2>{{ title }}</h2><ul style='text-align:left;'>{% foreach:items %}<li style='color:{{ item.color }}'>{{ item.item }}</li>{% endforeach %}</ul>",
     structure: {
       tabs: [
         {
           name: "List",
           sections: [
+            {
+              name: "Title",
+              attributes: [
+                { id: "title", name: "Title", type: SectionAttributeType.Text, value: "List title" }
+              ],
+              type: SectionAttributeType.Text,
+              value: "List title",
+            },
             { name: "Items", attributes: [
-              { id: "items", name: "Items (comma separated)", type: SectionAttributeType.Text, value: "" }
+              { 
+                id: "items", 
+                name: "Items (comma separated)", 
+                type: SectionAttributeType.Repeater, 
+                value: [
+                  { item: "Item 1", color: "#fe1277" },
+                  { item: "Item 2", color: "#125e00" },
+                  { item: "Item 3", color: "#000000" }
+                ],
+                attributes: [
+                  { id: "item", name: "Name", type: SectionAttributeType.Text, value: "" },
+                  { id: "color", name: "Text color", type: SectionAttributeType.Color, value: "" }
+                ]
+              }
             ]}
           ]
         },
@@ -88,7 +109,7 @@ export const DefaultModules: Module[] = [
   },
   {
     title: "Table",
-    icon: "table",
+    icon: IconName.TableCellsIcon,
     id: "table",
     render: "<table border=\"1\">{% foreach:tableRows %}<tr>{% foreach:item.columns %}<td>{{ item }}</td>{% endforeach %}</tr>{% endforeach %}</table>",
     structure: {
@@ -108,7 +129,7 @@ export const DefaultModules: Module[] = [
   },
   {
     title: "Button",
-    icon: "button",
+    icon: IconName.RectangleStackIcon,
     id: "button",
     render: "<a href=\"javascript:void(0)\" style=\"border-radius:10px; background-color: {{backgroundColor}}; color: {{textColor}}; display: inline-block; padding: 10px 20px; text-decoration: none;\">{{label}}</a>",
     structure: {
@@ -132,7 +153,7 @@ export const DefaultModules: Module[] = [
   },
   {
     title: "Badge",
-    icon: "badge",
+    icon: IconName.TagIcon,
     id: "badge",
     render: "<span style=\"background-color: {{color}}; color: #fff; padding: 5px 10px; border-radius: 5px;\">{{text}}</span>",
     structure: {
@@ -154,7 +175,7 @@ export const DefaultModules: Module[] = [
   // Media tab
   {
     title: "Image",
-    icon: "image",
+    icon: IconName.PhotoIcon,
     id: "image",
     render: "<img src=\"{{src}}\" alt=\"{{alt}}\" width=\"{{width}}\" height=\"{{height}}\" />",
     structure: {
@@ -178,7 +199,7 @@ export const DefaultModules: Module[] = [
   },
   {
     title: "Gallery",
-    icon: "gallery",
+    icon: IconName.RectangleGroupIcon,
     id: "gallery",
     render: "<div style=\"display: flex; gap: 5px;\">{% foreach:images %}<img src=\"{{ item }}\" style=\"max-width: 100px; max-height: 100px;\" />{% endforeach %}</div>",
     structure: {
@@ -197,7 +218,7 @@ export const DefaultModules: Module[] = [
   },
   {
     title: "Video",
-    icon: "video",
+    icon: IconName.VideoCameraIcon,
     id: "video",
     render: "<video controls style=\"max-width: 100%\"><source src=\"{{url}}\" type=\"video/mp4\">Your browser does not support the video tag.</video>",
     structure: {
@@ -216,7 +237,7 @@ export const DefaultModules: Module[] = [
   },
   {
     title: "Audio",
-    icon: "audio",
+    icon: IconName.SpeakerWaveIcon,
     id: "audio",
     render: "<audio controls><source src=\"{{src}}\" type=\"audio/mpeg\">Your browser does not support the audio element.</audio>",
     structure: {
@@ -235,7 +256,7 @@ export const DefaultModules: Module[] = [
   },
   {
     title: "Slider",
-    icon: "slider",
+    icon: IconName.CodeBracketSquareIcon,
     id: "slider",
     render: "<div class=\"slider\">{% foreach:slides %}<img src=\"{{ item }}\" style=\"max-width: 100%\" />{% endforeach %}</div>",
     structure: {
@@ -253,10 +274,9 @@ export const DefaultModules: Module[] = [
     }
   },
   {
-    title: "Spacer",
-    icon: "spacer",
-    id: "spacer",
-    render: "<div style=\"height: {{size}}px\"></div>",
+    title: "Space",
+    icon: IconName.ChevronUpDownIcon,
+    id: "space",
     structure: {
       tabs: [
         {
@@ -275,13 +295,9 @@ export const DefaultModules: Module[] = [
   // Structure tab
   {
     title: "Column",
-    icon: "column",
+    icon: IconName.ViewColumnsIcon,
+    childrenable: true,
     id: "column",
-    render: `{% if:type == 'line' %}
-      <hr style="border-color: {{color}};" />
-    {% else %}
-      <div style="width: {{size}}px; height: {{size}}px; background-color: {{color}}"></div>
-    {% endif %}`,
     structure: {
       tabs: [
         {
@@ -291,7 +307,7 @@ export const DefaultModules: Module[] = [
               { id: "type", name: "Select type", type: SectionAttributeType.Select, value: "space", options: { line: "Line", deliminer: "Deliminer", space: "Space" } }
             ]},
             { name: "Size", attributes: [
-              { id: "size", name: "Size", type: SectionAttributeType.Number, value: 1 }
+              { id: "size", name: "Size", type: SectionAttributeType.Number, value: 6 }
             ]},
             { name: "Color", attributes: [
               { id: "color", name: "Color of separator", type: SectionAttributeType.Color, value: "#000000" }
@@ -304,7 +320,8 @@ export const DefaultModules: Module[] = [
   },
   {
     title: "Container",
-    icon: "container",
+    icon: IconName.ArchiveBoxIcon,
+    childrenable: true,
     id: "container",
     render: "<div style=\"max-width: {{width}}px; padding: {{padding}}px; background-color: {{backgroundColor}};\">{{developer-css-attribute}}</div>",
     structure: {

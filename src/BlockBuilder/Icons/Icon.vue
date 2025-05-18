@@ -1,7 +1,7 @@
 <template>
-	<span>
+	<span class="bb-icon" v-if="name">
     <component :is="iconComponent" v-if="iconComponent" :style="iconStyle" />
-    <span v-else>❓</span>
+    <span v-else><img :src="name" alt="" @error="onIconLoadError" :style="iconStyle" /></span>
 	</span>
 </template>
 <script setup lang="ts">
@@ -37,4 +37,8 @@ const iconStyle = computed(() => {
 		height,
 	}
 })
+
+const onIconLoadError = () => {
+		console.error(`Icon "${props.name}" not found.`);
+}
 </script>

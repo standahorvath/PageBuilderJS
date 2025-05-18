@@ -4,7 +4,7 @@
 			{{ attribute.name }}
 		</div>
 		<div class="bb-attribute__content">
-			<component :is="components[attribute.type]" v-model="value" v-if="components[attribute.type]" :options="attribute.options" />
+			<component :is="components[attribute.type]" v-model="value" v-if="components[attribute.type]" :options="attribute.options" :attributes="attribute.attributes" />
 			<span v-else>Undefined attribute type</span>
 			<span v-if="attribute.description" class="bb-attribute__description">
 				{{ attribute.description }}
@@ -24,6 +24,7 @@ import CheckboxInput from "@/BlockBuilder/Components/Input/CheckboxInput.vue";
 import DateTimeInput from "@/BlockBuilder/Components/Input/DateTimeInput.vue";
 import ColorInput from "@/BlockBuilder/Components/Input/ColorInput.vue";
 import LinkInput from "@/BlockBuilder/Components/Input/LinkInput.vue";
+import RepeaterInput from "../../Input/RepeaterInput.vue";
 import { SectionAttributeType } from "@/enums";
 
 const emits = defineEmits(["update:modelValue"])
@@ -61,5 +62,6 @@ const components = {
 	[SectionAttributeType.DateTime]: DateTimeInput,
 	[SectionAttributeType.Color]: ColorInput,
 	[SectionAttributeType.Link]: LinkInput,
+	[SectionAttributeType.Repeater]: RepeaterInput,
 } as Record<SectionAttributeType, any>
 </script>
