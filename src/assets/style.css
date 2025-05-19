@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 /* Base styles */
-:root {
-	--bb-font-family: "PT Sans", serif;
+:host, :root {
+	--bb-font-family: "PT Sans", sans-serif;
 	--bb-border-color: #E2E8F0;
 	--bb-section-padding: 10px;
 	--bb-toolbar-tools-bg: #f8fcff;
@@ -57,6 +57,7 @@
 
 .bb-container * {
 	box-sizing: border-box;
+	font-family: var(--bb-font-family);
 }
 
 /* Utility classes */
@@ -394,6 +395,7 @@
     width: 100%;
     height: 100%;
 	font-family: var(--bb-font-family);
+	z-index: 100;
 }
 
 .bb-modal__overlay {

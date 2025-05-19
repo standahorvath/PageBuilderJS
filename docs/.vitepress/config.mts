@@ -9,7 +9,8 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Get Started', link: '/getting-started' }
+      { text: 'Get Started', link: '/getting-started' },
+      { text: 'View demo', link: '/demo' },
     ],
 
     sidebar: [
@@ -19,6 +20,7 @@ export default defineConfig({
           { text: 'Getting Started', link: '/getting-started' },
           { text: 'Define Modules', link: '/modules' },
           { text: 'Define Toolbar', link: '/toolbar' },
+          { text: 'Listen to events', link: '/events' },
           { text: 'Icon List', link: '/icons' },
           { text: 'Demo', link: '/demo' },
         ]
@@ -26,7 +28,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/standahorvath/PageBuilderJS' }
     ]
   }
 })

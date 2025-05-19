@@ -67,8 +67,9 @@ const editInstanceModule = computed(() => {
 useContentStore().initInstances(props.content, props.modules)
 useContentStore().$subscribe((mutation) => {
 	if(history.currentIndex === history.history.length - 1 || mutation.events.type === 'add'){
-	history.saveState(useContentStore().instances)
+		history.saveState(useContentStore().instances)
 	}
+	emits('onUpdate', useContentStore().instances)
 })
 
 useTemplateStore().$subscribe(() => {

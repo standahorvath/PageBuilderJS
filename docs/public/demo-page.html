@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PageBuilderJS Demo</title>
+	<style>
+		body {
+			font-family: sans-serif;
+			margin: 2rem;
+			background: #f9f9f9;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>PageBuilderJS Demo</h1>
+
+	<script type="module">
+		import 'https://cdn.jsdelivr.net/npm/pagebuilderjs@1.0.13/dist/block-builder.umd.js'
+
+		const builder = document.createElement('block-builder')
+
+		const modules = [
+			// Content tab
+			{
+				title: "Title",
+				icon: "H1Icon",
+				id: "text",
+				render: "<h1 style=\"font-size: {{fontSize}}px; color: {{color}}; text-align: {{align}}\">{{content}}</h1>",
+				structure: {
+					tabs: [
+						{
+							name: "Content",
+							sections: [
+								{
+									name: "Main", attributes: [
+										{ id: "content", name: "Content", type: "textarea", value: "Page title example" },
+										{ id: "align", name: "Text Align", type: "select", value: "left", options: { left: "Left", center: "Center", right: "Right" } },
+										{ id: "color", name: "Text color", type: "color", value: "#000000" }
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			},
+			{
+				title: "Rich Text",
+				icon: "Bars3CenterLeftIcon",
+				id: "richtext",
+				render: "<div style=\"font-size: {{fontSize}}px; color: {{color}}\">{{content}}</div>",
+				structure: {
+					tabs: [
+						{
+							name: "Content",
+							sections: [
+								{
+									name: "Main", attributes: [
+										{ id: "content", name: "Content", type: "textarea", value: "Lorem ipsum dolor sit amed" },
+										{ id: "fontSize", name: "Font size", type: "FontSize", value: 14 },
+										{ id: "color", name: "Text color", type: "color", value: "#000000" }
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			},
+			{
+				title: "Quote",
+				icon: "BookOpenIcon",
+				id: "quote",
+				render: "<blockquote><p>{{quote}}</p><i>- {{author}}</i></blockquote>",
+				structure: {
+					tabs: [
+						{
+							name: "Quote",
+							sections: [
+								{
+									name: "Main", attributes: [
+										{ id: "quote", name: "Quote text", type: "textarea", value: "Be yourself; everyone else is already taken." },
+										{ id: "author", name: "Author", type: "text", value: "Oscar Wilde" }
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			},
+			{
+				title: "List",
+				icon: "ListBulletIcon",
+				id: "list",
+				render: "<h2>{{ title }}</h2><ul style='text-align:left;'>{% foreach:items %}<li style='color:{{ item.color }}'>{{ item.item }}</li>{% endforeach %}</ul>",
+				structure: {
+					tabs: [
+						{
+							name: "List",
+							sections: [
+								{
+									name: "Title",
+									attributes: [
+										{ id: "title", name: "Title", type: "text", value: "List title" }
+									],
+									type: "text",
+									value: "List title",
+								},
+								{
+									name: "Items", attributes: [
+										{
+											id: "items",
+											name: "Items (comma separated)",
+											type: "repeater",
+											value: [
+												{ item: "Item 1", color: "#fe1277" },
+												{ item: "Item 2", color: "#125e00" },
+												{ item: "Item 3", color: "#000000" }
+											],
+											attributes: [
+												{ id: "item", name: "Name", type: "text", value: "" },
+												{ id: "color", name: "Text color", type: "color", value: "" }
+											]
+										}
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			},
+			{
+				title: "Table",
+				icon: "TableCellsIcon",
+				id: "table",
+				render: "<table border=\"1\">{% foreach:tableRows %}<tr>{% foreach:item.columns %}<td>{{ item }}</td>{% endforeach %}</tr>{% endforeach %}</table>",
+				structure: {
+					tabs: [
+						{
+							name: "Table",
+							sections: [
+								{
+									name: "Data", attributes: [
+										{ id: "rows", name: "Rows", type: "number", value: 2 },
+										{ id: "columns", name: "Columns", type: "number", value: 2 }
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			},
+			{
+				title: "Button",
+				icon: "RectangleStackIcon",
+				id: "button",
+				render: "<a href=\"javascript:void(0)\" style=\"border-radius:10px; background-color: {{backgroundColor}}; color: {{textColor}}; display: inline-block; padding: 10px 20px; text-decoration: none;\">{{label}}</a>",
+				structure: {
+					tabs: [
+						{
+							name: "General",
+							sections: [
+								{
+									name: "Content", attributes: [
+										{ id: "label", name: "Button label", type: "text", value: "Click me" },
+										{ id: "link", name: "link", type: "link", value: "" }
+									]
+								},
+								{
+									name: "Style", attributes: [
+										{ id: "backgroundColor", name: "Background color", type: "color", value: "#007bff" },
+										{ id: "textColor", name: "Text color", type: "color", value: "#ffffff" }
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			},
+			{
+				title: "Badge",
+				icon: "TagIcon",
+				id: "badge",
+				render: "<span style=\"background-color: {{color}}; color: #fff; padding: 5px 10px; border-radius: 5px;\">{{text}}</span>",
+				structure: {
+					tabs: [
+						{
+							name: "Label",
+							sections: [
+								{
+									name: "Badge", attributes: [
+										{ id: "text", name: "text", type: "text", value: "New" },
+										{ id: "color", name: "color", type: "color", value: "#ff0000" }
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			},
+
+			// Media tab
+			{
+				title: "Image",
+				icon: "PhotoIcon",
+				id: "image",
+				render: "<img src=\"{{src}}\" alt=\"{{alt}}\" width=\"{{width}}\" height=\"{{height}}\" />",
+				structure: {
+					tabs: [
+						{
+							name: "Image",
+							sections: [
+								{
+									name: "Image", attributes: [
+										{ id: "src", name: "Image source", type: "Image", value: "" },
+										{ id: "alt", name: "Alt text", type: "text", value: "" }
+									]
+								},
+								{
+									name: "Size", attributes: [
+										{ id: "width", name: "Width (px)", type: "number", value: 100 },
+										{ id: "height", name: "Height (px)", type: "number", value: 100 }
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			},
+			{
+				title: "Gallery",
+				icon: "RectangleGroupIcon",
+				id: "gallery",
+				render: "<div style=\"display: flex; gap: 5px;\">{% foreach:images %}<img src=\"{{ item }}\" style=\"max-width: 100px; max-height: 100px;\" />{% endforeach %}</div>",
+				structure: {
+					tabs: [
+						{
+							name: "Images",
+							sections: [
+								{
+									name: "Gallery", attributes: [
+										{ id: "images", name: "Images", type: "Image", value: "" }
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			},
+			{
+				title: "Video",
+				icon: "VideoCameraIcon",
+				id: "video",
+				render: "<video controls style=\"max-width: 100%\"><source src=\"{{url}}\" type=\"video/mp4\">Your browser does not support the video tag.</video>",
+				structure: {
+					tabs: [
+						{
+							name: "Video",
+							sections: [
+								{
+									name: "Source", attributes: [
+										{ id: "url", name: "Video URL", type: "link", value: "" }
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			},
+			{
+				title: "Audio",
+				icon: "SpeakerWaveIcon",
+				id: "audio",
+				render: "<audio controls><source src=\"{{src}}\" type=\"audio/mpeg\">Your browser does not support the audio element.</audio>",
+				structure: {
+					tabs: [
+						{
+							name: "Audio",
+							sections: [
+								{
+									name: "Audio", attributes: [
+										{ id: "src", name: "Audio Source", type: "link", value: "" }
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			},
+			{
+				title: "Slider",
+				icon: "CodeBracketSquareIcon",
+				id: "slider",
+				render: "<div class=\"slider\">{% foreach:slides %}<img src=\"{{ item }}\" style=\"max-width: 100%\" />{% endforeach %}</div>",
+				structure: {
+					tabs: [
+						{
+							name: "Slider",
+							sections: [
+								{
+									name: "Slides", attributes: [
+										{ id: "slides", name: "Slides (images)", type: "Image", value: "" }
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			},
+			{
+				title: "Space",
+				icon: "ChevronUpDownIcon",
+				id: "space",
+				structure: {
+					tabs: [
+						{
+							name: "Spacing",
+							sections: [
+								{
+									name: "Size", attributes: [
+										{ id: "size", name: "Size (px)", type: "number", value: 20 }
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			},
+
+			// Structure tab
+			{
+				title: "Column",
+				icon: "ViewColumnsIcon",
+				childrenable: true,
+				id: "column",
+				structure: {
+					tabs: [
+						{
+							name: "General",
+							sections: [
+								{
+									name: "Type of space", attributes: [
+										{ id: "type", name: "select type", type: "select", value: "space", options: { line: "Line", deliminer: "Deliminer", space: "Space" } }
+									]
+								},
+								{
+									name: "Size", attributes: [
+										{ id: "size", name: "Size", type: "number", value: 6 }
+									]
+								},
+								{
+									name: "color", attributes: [
+										{ id: "color", name: "color of separator", type: "color", value: "#000000" }
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			},
+			{
+				title: "Container",
+				icon: "ArchiveBoxIcon",
+				childrenable: true,
+				id: "container",
+				render: "<div style=\"max-width: {{width}}px; padding: {{padding}}px; background-color: {{backgroundColor}};\">{{developer-css-attribute}}</div>",
+				structure: {
+					tabs: [
+						{
+							name: "General",
+							sections: [
+								{
+									name: "Size", attributes: [
+										{ id: "width", name: "Max width (px)", type: "number", value: 1200 },
+										{ id: "padding", name: "Padding (px)", type: "number", value: 20 }
+									]
+								},
+								{
+									name: "Background", attributes: [
+										{ id: "backgroundColor", name: "Background color", type: "color", value: "#ffffff" }
+									]
+								}
+							]
+						},
+						
+					]
+				}
+			}
+		]
+
+		const toolbar = {
+			tabs: [
+				{
+					id: "content",
+					title: "Content",
+					icon: "text",
+					tools: [
+						"text",        // Title
+						"richtext",    // Rich Text
+						"quote",       // Quote
+						"list",        // List
+						"table",       // Table
+						"button",      // Button
+						"badge"        // Badge
+					]
+				},
+				{
+					id: "media",
+					title: "Media",
+					icon: "image",
+					tools: [
+						"image",
+						"gallery",
+						"video",
+						"audio",
+						"slider",
+						"space"
+					]
+				},
+				{
+					id: "structure",
+					title: "Structure",
+					icon: "column",
+					tools: [
+						"column",
+						"container",
+					]
+				}
+			]
+		}
+
+		const content = []
+
+		builder.modules = modules
+		builder.toolbar = toolbar
+		builder.content = content
+
+		builder.addEventListener('onTemplatesUpdate', (event) => {
+			console.log('Templates updated:', event.detail)
+		})
+
+		builder.addEventListener('onUpdate', (event) => {
+			console.log('Blocks content changed:', event.detail)
+		})
+
+		document.body.appendChild(builder)
+	</script>
+
+
+</body>
+
+</html>

@@ -60,9 +60,17 @@ type ModuleAttribute = {
 };
 ```
 
-Supported `type` values are like:
+Supported `type` values are:
 
-* `text`, `textarea`, `color`, `number`, `select`, `image`, `link`, `repeater`, etc.
+- `text` A single-line text input
+- `textarea` A multi-line text input
+- `color` A color picker
+- `number` A number input
+- `select` A dropdown select (with `options` property)
+- `image` An image uploader
+- `link` A link input
+- `repeater` A list of items with custom attributes
+- `checkbox` A checkbox input
 
 ---
 

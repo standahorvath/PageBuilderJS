@@ -5,9 +5,7 @@
 			<Icon :name="IconName.InformationCircleIcon" width="20" height="20" />
 		</button>
 	</div>
-	<Teleport to="body">
-		<InfoModal v-if="showInfo" v-model="showInfo" @close="showInfo = false" />
-	</Teleport>
+	<InfoModal v-if="showInfo" v-model="showInfo" @close="showInfo = false" />
 </template>
 
 <script setup lang="ts">

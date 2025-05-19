@@ -14,24 +14,29 @@ npm install pagebuilderjs
 
 Include the compiled Web Component in your project:
 
-```html
-<script src="/node_modules/pagebuilderjs/dist/block-builder.umd.js"></script>
-<block-builder modules="[]" toolbar="[]" content="[]"></block-builder>
+```js
+  const builder = document.createElement('block-builder')
+  const content = [/* ... */]
+  const modules = [/* ... */]
+  const toolbar = {/* ... */}
+
+  // Assign data
+  builder.modules = modules
+  builder.toolbar = toolbar
+  builder.content = content
+
+  // Listen to any changes in content structure
+  builder.addEventListener('onUpdate', (event) => {
+    console.log('Blocks content changed:', event.detail)
+  })
+
+  document.body.appendChild(builder)
 ```
 
 Or if you are using a bundler:
 
 ```js
 import 'pagebuilderjs';
-```
-
-Make sure to define the custom element before using it:
-
-```js
-document.addEventListener('DOMContentLoaded', () => {
-  const builder = document.querySelector('block-builder');
-  // Now you can interact with the builder programmatically
-});
 ```
 
 ## ✅ Requirements
