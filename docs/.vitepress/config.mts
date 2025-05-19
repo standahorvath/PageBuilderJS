@@ -18,6 +18,7 @@ export default defineConfig({
           { text: 'Getting Started', link: '/getting-started' },
           { text: 'Define Modules', link: '/modules' },
           { text: 'Define Toolbar', link: '/toolbar' },
+          { text: 'Icon List', link: '/icons' },
         ]
       }
     ],
