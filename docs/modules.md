@@ -242,5 +242,3 @@ For a full list of example modules, refer to the source file in the repository:
 * Use `childrenable: true` to allow nesting blocks (like Container or Column)
 * Use `render` only for live preview – not full rendering logic
 
-
-Next: [TemplifyJS →](/templify)

@@ -4,6 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "PageBuilderJs",
   description: "Documentation for page builder js.",
+  base: '/PageBuilderJS/',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
@@ -19,6 +20,7 @@ export default defineConfig({
           { text: 'Define Modules', link: '/modules' },
           { text: 'Define Toolbar', link: '/toolbar' },
           { text: 'Icon List', link: '/icons' },
+          { text: 'Demo', link: '/demo' },
         ]
       }
     ],

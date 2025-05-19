@@ -113,7 +113,7 @@ Features:
 * `{% foreach:array %} ... {% endforeach %}` → loops
 * `{% if:condition %} ... {% endif %}` → conditionals
 
-[See full TemplifyJS docs →](./src/docs/TemplifyJS.md)
+[See full TemplifyJS docs →]([github.com/standahorvath/TemplifyJS](https://github.com/standahorvath/TemplifyJS))
 
 ### ➡️ Toolbar System
 
