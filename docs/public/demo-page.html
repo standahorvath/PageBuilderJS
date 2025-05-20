@@ -18,7 +18,7 @@
 	<h1>PageBuilderJS Demo</h1>
 
 	<script type="module">
-		import 'https://cdn.jsdelivr.net/npm/pagebuilderjs@1.0.13/dist/block-builder.umd.js'
+		import 'https://cdn.jsdelivr.net/npm/pagebuilderjs@1.0.14/dist/block-builder.umd.js'
 
 		const builder = document.createElement('block-builder')
 
@@ -38,6 +38,7 @@
 									name: "Main", attributes: [
 										{ id: "content", name: "Content", type: "textarea", value: "Page title example" },
 										{ id: "align", name: "Text Align", type: "select", value: "left", options: { left: "Left", center: "Center", right: "Right" } },
+										{ id: "fontSize", name: "Font size", type: "select", value: 20, options: { 12: "12px", 14: "14px", 16: "16px", 18: "18px", 20: "20px", 24: "24px" } },
 										{ id: "color", name: "Text color", type: "color", value: "#000000" }
 									]
 								}
@@ -60,7 +61,7 @@
 								{
 									name: "Main", attributes: [
 										{ id: "content", name: "Content", type: "textarea", value: "Lorem ipsum dolor sit amed" },
-										{ id: "fontSize", name: "Font size", type: "FontSize", value: 14 },
+										{ id: "fontSize", name: "Font size", type: "select", value: 14, options: { 12: "12px", 14: "14px", 16: "16px", 18: "18px", 20: "20px" } },
 										{ id: "color", name: "Text color", type: "color", value: "#000000" }
 									]
 								}
