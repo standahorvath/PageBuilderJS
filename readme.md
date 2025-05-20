@@ -4,9 +4,13 @@
 
 PageBuilderJS is a fully self-contained **Web Component page builder** designed to be easily integrated into any web platform. It allows developers to provide an intuitive block-based page editing experience to their users with minimal setup.
 
-👉👉👉 **🔥 LIVE DEMO → [https://standahorvath.github.io/PageBuilderJS/](https://standahorvath.github.io/PageBuilderJS/)** 👈👈👈
+**🔥 LIVE DEMO → [https://standahorvath.github.io/PageBuilderJS/demo-page.html](https://standahorvath.github.io/PageBuilderJS/demo-page.html)** 
+
+**📖 DOCUMENTATION → [https://standahorvath.github.io/PageBuilderJS/](https://standahorvath.github.io/PageBuilderJS/)**
 
 ---
+
+![Demo](https://standahorvath.github.io/PageBuilderJS/builder-preview.gif)
 
 ## ✨ Key Features
 
@@ -34,69 +38,30 @@ The library exposes the `block-builder` web component.
 
 Example usage in any web application:
 
-```html
-<script src="/path/to/block-builder.umd.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const builder = document.querySelector("block-builder");
-    // builder is ready
-});
-</script>
+```js
+  const builder = document.createElement('block-builder')
+  const content = [/* ... */]
+  const modules = [/* ... */]
+  const toolbar = {/* ... */}
 
-<block-builder></block-builder>
+  // Assign data
+  builder.modules = modules
+  builder.toolbar = toolbar
+  builder.content = content
+
+  // Listen to any changes in content structure
+  builder.addEventListener('onUpdate', (event) => {
+    console.log('Blocks content changed:', event.detail)
+  })
+
+  document.body.appendChild(builder)
 ```
 
 You can use it in any modern frontend or backend system (Laravel, Symfony, Node.js, plain HTML etc.).
 
+If you want to get started quickly, go to the **[Live Demo](https://standahorvath.github.io/PageBuilderJS/demo-page.html)** and check the **[Getting started page](https://standahorvath.github.io/PageBuilderJS/getting-started.html)**.
 
-
----
-
-## 🧱 Core Concepts
-
-### ➡️ Modules (Blocks)
-
-Example module definition:
-
-```typescript
-const buttonModule: Module = {
-  id: 'button',
-  title: 'Button',
-  icon: '🖱️',
-  render: '<button style="background-color: {{backgroundColor}}; color: {{textColor}}">{{label}}</button>',
-  structure: {
-    tabs: [
-      {
-        name: 'Content',
-        sections: [
-          {
-            name: 'Settings',
-            attributes: [
-              { id: 'label', name: 'Label', type: 'text', value: 'Click me' },
-              { id: 'backgroundColor', name: 'Background', type: 'color', value: '#000000' },
-              { id: 'textColor', name: 'Text Color', type: 'color', value: '#ffffff' }
-            ]
-          }
-        ]
-      }
-    ]
-  }
-};
-````
-
-A **Module** is a configurable block the user can drag into the builder canvas.
-
-```typescript
-export type Module = {
-  title: string;
-  id: string;
-  icon: string;
-  structure: {
-    tabs: ModuleTab[];
-  };
-  render?: string;
-};
-```
+----
 
 ### ➡️ TemplifyJS (Rendering Engine)
 
@@ -115,25 +80,19 @@ Features:
 
 [See full TemplifyJS docs →]([github.com/standahorvath/TemplifyJS](https://github.com/standahorvath/TemplifyJS))
 
-### ➡️ Toolbar System
+### Toolbar Type
+The toolbar is a simple object composed of **tabs** and **tools**.
 
-You can extend the editor with your own toolbar buttons.
-
-Example toolbar action:
-
-```typescript
-const myToolbarAction: ToolbarAction = {
-  icon: '🗑️',
-  title: 'Delete block',
-  onClick: (instance) => {
-    console.log('Delete block:', instance.id);
-  }
+```ts
+export type Toolbar = {
+  tabs: {
+    id: string;
+    title: string;
+    icon?: string;
+    tools: string[];
+  }[];
 };
 ```
-
-### ➡️ State Management
-
-Blocks and structure are handled by a built-in Pinia store (`ContentStore.ts`).
 
 ---
 
@@ -143,7 +102,6 @@ Although built with **Vue 3 + Vite + Pinia + Tailwind CSS**, PageBuilderJS is sh
 
 This makes it perfect for integrating into any system without conflicts.
 
----
 
 ## 🛠️ Development Setup
 
