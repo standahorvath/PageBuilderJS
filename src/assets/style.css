@@ -44,6 +44,11 @@
 	--bb-accordition-bg: #f8f8f8;
 }
 
+/* Global styles */
+.drag-animating {
+	pointer-events: none !important;
+}
+
 .bb-container {
 	width: 100%;
 	border: 1px solid var(--bb-border-color);

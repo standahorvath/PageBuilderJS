@@ -1,6 +1,6 @@
 {
   "name": "pagebuilderjs",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "",
   "main": "dist/block-builder.umd.js",
   "module": "dist/block-builder.js",

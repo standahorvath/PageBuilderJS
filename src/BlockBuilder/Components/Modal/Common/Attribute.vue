@@ -4,7 +4,7 @@
 			{{ attribute.name }}
 		</div>
 		<div class="bb-attribute__content">
-			<component :is="components[attribute.type]" v-model="value" v-if="components[attribute.type]" :options="attribute.options" :attributes="attribute.attributes" />
+			<component :is="components[attribute.type]" v-model="value" v-if="components[attribute.type]" :options="attribute.options" :attributes="attribute.attributes ?? []" />
 			<span v-else>Undefined attribute type</span>
 			<span v-if="attribute.description" class="bb-attribute__description">
 				{{ attribute.description }}

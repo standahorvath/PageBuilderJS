@@ -88,14 +88,17 @@ export const useContentStore = defineStore('content', {
 					this.instances[i] = instance
 					return
 				}
-				const children = this.instances[i].children
-				if (!children) continue
-				for (let j = 0; j < children.length; j++) {
-					if (children[j].nonce === instance.nonce) {
-						children[j] = instance
-						return
-					}
-				}
+				this.updateInChildren(this.instances[i], instance)
+			}
+		},
+		updateInChildren(instance: InstanceModule, update: InstanceModule) {
+			if (!instance.children) return
+			const index = instance.children.findIndex((i) => (i as InstanceModule).nonce === update.nonce)
+			if (index !== -1) {
+				instance.children[index] = update
+			}
+			for (let i = 0; i < instance.children.length; i++) {
+				this.updateInChildren(instance.children[i], update)
 			}
 		},
 		removeInstance(instance: InstanceModule, recursively: boolean = false) {
@@ -124,7 +127,7 @@ export const useContentStore = defineStore('content', {
 				...instance,
 				module: instance.module,
 				nonce: Math.random().toString(36).substring(2),
-				children: [],
+				children: instance.children ? instance.children : [],
 			};
 
 			this.instances.splice(newIndex, 0, newInstance);

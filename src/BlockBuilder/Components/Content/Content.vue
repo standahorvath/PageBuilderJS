@@ -2,15 +2,15 @@
 	<div class="bb-content">
 		<EmptyContent v-if="!instances.length" />
 
-		<Draggable v-model="internalInstances" item-key="nonce" :group="{ name: 'blocks', pull: true, put: true }"
-			:animation="200" ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="drag-drag"
+		<Draggable v-model="internalInstances" item-key="nonce" :group="{ name: 'blocks', pull: true, put: true }" :swap-threshold="0.65"
+			:animation="200" forceFallback: true ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="drag-drag" 
 			@end="onMoveInstance" @change="onChangeInstance($event)">
 			<template #item="{ element: instance }">
 				<component :is="getComponent(instance)" :data="instance.structureData" :module="instance.module"
 					@remove="onRemove(instance)" @edit="onEdit(instance)" @duplicate="onDuplicate(instance)">
 					<div class="bb-content">
 						<!-- Nested children -->
-						<Draggable v-model="instance.children" item-key="nonce" :animation="200"
+						<Draggable v-model="instance.children" item-key="nonce" :animation="200" forceFallback: true :swap-threshold="0.65"
 							ghost-class="drag-ghost" :data-nonce="instance.nonce" chosen-class="drag-chosen"
 							drag-class="drag-drag" :group="{ name: 'blocks', pull: true, put: true }">
 							<template #item="{ element: child }">
@@ -18,7 +18,7 @@
 									@remove="onRemove(child)" @edit="onEdit(child)" @duplicate="onDuplicate(child)">
 									<div class="bb-content">
 										<!-- Nested children -->
-										<Draggable v-model="child.children" item-key="nonce" :animation="200"
+										<Draggable v-model="child.children" item-key="nonce" :animation="200" forceFallback: true :swap-threshold="0.65"
 											ghost-class="drag-ghost" :data-nonce="child.nonce"
 											chosen-class="drag-chosen" drag-class="drag-drag"
 											:group="{ name: 'blocks', pull: true, put: true }">
@@ -98,6 +98,7 @@ const onEdit = (instance: InstanceModule) => {
 	emits("edit", instance);
 };
 const onMoveInstance = (event: any) => {
+	console.log(event)
 	if (event.pullMode) {
 		return;
 	}
@@ -107,6 +108,7 @@ const onMoveInstance = (event: any) => {
 
 const onChangeInstance = (event: any) => {
 	const { from, to, item, removed, added } = event;
+	console.log(event)
 	const fromParent = findParentByChildren(from);
 	const toParent = findParentByChildren(to);
 
@@ -141,6 +143,20 @@ function findParentByChildren(containerEl: HTMLElement): InstanceModule | null {
 	};
 
 	return findRecursive(internalInstances.value);
+}
+
+function onDragStart(evt: any) {
+	const siblings = evt.from?.children;
+	for (const child of siblings) {
+		child.classList.add('drag-animating');
+	}
+}
+
+function onDragEnd(evt: any) {
+	const siblings = evt.from?.children;
+	for (const child of siblings) {
+		child.classList.remove('drag-animating');
+	}
 }
 
 </script>
