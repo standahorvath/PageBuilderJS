@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BlockBuilder :modules="DefaultModules" :toolbar="DefaultToolbar" :content="blocks" ref="builderRef" @onUpdate="handleUpdate" />
+    <BlockBuilder :modules="DefaultModules" :toolbar="DefaultToolbar" :content="blocks" ref="builderRef" :uploader="handleUploader" @onUpdate="handleUpdate" />
   </div>
 </template>
 <script setup lang="ts">
@@ -14,6 +14,13 @@ const builderRef = ref();
 
 const handleUpdate = (data: any) => {
   console.log('Update from BlockBuilder:', data);
+};
+
+const handleUploader = (callback: (image: string) => void) => {
+  setTimeout(() => {
+    const uploadedImage = 'https://placecats.com/300/200';
+    callback(uploadedImage);
+  }, 1000);
 };
 
 onMounted(() => {

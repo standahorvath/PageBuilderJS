@@ -6,7 +6,7 @@
 		<Content :instances="instances" @edit="onEdit" />
 		<FadeTrasition>
 			<EditInstanceModal v-if="modalOpened && editInstance && editInstanceModule" :instance="editInstance"
-				:module="editInstanceModule" @close="onModalClose" @save="onModalSave" />
+				:module="editInstanceModule" @close="onModalClose" @save="onModalSave" :uploader="uploader" />
 			<TemplatesModal v-if="templatesModalOpened" @close="templatesModalOpened=false" @delete="onTemplateDelete" @append="onTemplateAppend" />
 			<AddTemplateModal v-if="addTemplateModalOpened" @close="addTemplateModalOpened=false" @save="onTemplateCreate" />
 		</FadeTrasition>
@@ -40,6 +40,10 @@ const props = defineProps({
 	content: {
 		type: Array as PropType<ModuleData[]>,
 		default: () => [],
+	},
+	uploader: {
+		type: Function as PropType<(callback: (image: string) => void) => void>,
+		default: null,
 	},
 })
 

@@ -4,7 +4,7 @@
 			{{ attribute.name }}
 		</div>
 		<div class="bb-attribute__content">
-			<component :is="components[attribute.type]" v-model="value" v-if="components[attribute.type]" :options="attribute.options" :attributes="attribute.attributes ?? []" />
+			<component :is="components[attribute.type]" v-model="value" v-if="components[attribute.type]" :options="attribute.options" :attributes="attribute.attributes ?? []" :uploader="uploader" />
 			<span v-else>Undefined attribute type</span>
 			<span v-if="attribute.description" class="bb-attribute__description">
 				{{ attribute.description }}
@@ -24,7 +24,10 @@ import CheckboxInput from "@/BlockBuilder/Components/Input/CheckboxInput.vue";
 import DateTimeInput from "@/BlockBuilder/Components/Input/DateTimeInput.vue";
 import ColorInput from "@/BlockBuilder/Components/Input/ColorInput.vue";
 import LinkInput from "@/BlockBuilder/Components/Input/LinkInput.vue";
-import RepeaterInput from "../../Input/RepeaterInput.vue";
+import RepeaterInput from "@/BlockBuilder/Components/Input/RepeaterInput.vue";
+import CodeInput from "@/BlockBuilder/Components/Input/CodeInput.vue";
+import WysiwygInput from "@/BlockBuilder/Components/Input/WysiwygInput.vue";
+import ImageInput from "@/BlockBuilder/Components/Input/ImageInput.vue";
 import { SectionAttributeType } from "@/enums";
 
 const emits = defineEmits(["update:modelValue"])
@@ -37,6 +40,10 @@ const props = defineProps({
 	data: {
 		type: Object as PropType<AttributeData>,
 		required: true,
+	},
+	uploader: {
+		type: Function as PropType<(callback: (image: string) => void) => void>,
+		default: null,
 	},
 })
 
@@ -63,5 +70,8 @@ const components = {
 	[SectionAttributeType.Color]: ColorInput,
 	[SectionAttributeType.Link]: LinkInput,
 	[SectionAttributeType.Repeater]: RepeaterInput,
+	[SectionAttributeType.Wysiwyg]: WysiwygInput,
+	[SectionAttributeType.Code]: CodeInput,
+	[SectionAttributeType.Image]: ImageInput,
 } as Record<SectionAttributeType, any>
 </script>

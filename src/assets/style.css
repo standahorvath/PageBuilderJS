@@ -44,6 +44,50 @@
 	--bb-accordition-bg: #f8f8f8;
 }
 
+:host.dark, :root.dark {
+	--bb-font-family: "PT Sans", sans-serif;
+	--bb-border-color: #3a3a3a;
+	--bb-section-padding: 10px;
+	--bb-toolbar-tools-bg: #262626;
+	--bb-toolbar-tools-border-color: #0a0606;
+	--bb-header-bg: #1f1f1f;
+	--bb-control-panel-button-hover-bg: #3b3b3b;
+	--bb-control-panel-button-border-color: #0e1b2e;
+	--bb-control-panel-button-text-color: #e0e7ff;
+	--bb-toolbar-tools-hover-bg: #110c24;
+	--bb-content-min-height: 200px;
+	--bb-module-header-bg: #090c16;
+	--bb-module-header-border-color: #010002;
+	--bb-module-content-border-color: #3a3a3a;
+	--bb-module-content-background-color: #1e1e1e;
+	--bb-module-gap-between: 16px;
+	--bb-module-content-min-height: 50px;
+	--bb-module-border-radius: 2px;
+	--bb-container-border-radius: 8px;
+	--bb-toolbar-tools-border-radius: 4px;
+	--bb-content-background-color: #121212;
+	--bb-primary-color: #3b82f6;
+	--bb-accent-color: #60a5fa;
+	--bb-container-bg: #121212;
+	--bb-content-empty-bubble-bg: #2e2e2e;
+	--bb-modal-button-bg: #2563eb;
+	--bb-modal-button-hover-bg: #1e40af;
+	--bb-modal-button-border-color: #1e40af;
+	--bb-modal-button-danger-hover-bg: #dc2626;
+	--bb-modal-button-text-color: #ffffff;
+	--bb-modal-border-radius: 8px;
+	--bb-modal-tab-bg: #1f1f1f;
+	--bb-error-color: #ef4444;
+	--bb-label-color: #f3f4f6;
+	--bb-accordition-active-bg: #1e40af;
+	--bb-accordition-border-radius: 4px;
+	--bb-open-accordition-header-bg: #3b82f6;
+	--bb-modal-tab-border-radius: 5px;
+	--bb-open-accordition-header-color: #ffffff;
+	--bb-accordition-bg: #181818;
+}
+
+
 /* Global styles */
 .drag-animating {
 	pointer-events: none !important;
@@ -120,7 +164,12 @@
 .bb-button.bb-button--secondary:hover {
 	background: #dae2e9;
 }
-
+.bb-wysiwyg-button {
+	padding: 4px 8px;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+}
 /* Transitions */
 .fade-enter-active,
 .fade-leave-active {
@@ -293,6 +342,97 @@
 .bb-module__content .bb-content>div {
 	border: 1px solid var(--bb-border-color);
 	border-radius: calc(var(--bb-container-border-radius) / 2);
+}
+
+/* Code Input */
+
+.bb-code-input {
+  font-family: 'Fira Code', monospace;
+  font-size: 14px;
+  line-height: normal;
+  background: #2d2d2d;
+  color: white;
+  border-radius: 6px;
+  padding: 0px 10px;
+  overflow: auto;
+  max-height: 300px;
+}
+
+.code-editable {
+  outline: none;
+  white-space: pre;
+}
+.bb-code-input pre,
+.bb-code-input code {
+  font-family: 'Fira Code', monospace;
+  white-space: pre;
+}
+.bb-code-input pre {
+  margin: 0 !important;
+  padding: 0 5px !important;
+  background: transparent; /* nebo tvoje barva */
+  border: none;
+}
+
+.bb-code-input code {
+  display: block;
+  padding: 0; /* nebo 0 pokud chceš úplně nulu */
+  outline: none;
+  white-space: pre-wrap; /* aby fungovaly zalomené řádky */
+  word-break: break-word;
+}
+
+/* Image Input */
+
+.bb-image-input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.bb-image-input__preview {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+}
+.bb-image-input__preview .bb-button {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	top: 0;
+	margin: auto;
+	max-height: 36px;
+	width: 90%;
+	opacity: 0;
+	z-index: 1;
+}
+.bb-image-input__preview:hover .bb-button {
+	opacity: 1;
+}
+
+.bb-image-input__upload,
+.bb-image-input__reset {
+  background-color: var(--bb-primary-color, #2d8cf0);
+  color: white;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.bb-image-input__image {
+  max-width: 100%;
+  width: 150px;
+  height: 150px;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  object-fit: cover;
+}
+
+.bb-image-input__upload:hover,
+.bb-image-input__reset:hover {
+  opacity: 0.85;
 }
 
 /* Module styles */
@@ -698,6 +838,9 @@
 	gap: 8px;
 	padding: calc(var(--bb-section-padding) / 2);
 }
+.bb-attribute__content {
+	flex: 1;
+}
 .bb-attribute:last-child {
 	border-bottom: none;
 }
@@ -713,6 +856,44 @@
 	font-size: 12px;
 	color: var(--bb-label-color);
 	border-bottom: none;
+}
+
+/* Wysiwyg Editor */
+.bb-wysiwyg-input {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  font-family: sans-serif;
+}
+
+.bb-wysiwyg-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px;
+  background: #f4f4f4;
+  border-bottom: 1px solid #ccc;
+  border-radius: 8px 8px 0 0;
+}
+
+.bb-wysiwyg-toolbar button {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.bb-wysiwyg-toolbar button:hover {
+  background: #e8e8e8;
+}
+
+.bb-wysiwyg-editor {
+  min-height: 200px;
+  padding: 15px;
+  outline: none;
+  font-size: 16px;
 }
 
 /* Text Input */

@@ -37,7 +37,7 @@ export const DefaultModules: Module[] = [
           name: "Content",
           sections: [
             { name: "Main", attributes: [
-              { id: "content", name: "Content", type: SectionAttributeType.Textarea, value: "Lorem ipsum dolor sit amed" },
+              { id: "content", name: "Content", type: SectionAttributeType.Wysiwyg, value: "Lorem ipsum dolor sit amed" },
               { id: "fontSize", name: "Font size", type: SectionAttributeType.FontSize, value: 14 },
               { id: "color", name: "Text color", type: SectionAttributeType.Color, value: "#000000" }
             ]}
@@ -177,7 +177,7 @@ export const DefaultModules: Module[] = [
     title: "Image",
     icon: IconName.PhotoIcon,
     id: "image",
-    render: "<img src=\"{{src}}\" alt=\"{{alt}}\" width=\"{{width}}\" height=\"{{height}}\" />",
+    render: "<img src=\"{{src}}\" alt=\"{{alt}}\" width=\"{{width}}\" />",
     structure: {
       tabs: [
         {
@@ -188,7 +188,7 @@ export const DefaultModules: Module[] = [
               { id: "alt", name: "Alt text", type: SectionAttributeType.Text, value: "" }
             ]},
             { name: "Size", attributes: [
-              { id: "width", name: "Width (px)", type: SectionAttributeType.Number, value: 100 },
+              { id: "width", name: "Width (px)", type: SectionAttributeType.Number, value: 300 },
               { id: "height", name: "Height (px)", type: SectionAttributeType.Number, value: 100 }
             ]}
           ]

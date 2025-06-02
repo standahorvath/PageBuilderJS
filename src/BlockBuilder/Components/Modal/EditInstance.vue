@@ -4,7 +4,7 @@
 		<div class="bb-modal__content__inner">
 		<Accordition v-for="section in activeTabData?.sections" :key="section.name" :title="section.name" v-model="openedSections[section.name]">
 			<div v-for="attribute in section.attributes"  :key="attribute.id + '_' + instanceCopy.id">
-				<Attribute  :attribute="attribute" :data="attributeDataMap[attribute.id] ?? null" @update:modelValue="onAttributeUpdate(attribute, $event)"  />
+				<Attribute  :attribute="attribute" :data="attributeDataMap[attribute.id] ?? null" @update:modelValue="onAttributeUpdate(attribute, $event)" :uploader="uploader"  />
 			</div>
 		</Accordition>
 		</div>
@@ -28,6 +28,10 @@ const props = defineProps({
 	module: {
 		type: Object as PropType<Module>,
 		required: true,
+	},
+	uploader: {
+		type: Function as PropType<(callback: (image: string) => void) => void>,
+		default: null,
 	},
 })
 

@@ -12,6 +12,8 @@ export enum SectionAttributeType {
 	Image = 'image',
 	Radio = 'radio',
 	Range = 'range',
+	Wysiwyg = 'wysiwyg',
+	Code = 'code',
 }
 
 export enum ModuleInstanceId {
