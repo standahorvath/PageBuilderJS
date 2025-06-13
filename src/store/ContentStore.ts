@@ -141,15 +141,5 @@ export const useContentStore = defineStore('content', {
 				children: [],
 			})
 		},
-		initInstances(instances: InstanceModule[] | ModuleData[], modules: Module[]) {
-			this.instances = instances.map((instance) => {
-				return {
-					children: [] as InstanceModule[],
-					module: modules.find((m) => m.id === instance.id) as Module,
-					...instance,
-					nonce: Math.random().toString(36).substring(2),
-				} as InstanceModule
-			})
-		},
 	},
 })

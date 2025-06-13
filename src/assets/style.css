@@ -700,6 +700,9 @@
 	gap: 16px;
 	padding-bottom: 16px;
 }
+.bb-repeater__fields {
+	flex: 1;
+}
 .bb-modal__tabs {
 	padding: var(--bb-section-padding) 0 0 0;
 	border-bottom: 1px solid var(--bb-border-color);
