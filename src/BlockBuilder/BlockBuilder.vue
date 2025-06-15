@@ -26,7 +26,6 @@ import AddTemplateModal from "@/BlockBuilder/Components/Modal/AddTemplate.vue";
 import FadeTrasition from "@/BlockBuilder/Components/Transitions/FadeTransition.vue";
 import { useTemplateStore } from "@/store/TemplateStore";
 import { useHistoryStore } from "@/store/HistoryStore";
-import { MutationType } from "pinia";
 
 const props = defineProps({
 	modules: {
@@ -73,12 +72,16 @@ useContentStore().$subscribe((mutation) => {
 	if(history.currentIndex === history.history.length - 1 || mutation.events.type === 'add'){
 		history.saveState(useContentStore().instances)
 	}
-	emits('onUpdate', useContentStore().export)
+	onContentUpdate()
 })
 
 useTemplateStore().$subscribe(() => {
 	emits('onTemplatesUpdate', useTemplateStore().templates)
 })
+
+const onContentUpdate = () => {
+	emits('onUpdate', useContentStore().export)
+}
 
 const instances = computed(() => {
 	return useContentStore().instances
@@ -91,6 +94,7 @@ const onToolClick = (tool: ToolbarTool) => {
 		return;
 	}
 	useContentStore().addInstanceFromModule(module[0])
+	onContentUpdate()
 }
 
 const onEdit = (instance: InstanceModule) => {
@@ -108,6 +112,7 @@ const onModalSave = (newVersion: InstanceModule) => {
 	editInstance.value = null
 	useContentStore().updateInstance(newVersion)
 	emits('onModalSave', newVersion)
+	onContentUpdate()
 }
 
 const onTemplateCreate = (template: Template) => {
@@ -130,6 +135,7 @@ const onTemplateAppend = (name: string) => {
 	useContentStore().import(template.data, props.modules)
 	templatesModalOpened.value = false
 	emits('onTemplateAppend', name)
+	onContentUpdate()
 }
 
 </script>

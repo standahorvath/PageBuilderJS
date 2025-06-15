@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BlockBuilder :modules="DefaultModules" :toolbar="DefaultToolbar" :content="blocks" ref="builderRef" :uploader="handleUploader" @onUpdate="handleUpdate" />
+    <BlockBuilder :modules="DefaultModules" :toolbar="DefaultToolbar" :content="content" ref="builderRef" :uploader="handleUploader" @onUpdate="handleUpdate" />
   </div>
 </template>
 <script setup lang="ts">
@@ -30,7 +30,6 @@ onMounted(() => {
   }
 });
 
-const blocks = [
-] as ModuleData[]
+const content = [{"id":"column","children":[],"structureData":[{"id":"type","value":"space"},{"id":"size","value":6},{"id":"color","value":"#000000"}]}];
 
 </script>
