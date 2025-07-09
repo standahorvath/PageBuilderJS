@@ -1,5 +1,5 @@
 import { ToolbarTab, ToolbarTools, ToolbarTool, Toolbar } from './modules/Toolbar';
-import { Module, ModuleTab, ModuleSection, ModuleAttribute } from './modules/Module';
+import { Module, ModuleTab, ModuleSection, ModuleAttribute, InputLinkModel, InputLinkCategory, InputLinkModelManual } from './modules/Module';
 import { InstanceModule, AttributeData, ModuleData } from './modules/Content';
 import { ModalTab } from './modules/Modal';
 import { Template } from './modules/Template';
@@ -14,6 +14,9 @@ export type {
 	ModuleTab, 
 	ModuleSection, 
 	ModuleAttribute,
+	InputLinkModel,
+	InputLinkCategory,
+	InputLinkModelManual,
 	InstanceModule,
 	AttributeData,
 	ModuleData,

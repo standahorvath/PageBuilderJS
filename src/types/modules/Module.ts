@@ -31,3 +31,28 @@ export type ModuleAttribute = {
 	options?: Record<string, string>;
 	attributes?: ModuleAttribute[];
 }
+
+export type InputLinkOption = {
+	value: string
+	label: string
+}
+
+export type InputLinkCategory = {
+	value: string
+	label: string
+	links: InputLinkOption[]
+}
+
+export type InputLinkModelManual = {
+	category: 'manual'
+	url: string
+	openInNewWindow: boolean
+}
+
+export type InputLinkModelSelected = {
+	category: string
+	link: string
+	openInNewWindow: boolean
+}
+
+export type InputLinkModel = InputLinkModelManual | InputLinkModelSelected

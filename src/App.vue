@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BlockBuilder :modules="DefaultModules" :toolbar="DefaultToolbar" :content="content" ref="builderRef"
+    <BlockBuilder :modules="DefaultModules" :toolbar="DefaultToolbar" :content="content" ref="builderRef"  :categories="categories"
       :uploader="handleUploader" @onUpdate="handleUpdate" />
   </div>
 </template>
@@ -9,7 +9,7 @@ import { computed, onMounted, ref } from "vue";
 import BlockBuilder from "@/BlockBuilder/BlockBuilder.vue";
 import { DefaultModules } from "@/data/DefaultModules";
 import { DefaultToolbar } from "./data/DefaultToolbar";
-import { ModuleData } from "@/types";
+import { InputLinkCategory, ModuleData } from "@/types";
 
 const builderRef = ref();
 
@@ -33,5 +33,34 @@ onMounted(() => {
 });
 
 const content = [{ "id": "column", "children": [], "structureData": [{ "id": "type", "value": "space" }, { "id": "size", "value": 6 }, { "id": "color", "value": "#000000" }] }];
+const categories: InputLinkCategory[] = [
+	{
+		value: 'post',
+		label: 'Post',
+		links: [
+			{ value: 'post-1', label: 'How to Write a Great Blog Post' },
+			{ value: 'post-2', label: '10 Tips for Effective Writing' },
+			{ value: 'post-3', label: 'Beginner’s Guide to SEO' }
+		]
+	},
+	{
+		value: 'page',
+		label: 'Page',
+		links: [
+			{ value: 'about', label: 'About Us' },
+			{ value: 'contact', label: 'Contact' },
+			{ value: 'faq', label: 'Frequently Asked Questions' }
+		]
+	},
+	{
+		value: 'product',
+		label: 'Product',
+		links: [
+			{ value: 'product-abc', label: 'Product ABC' },
+			{ value: 'product-xyz', label: 'Product XYZ' },
+			{ value: 'product-123', label: 'Product 123' }
+		]
+	}
+]
 
 </script>
