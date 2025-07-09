@@ -4,7 +4,7 @@
 		<div class="bb-modal__content__inner">
 		<Accordition v-for="section in activeTabData?.sections" :key="section.name" :title="section.name" v-model="openedSections[section.name]">
 			<div v-for="attribute in section.attributes"  :key="attribute.id + '_' + instanceCopy.id">
-				<Attribute  :attribute="attribute" :data="attributeDataMap[attribute.id] ?? null" @update:modelValue="onAttributeUpdate(attribute, $event)" :uploader="uploader"  />
+				<Attribute  :attribute="attribute" :data="attributeDataMap[attribute.id] ?? null" @update:modelValue="onAttributeUpdate(attribute, $event)" />
 			</div>
 		</Accordition>
 		</div>
@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import Base from "@/BlockBuilder/Components/Modal/Base.vue";
 import { AttributeData, InstanceModule, Module, ModuleAttribute, ModuleTab } from "@/types";
-import { computed, onMounted, PropType, ref } from "vue";
+import { computed, onMounted, PropType, ref, watch } from "vue";
 import Tabs from "@/BlockBuilder/Components/Modal/Common/Tabs.vue";
 import Accordition from "@/BlockBuilder/Components/Modal/Common/Accordition.vue";
 import Attribute from "@/BlockBuilder/Components/Modal/Common/Attribute.vue";
@@ -28,10 +28,6 @@ const props = defineProps({
 	module: {
 		type: Object as PropType<Module>,
 		required: true,
-	},
-	uploader: {
-		type: Function as PropType<(callback: (image: string) => void) => void>,
-		default: null,
 	},
 })
 

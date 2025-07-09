@@ -12,19 +12,24 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
+import { defineProps, defineEmits, watch, inject, Ref } from 'vue'
 
-const props = defineProps<{
+defineProps<{
   modelValue: string | null
-  uploader: (callback: (image: string) => void) => void
 }>()
+
+const uploader = inject<Ref<((cb: (img: string) => void) => void) | null>>('uploader')
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string | null): void
 }>()
 
 function uploadImage() {
-  props.uploader((img: string) => {
+  if (!uploader || !uploader.value) {
+    console.warn('Uploader function is not provided.')
+    return
+  }
+  uploader.value((img: string) => {
     emit('update:modelValue', img)
   })
 }

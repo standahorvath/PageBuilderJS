@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineEmits, defineProps, reactive, watch } from 'vue'
+import { computed, defineEmits, defineProps, PropType, reactive, watch } from 'vue'
 import type { ModuleAttribute } from '@/types'
 import Attribute from '../Modal/Common/Attribute.vue'
 import IconCross from "@/BlockBuilder/Icons/Cross.vue";
@@ -61,7 +61,7 @@ const props = defineProps({
 	attributes: {
 		type: Array as () => ModuleAttribute[],
 		required: true
-	}
+	},
 })
 
 const emit = defineEmits(['update:modelValue'])

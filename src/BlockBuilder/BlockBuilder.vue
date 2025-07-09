@@ -5,8 +5,13 @@
 		<ControlPanel @templatesClick="templatesModalOpened=true" @templatesAddClick="addTemplateModalOpened=true" />
 		<Content :instances="instances" @edit="onEdit" />
 		<FadeTrasition>
-			<EditInstanceModal v-if="modalOpened && editInstance && editInstanceModule" :instance="editInstance"
-				:module="editInstanceModule" @close="onModalClose" @save="onModalSave" :uploader="uploader" />
+			<EditInstanceModal 
+			v-if="modalOpened && editInstance && editInstanceModule" 
+				:instance="editInstance"
+				:module="editInstanceModule" 
+				@close="onModalClose" 
+				@save="onModalSave"  
+			/>
 			<TemplatesModal v-if="templatesModalOpened" @close="templatesModalOpened=false" @delete="onTemplateDelete" @append="onTemplateAppend" />
 			<AddTemplateModal v-if="addTemplateModalOpened" @close="addTemplateModalOpened=false" @save="onTemplateCreate" />
 		</FadeTrasition>
@@ -17,7 +22,7 @@ import ToolBar from "@/BlockBuilder/Components/Toolbar/Toolbar.vue";
 import Title from "@/BlockBuilder/Components/Title.vue";
 import ControlPanel from "@/BlockBuilder/Components/ControlPanel.vue";
 import Content from "@/BlockBuilder/Components/Content/Content.vue";
-import { computed, defineProps, getCurrentInstance, PropType, ref } from "vue";
+import { computed, defineProps, getCurrentInstance, onMounted, PropType, provide, ref, watch } from "vue";
 import { InstanceModule, Module, ModuleData, Template, Toolbar, ToolbarTool } from "@/types";
 import { useContentStore } from "@/store/ContentStore";
 import EditInstanceModal from "@/BlockBuilder/Components/Modal/EditInstance.vue";
@@ -40,9 +45,9 @@ const props = defineProps({
 		type: Array as PropType<ModuleData[]>,
 		default: () => [],
 	},
-	uploader: {
-		type: Function as PropType<(callback: (image: string) => void) => void>,
-		default: null,
+	templates: {
+		type: Array as PropType<Template[]>,
+		default: () => [],
 	},
 })
 
@@ -54,6 +59,17 @@ const emits = defineEmits([
 	"onTemplatesUpdate",
 	"onTemplateAppend",
 ])
+
+const uploader = ref<((cb: (url: string) => void) => void) | null>(null)
+
+provide('uploader', uploader)
+
+defineExpose({
+  setUploader(fn: any) {
+	console.log('Setting uploader function:', fn)
+    uploader.value = fn
+  }
+})
 
 const modalOpened = ref(false)
 const addTemplateModalOpened = ref(false)
@@ -137,5 +153,11 @@ const onTemplateAppend = (name: string) => {
 	emits('onTemplateAppend', name)
 	onContentUpdate()
 }
+
+onMounted(() => {
+	if(props.templates && props.templates.length > 0) {
+		useTemplateStore().templates = props.templates
+	}
+})
 
 </script>

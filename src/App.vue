@@ -1,6 +1,7 @@
 <template>
   <div>
-    <BlockBuilder :modules="DefaultModules" :toolbar="DefaultToolbar" :content="content" ref="builderRef" :uploader="handleUploader" @onUpdate="handleUpdate" />
+    <BlockBuilder :modules="DefaultModules" :toolbar="DefaultToolbar" :content="content" ref="builderRef"
+      :uploader="handleUploader" @onUpdate="handleUpdate" />
   </div>
 </template>
 <script setup lang="ts">
@@ -16,20 +17,21 @@ const handleUpdate = (data: any) => {
   console.log('Update from BlockBuilder:', data);
 };
 
-const handleUploader = (callback: (image: string) => void) => {
-  setTimeout(() => {
-    const uploadedImage = 'https://placecats.com/300/200';
-    callback(uploadedImage);
-  }, 1000);
-};
 
 onMounted(() => {
   if (builderRef.value) {
     builderRef.value.onUpdate = handleUpdate;
     console.log(builderRef.value)
+
+    builderRef.value.setUploader((callback: (image: string) => void) => {
+      setTimeout(() => {
+        const uploadedImage = 'https://placecats.com/300/200';
+        callback(uploadedImage);
+      }, 1000);
+    });
   }
 });
 
-const content = [{"id":"column","children":[],"structureData":[{"id":"type","value":"space"},{"id":"size","value":6},{"id":"color","value":"#000000"}]}];
+const content = [{ "id": "column", "children": [], "structureData": [{ "id": "type", "value": "space" }, { "id": "size", "value": 6 }, { "id": "color", "value": "#000000" }] }];
 
 </script>

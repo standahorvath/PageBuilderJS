@@ -4,7 +4,7 @@
 			{{ attribute.name }}
 		</div>
 		<div class="bb-attribute__content">
-			<component :is="components[attribute.type]" v-model="value" v-if="components[attribute.type]" :options="attribute.options" :attributes="attribute.attributes ?? []" :uploader="uploader" />
+			<component :is="components[attribute.type]" v-model="value" v-if="components[attribute.type]" :options="attribute.options" :attributes="attribute.attributes ?? []" />
 			<span v-else>Undefined attribute type</span>
 			<span v-if="attribute.description" class="bb-attribute__description">
 				{{ attribute.description }}
@@ -40,10 +40,6 @@ const props = defineProps({
 	data: {
 		type: Object as PropType<AttributeData>,
 		required: true,
-	},
-	uploader: {
-		type: Function as PropType<(callback: (image: string) => void) => void>,
-		default: null,
 	},
 })
 
