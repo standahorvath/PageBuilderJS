@@ -3,7 +3,7 @@
 		<label v-if="label" class="bb-text-input__label">{{ label }}</label>
 
 		<select class="bb-select-input__select" :value="model.category" @change="onSelectCategory"  v-if="categories && categories.length > 0">
-			<option v-for="category in categories" :key="category.value" :value="category.value">
+			<option v-for="category in categoriesWithManual" :key="category.value" :value="category.value">
 				{{ category.label }}
 			</option>
 		</select>
@@ -45,13 +45,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, inject, onMounted } from 'vue'
 import type { InputLinkCategory, InputLinkModel, InputLinkModelManual } from '@/types'
 
 const props = defineProps<{
 	label?: string
 	modelValue: InputLinkModel
-	categories?: InputLinkCategory[]
 	disabled?: boolean
 	error?: string
 }>()
@@ -59,11 +58,26 @@ const props = defineProps<{
 const emit = defineEmits<{
 	(e: 'update:modelValue', value: InputLinkModel): void
 }>()
+const categories = inject<InputLinkCategory[]>('categories', [])
 
 const model = computed(() => props.modelValue)
 
+onMounted(() => {
+	if (!model.value) {
+		emit('update:modelValue', {
+			category: 'manual',
+			url: '',
+			openInNewWindow: false
+		} as InputLinkModelManual)
+	}
+})
+
+const categoriesWithManual = computed(() => {
+	return [{ value: 'manual', label: 'Manual Input' }, ...categories]
+})
+
 const selectedCategoryLinks = computed(() => {
-	const category = props.categories?.find((c) => c.value === model.value.category)
+	const category = categoriesWithManual?.value.find((c) => c.value === model.value.category)
 	return category?.links ?? []
 })
 

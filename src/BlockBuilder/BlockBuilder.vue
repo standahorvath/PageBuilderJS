@@ -23,7 +23,7 @@ import Title from "@/BlockBuilder/Components/Title.vue";
 import ControlPanel from "@/BlockBuilder/Components/ControlPanel.vue";
 import Content from "@/BlockBuilder/Components/Content/Content.vue";
 import { computed, defineProps, getCurrentInstance, onMounted, PropType, provide, ref, watch } from "vue";
-import { InstanceModule, Module, ModuleData, Template, Toolbar, ToolbarTool } from "@/types";
+import { InputLinkCategory, InstanceModule, Module, ModuleData, Template, Toolbar, ToolbarTool } from "@/types";
 import { useContentStore } from "@/store/ContentStore";
 import EditInstanceModal from "@/BlockBuilder/Components/Modal/EditInstance.vue";
 import TemplatesModal from "@/BlockBuilder/Components/Modal/Templates.vue";
@@ -49,6 +49,10 @@ const props = defineProps({
 		type: Array as PropType<Template[]>,
 		default: () => [],
 	},
+	categories: {
+		type: Array as PropType<InputLinkCategory[]>,
+		default: () => [],
+	}
 })
 
 const emits = defineEmits([
@@ -63,6 +67,7 @@ const emits = defineEmits([
 const uploader = ref<((cb: (url: string) => void) => void) | null>(null)
 
 provide('uploader', uploader)
+provide('categories', props.categories)
 
 defineExpose({
   setUploader(fn: any) {
