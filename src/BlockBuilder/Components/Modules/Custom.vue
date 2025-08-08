@@ -10,7 +10,7 @@
 import ModuleHeader from "@/BlockBuilder/Components/Modules/Common/Header.vue";
 import ModuleContent from "@/BlockBuilder/Components/Modules/Common/Content.vue";
 import { computed, PropType } from "vue";
-import { AttributeData, InstanceModule, Module } from "@/types";
+import { AttributeData, InstanceModule, Module, ModuleTab } from "@/types";
 import { Templify } from 'templify-js';
 
 const emits = defineEmits(["remove", "edit", "duplicate"]);
@@ -32,10 +32,35 @@ const moduleContent = computed(() => {
 		return ''
 	}
 	const templify = new Templify(content);
-	return templify.render(props.data.reduce((acc, item) => {
-		acc[item.id] = item.value
-		return acc
-	}, {} as Record<string, any>))
+
+	// Get options from module structure and selected option
+	// This helps show the selected options in the render preview of module
+	// Example:
+	// menu_options = { "option1": "Option 1", "option2": "Option 2" }
+	// menu_selected = "Option 1"
+	const options = props.module.structure?.tabs?.reduce((acc, tab: ModuleTab) => {
+		tab.sections?.forEach(section => {
+			section.attributes?.forEach(attribute => {
+				if (attribute.options && attribute.id) {
+					acc[`${attribute.id}_options`] = attribute.options;
+					const dataAttribute = props.data.find(item => item.id === attribute.id);
+					if(props.data && attribute.id && dataAttribute && typeof attribute.options[dataAttribute.value] !== 'undefined') {
+						acc[`${attribute.id}_selected`] = attribute.options[dataAttribute.value];
+					}
+				}
+			});
+		});
+		return acc;
+	}, {} as Record<string, any>) || {};
+
+	return templify.render({
+		...props.data.reduce((acc, item) => {
+			acc[item.id] = item.value
+			return acc
+		}, {} as Record<string, any>), 
+		...options
+	});
+
 })
 
 const onRemove = () => {

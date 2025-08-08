@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BlockBuilder :modules="DefaultModules" :toolbar="DefaultToolbar" :content="content" ref="builderRef"  :categories="categories"
+    <BlockBuilder :modules="DefaultModules" :toolbar="DefaultToolbar" :content="content" ref="builderRef"  :links="links"
       :uploader="handleUploader" @onUpdate="handleUpdate" />
   </div>
 </template>
@@ -33,7 +33,7 @@ onMounted(() => {
 });
 
 const content = [{ "id": "column", "children": [], "structureData": [{ "id": "type", "value": "space" }, { "id": "size", "value": 6 }, { "id": "color", "value": "#000000" }] }];
-const categories: InputLinkCategory[] = [
+const links: InputLinkCategory[] = [
 	{
 		value: 'post',
 		label: 'Post',

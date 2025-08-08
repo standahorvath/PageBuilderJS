@@ -42,6 +42,7 @@
 	--bb-modal-tab-border-radius: 5px;
 	--bb-open-accordition-header-color: #ffffff;
 	--bb-accordition-bg: #f8f8f8;
+	--bb-modal-z-index: 100;
 }
 
 :host.dark, :root.dark {
@@ -85,6 +86,7 @@
 	--bb-modal-tab-border-radius: 5px;
 	--bb-open-accordition-header-color: #ffffff;
 	--bb-accordition-bg: #181818;
+	--bb-modal-z-index: 100;
 }
 
 
@@ -540,7 +542,7 @@
     width: 100%;
     height: 100%;
 	font-family: var(--bb-font-family);
-	z-index: 100;
+	z-index: var(--bb-modal-z-index);
 }
 
 .bb-modal__overlay {

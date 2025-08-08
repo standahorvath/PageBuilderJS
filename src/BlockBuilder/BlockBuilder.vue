@@ -49,7 +49,7 @@ const props = defineProps({
 		type: Array as PropType<Template[]>,
 		default: () => [],
 	},
-	categories: {
+	links: {
 		type: Array as PropType<InputLinkCategory[]>,
 		default: () => [],
 	}
@@ -67,7 +67,7 @@ const emits = defineEmits([
 const uploader = ref<((cb: (url: string) => void) => void) | null>(null)
 
 provide('uploader', uploader)
-provide('categories', props.categories)
+provide('links', props.links)
 
 defineExpose({
   setUploader(fn: any) {
