@@ -2,14 +2,17 @@
 	<div class="bb-module">
 	<ModuleHeader :title="module.title" :icon="module.icon" @remove="onRemove" @edit="onEdit" @duplicate="onDuplicate" />
 	<ModuleContent class="bb-min-h-0">
-		<div class="bb-module__custom" v-html="moduleContent" />
+		<div class="bb-module__custom">
+			<ShadowDom :html="moduleContent" :stylesheet="stylesheet" />
+		</div>
 	</ModuleContent>
 	</div>
 </template>
 <script setup lang="ts">
 import ModuleHeader from "@/BlockBuilder/Components/Modules/Common/Header.vue";
 import ModuleContent from "@/BlockBuilder/Components/Modules/Common/Content.vue";
-import { computed, PropType } from "vue";
+import ShadowDom from "@/BlockBuilder/Components/Modules/Common/ShadowDom.vue";
+import { computed, inject, PropType } from "vue";
 import { AttributeData, InstanceModule, Module, ModuleTab } from "@/types";
 import { Templify } from 'templify-js';
 
@@ -24,6 +27,8 @@ const props = defineProps({
 		required: true,
 	},
 })
+
+const stylesheet = inject('stylesheet') as string | undefined
 
 const moduleContent = computed(() => {
 	if(!props.module.render) return props.module.title

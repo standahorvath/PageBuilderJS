@@ -1,7 +1,7 @@
 <template>
   <div>
     <BlockBuilder :modules="DefaultModules" :toolbar="DefaultToolbar" :content="content" ref="builderRef"  :links="links"
-      :uploader="handleUploader" @onUpdate="handleUpdate" />
+      :uploader="handleUploader" @onUpdate="handleUpdate" stylesheet="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
   </div>
 </template>
 <script setup lang="ts">

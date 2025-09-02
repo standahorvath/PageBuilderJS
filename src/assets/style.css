@@ -4,7 +4,7 @@
 :host, :root {
 	--bb-font-family: "PT Sans", sans-serif;
 	--bb-border-color: #E2E8F0;
-	--bb-section-padding: 10px;
+	--bb-section-padding: 5px;
 	--bb-toolbar-tools-bg: #f8fcff;
 	--bb-toolbar-tools-border-color: #cde3ff;
 	--bb-header-bg: #F8FAFC;
@@ -17,7 +17,7 @@
 	--bb-module-header-border-color: #E2E8F0;
 	--bb-module-content-border-color: #E2E8F0;
 	--bb-module-content-background-color: #F8FAFC;
-	--bb-module-gap-between: 16px;
+	--bb-module-gap-between: 8px;
 	--bb-module-content-min-height: 50px;
 	--bb-module-border-radius: 2px;
 	--bb-container-border-radius: 8px;
@@ -453,6 +453,11 @@
 	align-items: center;
 	border-top-left-radius: var(--bb-module-border-radius);
 	border-top-right-radius: var(--bb-module-border-radius);
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+.bb-module:hover .bb-module__header {
+	opacity: 1;
 }
 .bb-module__header span {
 	display: flex;

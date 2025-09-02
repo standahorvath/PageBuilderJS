@@ -98,7 +98,6 @@ const onEdit = (instance: InstanceModule) => {
 	emits("edit", instance);
 };
 const onMoveInstance = (event: any) => {
-	console.log(event)
 	if (event.pullMode) {
 		return;
 	}
@@ -108,7 +107,6 @@ const onMoveInstance = (event: any) => {
 
 const onChangeInstance = (event: any) => {
 	const { from, to, item, removed, added } = event;
-	console.log(event)
 	const fromParent = findParentByChildren(from);
 	const toParent = findParentByChildren(to);
 

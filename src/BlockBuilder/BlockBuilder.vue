@@ -52,7 +52,11 @@ const props = defineProps({
 	links: {
 		type: Array as PropType<InputLinkCategory[]>,
 		default: () => [],
-	}
+	},
+	stylesheet: {
+		type: String as PropType<string>,
+		default: '',
+	},
 })
 
 const emits = defineEmits([
@@ -68,6 +72,7 @@ const uploader = ref<((cb: (url: string) => void) => void) | null>(null)
 
 provide('uploader', uploader)
 provide('links', props.links)
+provide('stylesheet', props.stylesheet)
 
 defineExpose({
   setUploader(fn: any) {
