@@ -2,6 +2,7 @@
 
 /* Base styles */
 :host, :root {
+	--bb-text-color: #1f1f1f;
 	--bb-font-family: "PT Sans", sans-serif;
 	--bb-border-color: #E2E8F0;
 	--bb-section-padding: 5px;
@@ -43,33 +44,37 @@
 	--bb-open-accordition-header-color: #ffffff;
 	--bb-accordition-bg: #f8f8f8;
 	--bb-modal-z-index: 100;
+	--bb-bg: white;
+	--bb-button-hover-bg: #dae2e9;
 }
 
 :host.dark, :root.dark {
+	--bb-bg: #132337;
+	--bb-text-color: #ffffff;
 	--bb-font-family: "PT Sans", sans-serif;
-	--bb-border-color: #3a3a3a;
+	--bb-border-color: #233A57;
 	--bb-section-padding: 10px;
-	--bb-toolbar-tools-bg: #262626;
+	--bb-toolbar-tools-bg: #132337;
 	--bb-toolbar-tools-border-color: #0a0606;
-	--bb-header-bg: #1f1f1f;
-	--bb-control-panel-button-hover-bg: #3b3b3b;
+	--bb-header-bg: #132337;
+	--bb-control-panel-button-hover-bg: #132337;
 	--bb-control-panel-button-border-color: #0e1b2e;
 	--bb-control-panel-button-text-color: #e0e7ff;
 	--bb-toolbar-tools-hover-bg: #110c24;
 	--bb-content-min-height: 200px;
-	--bb-module-header-bg: #090c16;
+	--bb-module-header-bg: #0e1b2e;
 	--bb-module-header-border-color: #010002;
-	--bb-module-content-border-color: #3a3a3a;
-	--bb-module-content-background-color: #1e1e1e;
+	--bb-module-content-border-color: #233A57;
+	--bb-module-content-background-color: #132337;
 	--bb-module-gap-between: 16px;
 	--bb-module-content-min-height: 50px;
 	--bb-module-border-radius: 2px;
 	--bb-container-border-radius: 8px;
 	--bb-toolbar-tools-border-radius: 4px;
-	--bb-content-background-color: #121212;
+	--bb-content-background-color: #0F1824;
 	--bb-primary-color: #3b82f6;
 	--bb-accent-color: #60a5fa;
-	--bb-container-bg: #121212;
+	--bb-container-bg: #0F1824;
 	--bb-content-empty-bubble-bg: #2e2e2e;
 	--bb-modal-button-bg: #2563eb;
 	--bb-modal-button-hover-bg: #1e40af;
@@ -77,7 +82,7 @@
 	--bb-modal-button-danger-hover-bg: #dc2626;
 	--bb-modal-button-text-color: #ffffff;
 	--bb-modal-border-radius: 8px;
-	--bb-modal-tab-bg: #1f1f1f;
+	--bb-modal-tab-bg: #132337;
 	--bb-error-color: #ef4444;
 	--bb-label-color: #f3f4f6;
 	--bb-accordition-active-bg: #1e40af;
@@ -87,10 +92,14 @@
 	--bb-open-accordition-header-color: #ffffff;
 	--bb-accordition-bg: #181818;
 	--bb-modal-z-index: 100;
+	--bb-button-hover-bg: #1C2E45;
 }
 
 
 /* Global styles */
+.bb-container button {
+	color: var(--bb-text-color);
+}
 .drag-animating {
 	pointer-events: none !important;
 }
@@ -104,6 +113,7 @@
 	font-style: normal;
 	background: var(--bb-container-bg);
 	border-radius: var(--bb-container-border-radius);
+	color: var(--bb-text-color);
 }
 
 .bb-container * {
@@ -164,13 +174,16 @@
     border-radius: 4px;
 }
 .bb-button.bb-button--secondary:hover {
-	background: #dae2e9;
+	background: var(--bb-button-hover-bg);
 }
 .bb-wysiwyg-button {
 	padding: 4px 8px;
 	border-radius: 4px;
 	display: flex;
 	align-items: center;
+}
+.bb-wysiwyg-button:hover {
+	background: var(--bb-button-hover-bg);
 }
 /* Transitions */
 .fade-enter-active,
@@ -230,6 +243,7 @@
 	font-size: 16px;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
+	color: var(--bb-text-color);
 }
 .bb-toolbar__tab:hover {
 	background: var(--bb-toolbar-tools-bg);
@@ -476,7 +490,7 @@
 	padding: 0 2px;
 }
 .bb-module__header__edit:hover {
-	background: #dae2e9;
+	background: var(--bb-button-hover-bg);
 }
 .bb-module__header__copy {
 	cursor: pointer;
@@ -489,7 +503,7 @@
 	padding: 0 2px;
 }
 .bb-module__header__copy:hover {
-	background: #dae2e9;
+	background: var(--bb-button-hover-bg);
 }
 .bb-module__header__remove {
 	cursor: pointer;
@@ -499,9 +513,10 @@
 	display: flex;
 	align-items: center;
 	border-radius: 4px;
+	color: var(--bb-text-color);
 }
 .bb-module__header__remove:hover {
-	background: #dae2e9;
+	background: var(--bb-button-hover-bg);
 }
 .bb-module__header__button {
 	cursor: pointer;
@@ -514,7 +529,7 @@
 	padding: 0 2px;
 }
 .bb-module__header__button:hover {
-	background: #dae2e9;
+	background: var(--bb-button-hover-bg);
 }
 .bb-module__content{
 	padding: var(--bb-section-padding);
@@ -567,7 +582,7 @@
     max-width: 50%;
 	min-width: 560px;
     margin: auto;
-    background: white;
+    background: var(--bb-bg);
     top: 0;
     left: 0;
     right: 0;
@@ -605,7 +620,7 @@
 	align-items: center;
 }
 .bb-modal__header__remove:hover {
-	background: #dae2e9;
+	background: var(--bb-button-hover-bg);
 }
 
 .bb-modal__title {
@@ -688,7 +703,7 @@
 	align-items: center;
 }
 .bb-repeater__remove:hover {
-	background: #dae2e9;
+	background: var(--bb-button-hover-bg);
 }
 .bb-repeater__item {
 	display: flex;
@@ -870,7 +885,7 @@
 
 /* Wysiwyg Editor */
 .bb-wysiwyg-input {
-  border: 1px solid #ccc;
+  border: 1px solid var(--bb-border-color);
   border-radius: 8px;
   background: #fff;
   font-family: sans-serif;
@@ -881,28 +896,25 @@
   flex-wrap: wrap;
   gap: 6px;
   padding: 8px;
-  background: #f4f4f4;
-  border-bottom: 1px solid #ccc;
+  background: var(--bb-toolbar-tools-bg);
+  border-bottom: 1px solid var(--bb-border-color);
   border-radius: 8px 8px 0 0;
 }
 
 .bb-wysiwyg-toolbar button {
-  background: #fff;
-  border: 1px solid #ccc;
+  background: var(--bb-bg);
+  border: 1px solid var(--bb-border-color);
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
 }
 
-.bb-wysiwyg-toolbar button:hover {
-  background: #e8e8e8;
-}
-
 .bb-wysiwyg-editor {
   min-height: 200px;
   padding: 15px;
   outline: none;
+  color: initial;
   font-size: 16px;
 }
 
@@ -961,7 +973,7 @@
 	font-size: 16px;
 	outline: none;
 	transition: border 0.2s ease-in-out;
-	background: white;
+	background: var(--bb-bg);
 	cursor: pointer;
   }
   
@@ -998,7 +1010,7 @@
 	font-size: 16px;
 	outline: none;
 	transition: border 0.2s ease-in-out;
-	background: white;
+	background: var(--bb-bg);
 	appearance: textfield;
   }
   
@@ -1078,8 +1090,8 @@
   }
   
   .bb-checkbox-input__custom {
-	width: 14px;
-	height: 14px;
+	width: 17px;
+	height: 17px;
 	border: 2px solid var(--bb-border-color);
 	border-radius: 4px;
 	display: inline-block;
