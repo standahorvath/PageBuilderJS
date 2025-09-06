@@ -25,7 +25,25 @@
 											<template #item="{ element: subchild }">
 												<component :is="getComponent(subchild)" :data="subchild.structureData"
 													:module="subchild.module" @remove="onRemove(subchild)"
-													@edit="onEdit(subchild)" @duplicate="onDuplicate(subchild)" />
+													@edit="onEdit(subchild)" @duplicate="onDuplicate(subchild)">
+													<div class="bb-content">
+														<!-- Further nesting can be added similarly -->
+														<Draggable v-model="subchild.children" item-key="nonce" :animation="200" forceFallback: true :swap-threshold="0.65"
+															ghost-class="drag-ghost" :data-nonce="subchild.nonce"
+															chosen-class="drag-chosen" drag-class="drag-drag"
+															:group="{ name: 'blocks', pull: true, put: true }">
+															<template #item="{ element: subsubchild }">
+																<component :is="getComponent(subsubchild)" :data="subsubchild.structureData"
+																	:module="subsubchild.module" @remove="onRemove(subsubchild)"
+																	@edit="onEdit(subsubchild)" @duplicate="onDuplicate(subsubchild)">
+																	<div class="bb-content">
+																		<!-- Further nesting can be added similarly -->
+																	</div>
+																</component>
+															</template>
+														</Draggable>
+													</div>
+												</component>
 											</template>
 										</Draggable>
 									</div>

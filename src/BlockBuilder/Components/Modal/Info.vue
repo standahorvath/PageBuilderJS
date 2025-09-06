@@ -2,7 +2,7 @@
 	<Base title="Project Info" @close="onClose" width="500px" height="530px">
 		<div class="bb-modal__form bb-modal__info">
 			<h2>PageBuilderJS v{{ PROJECT_VERSION }}</h2>
-			<p>A modern block-based web page builder built with Vue 3, Tailwind CSS, and Vite. Perfect for creating modular and customizable pages visually.</p>
+			<p>A modern block-based web page builder built with Vue 3 and Vite. Perfect for creating modular and customizable pages visually.</p>
 			<div>
 				<strong>Documentation:</strong>
 				<a href="https://github.com/standahorvath/PageBuilderJS#readme" target="_blank" class="text-blue-600 hover:underline">

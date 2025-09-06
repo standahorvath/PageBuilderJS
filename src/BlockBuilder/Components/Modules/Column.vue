@@ -6,7 +6,7 @@
 				<button @click="onColumnChange(-1)" v-if="col > 1" class="bb-module__header__button">
 					<IconChevronLeft class="bb-module__header__chevron" />
 				</button>
-				<span class="bb-module__header__name">{{ module.title }} {{ col }}/{{ cols }}</span>
+				<span class="bb-module__header__name"><span v-if="Number(col) > 1">{{ module.title }} </span>{{ col }}/{{ cols }}</span>
 				<button @click="onColumnChange(1)" v-if="col < cols" class="bb-module__header__button">
 					<IconChevronRight class="bb-module__header__chevron" />
 				</button>
