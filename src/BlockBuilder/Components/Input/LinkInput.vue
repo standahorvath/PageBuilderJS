@@ -15,14 +15,24 @@
 			class="bb-text-input__input"
 			:class="{ 'bb-text-input__input--error': error }"
 			placeholder="Enter URL"
-			:value="model.url"
+			:value="manualUrl"
 			@input="onManualInput"
+		/>
+
+		<input
+			v-if="model.category === 'manual' || !links || links.length === 0"
+			type="text"
+			:disabled="disabled"
+			class="bb-text-input__input"
+			placeholder="Enter label"
+			:value="manualLabel"
+			@input="onManualLabelInput"
 		/>
 
 		<select
 			v-else
 			class="bb-select-input__select"
-			:value="model.link"
+			:value="selectedLink"
 			@change="onSelectLink"
 		>
 			<option value="" disabled hidden>{{ 'Select option' }}</option>
@@ -67,18 +77,19 @@ onMounted(() => {
 		emit('update:modelValue', {
 			category: 'manual',
 			url: '',
+			label: '',
 			openInNewWindow: false
 		} as InputLinkModelManual)
 	}
 })
 
 const linksWithManual = computed(() => {
-	return [{ value: 'manual', label: 'Manual Input' }, ...links]
+	return [{ value: 'manual', label: 'Manual Input' } as { value: string; label: string }, ...links]
 })
 
 const selectedCategoryLinks = computed(() => {
 	const category = linksWithManual?.value.find((c) => c.value === model.value.category)
-	return category?.links ?? []
+	return (category && (category as InputLinkCategory).links) ? (category as InputLinkCategory).links : []
 })
 
 const onSelectCategory = (e: Event) => {
@@ -87,6 +98,7 @@ const onSelectCategory = (e: Event) => {
 		emit('update:modelValue', {
 			category: 'manual',
 			url: '',
+			label: '',
 			openInNewWindow: false
 		})
 	} else {
@@ -98,12 +110,26 @@ const onSelectCategory = (e: Event) => {
 	}
 }
 
+const manualUrl = computed(() => (model.value as InputLinkModelManual).url || '')
+const manualLabel = computed(() => ((model.value as InputLinkModelManual).label) || '')
+const selectedLink = computed(() => (model.value as any).link || '')
+
 const onManualInput = (e: Event) => {
 	const url = (e.target as HTMLInputElement).value
 	if (model.value.category === 'manual') {
 		emit('update:modelValue', {
 			...model.value,
 			url
+		} as InputLinkModelManual)
+	}
+}
+
+const onManualLabelInput = (e: Event) => {
+	const label = (e.target as HTMLInputElement).value
+	if (model.value.category === 'manual') {
+		emit('update:modelValue', {
+			...model.value,
+			label
 		} as InputLinkModelManual)
 	}
 }

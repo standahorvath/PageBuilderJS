@@ -46,6 +46,7 @@ export type InputLinkCategory = {
 export type InputLinkModelManual = {
 	category: 'manual'
 	url: string
+	label?: string
 	openInNewWindow: boolean
 }
 
