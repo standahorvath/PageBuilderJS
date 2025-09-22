@@ -6,7 +6,7 @@
       <button class="bb-wysiwyg-button" :class="{ 'is-active': editor?.isActive('heading', { level: 1 }) }" title="Heading 1" @click="() => editor?.chain().focus().toggleHeading({ level: 1 }).run()">H1</button>
       <button class="bb-wysiwyg-button" :class="{ 'is-active': editor?.isActive('heading', { level: 2 }) }" title="Heading 2" @click="() => editor?.chain().focus().toggleHeading({ level: 2 }).run()">H2</button>
       <button class="bb-wysiwyg-button" :class="{ 'is-active': editor?.isActive('heading', { level: 3 }) }" title="Heading 3" @click="() => editor?.chain().focus().toggleHeading({ level: 3 }).run()">H3</button>
-      |
+
       <button class="bb-wysiwyg-button" :class="{ 'is-active': editor?.isActive({ textAlign: 'left' }) }" title="Align left" @click="() => editor?.chain().focus().setTextAlign('left').run()"><Bars3BottomLeftIcon style="width: 16px" /></button>
       <button class="bb-wysiwyg-button" :class="{ 'is-active': editor?.isActive({ textAlign: 'center' }) }" title="Align center" @click="() => editor?.chain().focus().setTextAlign('center').run()"><Bars3Icon style="width: 16px" /></button>
       <button class="bb-wysiwyg-button" :class="{ 'is-active': editor?.isActive({ textAlign: 'right' }) }" title="Align right" @click="() => editor?.chain().focus().setTextAlign('right').run()"><Bars3BottomRightIcon style="width: 16px" /></button>

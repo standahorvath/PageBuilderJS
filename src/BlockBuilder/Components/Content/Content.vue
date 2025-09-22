@@ -2,15 +2,15 @@
 	<div class="bb-content">
 		<EmptyContent v-if="!instances.length" />
 
-		<Draggable v-model="internalInstances" item-key="nonce" :group="{ name: 'blocks', pull: true, put: true }" :swap-threshold="0.65"
-			:animation="200" forceFallback: true ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="drag-drag" 
+		<Draggable v-model="internalInstances" item-key="nonce" :group="{ name: 'blocks', pull: true, put: true }" :scroll="true" :swap-threshold="0.65"
+			:animation="200" ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="drag-drag" 
 			@end="onMoveInstance" @change="onChangeInstance($event)">
 			<template #item="{ element: instance }">
 				<component :is="getComponent(instance)" :data="instance.structureData" :module="instance.module"
 					@remove="onRemove(instance)" @edit="onEdit(instance)" @duplicate="onDuplicate(instance)">
 					<div class="bb-content">
 						<!-- Nested children -->
-						<Draggable v-model="instance.children" item-key="nonce" :animation="200" forceFallback: true :swap-threshold="0.65"
+						<Draggable v-model="instance.children" item-key="nonce" :animation="200" :scroll="true" :swap-threshold="0.65"
 							ghost-class="drag-ghost" :data-nonce="instance.nonce" chosen-class="drag-chosen"
 							drag-class="drag-drag" :group="{ name: 'blocks', pull: true, put: true }">
 							<template #item="{ element: child }">
@@ -18,7 +18,7 @@
 									@remove="onRemove(child)" @edit="onEdit(child)" @duplicate="onDuplicate(child)">
 									<div class="bb-content">
 										<!-- Nested children -->
-										<Draggable v-model="child.children" item-key="nonce" :animation="200" forceFallback: true :swap-threshold="0.65"
+										<Draggable v-model="child.children" item-key="nonce" :animation="200" :scroll="true" :swap-threshold="0.65"
 											ghost-class="drag-ghost" :data-nonce="child.nonce"
 											chosen-class="drag-chosen" drag-class="drag-drag"
 											:group="{ name: 'blocks', pull: true, put: true }">
@@ -28,7 +28,7 @@
 													@edit="onEdit(subchild)" @duplicate="onDuplicate(subchild)">
 													<div class="bb-content">
 														<!-- Further nesting can be added similarly -->
-														<Draggable v-model="subchild.children" item-key="nonce" :animation="200" forceFallback: true :swap-threshold="0.65"
+														<Draggable v-model="subchild.children" item-key="nonce" :animation="200" :scroll="true" :swap-threshold="0.65"
 															ghost-class="drag-ghost" :data-nonce="subchild.nonce"
 															chosen-class="drag-chosen" drag-class="drag-drag"
 															:group="{ name: 'blocks', pull: true, put: true }">
