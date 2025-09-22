@@ -116,6 +116,17 @@
 	color: var(--bb-text-color);
 }
 
+.bb-container.bb-container--fullscreen {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 9999;
+	border-radius: 0;
+	overflow-y: auto;
+}
+
 .bb-container * {
 	box-sizing: border-box;
 	font-family: var(--bb-font-family);
@@ -269,6 +280,12 @@
 .bb-header__title {
 	font-size: 14px;
 	font-weight: 700;
+}
+.bb-header__actions {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 4px;
 }
 
 /* Control panel styles */
@@ -767,7 +784,7 @@
 	align-items: center;
 	background: var(--bb-modal-button-bg);
 	border: 1px solid var(--bb-modal-button-border-color);
-	color: var(--bb-modal-button-text-color);
+	color: var(--bb-modal-button-text-color) !important;
 	transition: 0.3s all;
 	text-align: center;
 }

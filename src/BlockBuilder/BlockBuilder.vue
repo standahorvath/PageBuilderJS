@@ -1,5 +1,5 @@
 <template>
-	<div class="bb-container" ref="rootEl">
+	<div class="bb-container" :class="useAppStore().fullscreen ? 'bb-container--fullscreen' : ''" ref="rootEl">
 		<Title />
 		<ToolBar :toolbar="toolbar" :modules="modules" @toolClick="onToolClick" />
 		<ControlPanel @templatesClick="templatesModalOpened=true" @templatesAddClick="addTemplateModalOpened=true" />
@@ -31,6 +31,7 @@ import AddTemplateModal from "@/BlockBuilder/Components/Modal/AddTemplate.vue";
 import FadeTrasition from "@/BlockBuilder/Components/Transitions/FadeTransition.vue";
 import { useTemplateStore } from "@/store/TemplateStore";
 import { useHistoryStore } from "@/store/HistoryStore";
+import { useAppStore } from "@/store/AppStore";
 
 const props = defineProps({
 	modules: {
