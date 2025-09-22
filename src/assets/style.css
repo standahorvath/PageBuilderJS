@@ -97,8 +97,14 @@
 
 
 /* Global styles */
-.bb-container button {
+.bb-accordition__header {
 	color: var(--bb-text-color);
+}
+.bb-modal button.bb-button--secondary, .bb-modal button.bb-wysiwyg-button {
+	color: var(--bb-text-color);
+}
+.bb-container button.bb-modal__footer__button {
+	color: var(--bb-modal-button-text-color);
 }
 .drag-animating {
 	pointer-events: none !important;
@@ -286,6 +292,9 @@
 	flex-direction: row;
 	align-items: center;
 	gap: 4px;
+}
+.bb-header__actions button {
+	color: var(--bb-text-color) !important;
 }
 
 /* Control panel styles */
@@ -505,6 +514,7 @@
 	align-items: center;
 	border-radius: 4px;
 	padding: 0 2px;
+	color: var(--bb-text-color);
 }
 .bb-module__header__edit:hover {
 	background: var(--bb-button-hover-bg);
@@ -518,6 +528,7 @@
 	align-items: center;
 	border-radius: 4px;
 	padding: 0 2px;
+	color: var(--bb-text-color);
 }
 .bb-module__header__copy:hover {
 	background: var(--bb-button-hover-bg);
@@ -544,6 +555,7 @@
 	align-items: center;
 	border-radius: 4px;
 	padding: 0 2px;
+	color: var(--bb-text-color);
 }
 .bb-module__header__button:hover {
 	background: var(--bb-button-hover-bg);
@@ -635,6 +647,7 @@
 	margin-right: calc(var(--bb-section-padding) / 2 * -1);
 	display: flex;
 	align-items: center;
+	color: var(--bb-text-color);
 }
 .bb-modal__header__remove:hover {
 	background: var(--bb-button-hover-bg);
@@ -754,6 +767,7 @@
 	font-size: 16px;
 	border-top-left-radius: var(--bb-modal-tab-border-radius);
 	border-top-right-radius: var(--bb-modal-tab-border-radius);
+	color: var(--bb-text-color);
 }
 .bb-modal__tab:hover {
 	background: var(--bb-modal-tab-bg);
@@ -883,6 +897,9 @@
 .bb-attribute__content {
 	flex: 1;
 }
+.bb-attribute__content input {
+	color: var(--bb-text-color);
+}
 .bb-attribute:last-child {
 	border-bottom: none;
 }
@@ -926,13 +943,145 @@
   font-size: 14px;
   cursor: pointer;
 }
-
+.bb-wysiwyg-editor .tiptap {
+	border: none;
+	outline: none;
+}
 .bb-wysiwyg-editor {
   min-height: 200px;
-  padding: 15px;
+  padding: 3px 10px;
   outline: none;
   color: initial;
   font-size: 16px;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+}
+.bb-wysiwyg-editor>.tiptap {
+	flex: 1;
+}
+.bb-wysiwyg-editor>.tiptap>*:hover {
+	background: color-mix(in srgb, var(--bb-primary-color) 10%, white 10%);
+}
+
+.bb-wysiwyg-editor hr {
+	border: none;
+	border-top: 1px solid var(--bb-border-color);
+	margin: 8px 0;
+}
+
+/* Wysiwyg tables */
+.bb-wysiwyg-editor table {
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid var(--bb-border-color);
+	border-radius: 6px;
+	overflow: hidden;
+}
+.bb-wysiwyg-dropdown {
+	position: absolute;
+	background: var(--bb-bg);
+	border: 1px solid var(--bb-border-color);
+	border-radius: 4px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	z-index: 1000;
+	padding: 8px;
+	display: flex;
+	flex-wrap: wrap;
+	width: fit-content;
+	width: 250px;
+	gap: 4px;
+}
+.bb-wysiwyg-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+.modal__content {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1000;
+	width: fit-content;
+	max-width: 90%;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+.bb-wysiwyg-modal:before {
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.3);
+	z-index: -1;
+	border-radius: 4px;
+}
+.bb-wysiwyg-modal__content {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	background: var(--bb-bg);
+	border: 1px solid var(--bb-border-color);
+	padding: 16px;
+	border-radius: 4px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.bb-wysiwyg-link-modal__body {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+.bb-wysiwyg-link-modal__footer {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	padding-top: 8px;
+}
+.bb-wysiwyg-dropdown hr {
+	width: 100%;
+	border: none;
+	border-top: 1px solid var(--bb-border-color);
+	margin: 4px 0;
+}
+.bb-wysiwyg-editor table p {
+	margin: 0;
+}
+.bb-wysiwyg-editor th,
+.bb-wysiwyg-editor td {
+	border: 1px solid var(--bb-border-color);
+	padding: 8px 12px;
+	text-align: left;
+}
+.bb-wysiwyg-editor thead th {
+	background: var(--bb-header-bg);
+	font-weight: 700;
+}
+.bb-wysiwyg-editor tbody tr:nth-child(even) {
+	background: var(--bb-toolbar-tools-bg);
+}
+.bb-wysiwyg-editor .selectedCell {
+	outline: 2px solid var(--bb-primary-color);
+	outline-offset: -2px;
+}
+.bb-wysiwyg-editor .column-resize-handle {
+	position: absolute;
+	right: -2px;
+	top: 0;
+	bottom: 0;
+	width: 4px;
+	background: var(--bb-primary-color);
+	opacity: 0.3;
+	pointer-events: none;
 }
 
 /* Text Input */
@@ -955,6 +1104,7 @@
 	font-size: 16px;
 	outline: none;
 	transition: border 0.2s ease-in-out;
+	background:  none;
   }
   
   .bb-text-input__input:focus {
@@ -992,6 +1142,7 @@
 	transition: border 0.2s ease-in-out;
 	background: var(--bb-bg);
 	cursor: pointer;
+	color: var(--bb-text-color);
   }
   
   .bb-select-input__select:focus {
