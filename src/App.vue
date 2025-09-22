@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="max-width: 1200px; margin: auto; padding: 20px;">
     <BlockBuilder :modules="DefaultModules" :toolbar="DefaultToolbar" :content="content" ref="builderRef"  :links="links"
       :uploader="handleUploader" @onUpdate="handleUpdate" stylesheet="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
   </div>
