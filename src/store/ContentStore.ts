@@ -44,10 +44,15 @@ export const useContentStore = defineStore('content', {
 		duplicateInstance(instance: InstanceModule) {
 			const parent = findParent(this.instances, instance)
 			const instanceCopy = deepCopy(instance)
-			if (!parent) {
-				this.instances.push(instanceCopy)
-				return
-			}
+				if (!parent) {
+					const index = this.instances.findIndex((i) => i.nonce === instance.nonce)
+					if (index === -1) {
+						this.instances.push(instanceCopy)
+						return
+					}
+					this.instances.splice(index + 1, 0, instanceCopy)
+					return
+				}
 			if(!parent.children) {
 				parent.children = []
 			}
