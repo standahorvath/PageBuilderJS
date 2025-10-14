@@ -28,7 +28,7 @@ import TextInput from "../Input/TextInput.vue";
 import { computed, ref } from "vue";
 import { useContentStore } from "@/store/ContentStore";
 
-const emits = defineEmits(["save"]);
+const emits = defineEmits(["save", "close"]);
 const templateName = ref("");
 const numOfBlock = computed(() => {
 	return useContentStore().instanceCount;
@@ -45,7 +45,7 @@ const onSave = () => {
 }
 
 const onClose = () => {
-	// Close logic here
+	emits("close");
 }
 
 </script>

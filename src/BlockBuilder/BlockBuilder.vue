@@ -3,7 +3,7 @@
 		<Title />
 		<ToolBar :toolbar="toolbar" :modules="modules" @toolClick="onToolClick" />
 		<ControlPanel @templatesClick="templatesModalOpened=true" @templatesAddClick="addTemplateModalOpened=true" />
-		<Content :instances="instances" @edit="onEdit" />
+		<Content :instances="instances" @edit="onEdit" @toolClick="onToolClick" />
 		<FadeTrasition>
 			<EditInstanceModal 
 			v-if="modalOpened && editInstance && editInstanceModule" 
@@ -71,9 +71,24 @@ const emits = defineEmits([
 
 const uploader = ref<((cb: (url: string) => void) => void) | null>(null)
 
+
+const onToolClick = (tool: ToolbarTool, parent?: InstanceModule, position?: "start" | "end") => {
+	console.log({ tool, parent, position })
+	const module = props.modules.filter(module => module.id === tool.id)
+	if (!module) {
+		console.error(`Module ${tool.id} not found`);
+		return;
+	}
+	useContentStore().addInstanceFromModule(module[0])
+	onContentUpdate()
+}
+
 provide('uploader', uploader)
 provide('links', props.links)
 provide('stylesheet', props.stylesheet)
+provide('modules', props.modules)
+provide('toolbar', props.toolbar)
+provide('onToolClick', onToolClick)
 
 defineExpose({
   setUploader(fn: any) {
@@ -113,16 +128,6 @@ const onContentUpdate = () => {
 const instances = computed(() => {
 	return useContentStore().instances
 })
-
-const onToolClick = (tool: ToolbarTool) => {
-	const module = props.modules.filter(module => module.id === tool.id)
-	if (!module) {
-		console.error(`Module ${tool.id} not found`);
-		return;
-	}
-	useContentStore().addInstanceFromModule(module[0])
-	onContentUpdate()
-}
 
 const onEdit = (instance: InstanceModule) => {
 	editInstance.value = instance

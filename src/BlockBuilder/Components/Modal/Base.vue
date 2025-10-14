@@ -1,6 +1,6 @@
 <template>
 	<div class="bb-modal">
-		<div class="bb-modal__overlay"></div>
+		<div class="bb-modal__overlay" @click="onClose"></div>
 		<div class="bb-modal__container" :style="{ width, height }">
 
 			<!-- Modal Header -->

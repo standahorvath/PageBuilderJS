@@ -137,8 +137,8 @@ export const useContentStore = defineStore('content', {
 
 			this.instances.splice(newIndex, 0, newInstance);
 		},
-		addInstanceFromModule(module: Module) {
-			this.instances.push({
+		addInstanceFromModule(module: Module, position = 0) {
+			this.instances.splice(position, 0, {
 				id: module.id,
 				structureData: getDefaultData(module),
 				module: module,

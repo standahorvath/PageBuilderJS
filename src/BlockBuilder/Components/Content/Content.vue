@@ -6,52 +6,60 @@
 			:animation="200" ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="drag-drag" 
 			@end="onMoveInstance" @change="onChangeInstance($event)">
 			<template #item="{ element: instance }">
-				<component :is="getComponent(instance)" :data="instance.structureData" :module="instance.module"
-					@remove="onRemove(instance)" @edit="onEdit(instance)" @duplicate="onDuplicate(instance)">
-					<div class="bb-content">
+				<Transition name="bb-scale">
+					<component :is="getComponent(instance)" :data="instance.structureData" :module="instance.module" @toolClick="(tool: ToolbarTool, position?: 'start' | 'end') => { onToolClick(tool, instance, position) }"
+						@remove="onRemove(instance)" @edit="onEdit(instance)" @duplicate="onDuplicate(instance)">
+						<div class="bb-content">
 						<!-- Nested children -->
 						<Draggable v-model="instance.children" item-key="nonce" :animation="200" :scroll="true" :swap-threshold="0.65"
 							ghost-class="drag-ghost" :data-nonce="instance.nonce" chosen-class="drag-chosen"
 							drag-class="drag-drag" :group="{ name: 'blocks', pull: true, put: true }">
 							<template #item="{ element: child }">
-								<component :is="getComponent(child)" :data="child.structureData" :module="child.module"
-									@remove="onRemove(child)" @edit="onEdit(child)" @duplicate="onDuplicate(child)">
-									<div class="bb-content">
+								<Transition name="bb-scale">
+									<component :is="getComponent(child)" :data="child.structureData" :module="child.module" @toolClick="(tool: ToolbarTool, position?: 'start' | 'end') => { onToolClick(tool, child, position) }"
+										@remove="onRemove(child)" @edit="onEdit(child)" @duplicate="onDuplicate(child)">
+										<div class="bb-content">
 										<!-- Nested children -->
 										<Draggable v-model="child.children" item-key="nonce" :animation="200" :scroll="true" :swap-threshold="0.65"
 											ghost-class="drag-ghost" :data-nonce="child.nonce"
 											chosen-class="drag-chosen" drag-class="drag-drag"
 											:group="{ name: 'blocks', pull: true, put: true }">
 											<template #item="{ element: subchild }">
-												<component :is="getComponent(subchild)" :data="subchild.structureData"
-													:module="subchild.module" @remove="onRemove(subchild)"
-													@edit="onEdit(subchild)" @duplicate="onDuplicate(subchild)">
-													<div class="bb-content">
+												<Transition name="bb-scale">
+													<component :is="getComponent(subchild)" :data="subchild.structureData"  @toolClick="(tool: ToolbarTool, position?: 'start' | 'end') => { onToolClick(tool, subchild, position) }"
+														:module="subchild.module" @remove="onRemove(subchild)"
+														@edit="onEdit(subchild)" @duplicate="onDuplicate(subchild)">
+														<div class="bb-content">
 														<!-- Further nesting can be added similarly -->
 														<Draggable v-model="subchild.children" item-key="nonce" :animation="200" :scroll="true" :swap-threshold="0.65"
 															ghost-class="drag-ghost" :data-nonce="subchild.nonce"
 															chosen-class="drag-chosen" drag-class="drag-drag"
 															:group="{ name: 'blocks', pull: true, put: true }">
 															<template #item="{ element: subsubchild }">
-																<component :is="getComponent(subsubchild)" :data="subsubchild.structureData"
-																	:module="subsubchild.module" @remove="onRemove(subsubchild)"
-																	@edit="onEdit(subsubchild)" @duplicate="onDuplicate(subsubchild)">
-																	<div class="bb-content">
+																<Transition name="bb-scale">
+																	<component :is="getComponent(subsubchild)" :data="subsubchild.structureData" @toolClick="(tool: ToolbarTool, position?: 'start' | 'end') => { onToolClick(tool, subsubchild, position) }"
+																		:module="subsubchild.module" @remove="onRemove(subsubchild)"
+																		@edit="onEdit(subsubchild)" @duplicate="onDuplicate(subsubchild)">
+																		<div class="bb-content">
 																		<!-- Further nesting can be added similarly -->
 																	</div>
-																</component>
+																		</component>
+																	</Transition>
 															</template>
 														</Draggable>
 													</div>
-												</component>
+													</component>
+												</Transition>
 											</template>
 										</Draggable>
-									</div>
-								</component>
+								</div>
+							</component>
+						</Transition>
 							</template>
 						</Draggable>
 					</div>
 				</component>
+				</Transition>
 			</template>
 		</Draggable>
 	</div>
@@ -63,12 +71,12 @@ import ModuleChildrenable from "@/BlockBuilder/Components/Modules/Childrenable.v
 import ModuleSpace from "@/BlockBuilder/Components/Modules/Space.vue";
 import ModuleCustom from "@/BlockBuilder/Components/Modules/Custom.vue";
 import EmptyContent from "@/BlockBuilder/Components/Content/Common/Empty.vue";
-import { InstanceModule } from "@/types";
+import { InstanceModule, ToolbarTool } from "@/types";
 import { PropType, computed, ref, watch } from "vue";
 import { useContentStore } from "@/store/ContentStore";
 import Draggable from "vuedraggable";
 
-const emits = defineEmits(["edit"]);
+const emits = defineEmits(["edit", "toolClick"]);
 
 const props = defineProps({
 	instances: {
@@ -121,6 +129,10 @@ const onMoveInstance = (event: any) => {
 	}
 
 	useContentStore().moveInstance(event.oldIndex, event.newIndex);
+};
+
+const onToolClick = (tool: ToolbarTool, instance: InstanceModule, position?: "start" | "end") => {
+	emits("toolClick", tool, instance, position);
 };
 
 const onChangeInstance = (event: any) => {
@@ -187,5 +199,16 @@ function onDragEnd(evt: any) {
 
 .drag-drag {
 	opacity: 0.8;
+}
+
+/* Scale-in animation for newly added items */
+.bb-scale-enter-active {
+	transition: transform 0.3s ease;
+}
+.bb-scale-enter-from {
+	transform: scale(0);
+}
+.bb-scale-enter-to {
+	transform: scale(1);
 }
 </style>

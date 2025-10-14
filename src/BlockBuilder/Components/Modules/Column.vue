@@ -14,13 +14,25 @@
 			</template>
 		</ModuleHeader>
 		<ModuleContent>
-			<button class="bb-module__new-module">
-				<IconPlus />
-			</button>
+			<div v-click-outside="onOutsideClickTools">
+			<div class="bb-module__new-module">
+				<SlideFromTop class="tooltip">
+				<div class="bb-module__new-module__tooltip bb-module__new-module__tooltip--top" v-if="isUpperToolsOpened">
+					<ToolBar :toolbar="toolbar" :modules="modules" @toolClick="(tool: ToolbarTool) => onToolClick(tool, 'start')" />
+				</div>
+				</SlideFromTop>
+				<button @click.stop="isUpperToolsOpened = !isUpperToolsOpened; isLowerToolsOpened = false;"><IconPlus /></button>
+			</div>
 			<slot />
-			<button class="bb-module__new-module">
-				<IconPlus />
-			</button>
+			<div class="bb-module__new-module">
+				<SlideFromBottom class="tooltip">
+				<div class="bb-module__new-module__tooltip bb-module__new-module__tooltip--bottom" v-if="isLowerToolsOpened">
+					<ToolBar :toolbar="toolbar" :modules="modules" @toolClick="(tool: ToolbarTool) => onToolClick(tool, 'end')" />
+				</div>
+				</SlideFromBottom>
+				<button @click.stop="isLowerToolsOpened = !isLowerToolsOpened; isUpperToolsOpened = false;"><IconPlus /></button>
+			</div>
+			</div>
 		</ModuleContent>
 	</div>
 </template>
@@ -30,11 +42,15 @@ import ModuleContent from "@/BlockBuilder/Components/Modules/Common/Content.vue"
 import IconChevronRight from "@/BlockBuilder/Icons/ChevronRight.vue";
 import IconChevronLeft from "@/BlockBuilder/Icons/ChevronLeft.vue";
 import IconPlus from "@/BlockBuilder/Icons/Plus.vue";
+import ToolBar from "@/BlockBuilder/Components/Toolbar/Toolbar.vue";
 
-import { computed, PropType } from "vue";
-import { AttributeData, Module } from "@/types";
+import { computed, inject, PropType, ref } from "vue";
+import { AttributeData, Module, Toolbar, ToolbarTool } from "@/types";
+import SlideFromBottom from "../Transitions/SlideFromBottom.vue";
+import SlideFromTop from "../Transitions/SlideFromTop.vue";
+import { useContentStore } from "@/store/ContentStore";
 
-const emits = defineEmits(["remove", "edit", "duplicate"]);
+const emits = defineEmits(["remove", "edit", "duplicate", "toolClick"]);
 const props = defineProps({
 	data: {
 		type: Array as PropType<AttributeData[]>,
@@ -54,6 +70,12 @@ const columnStyles = computed(() => {
 const col = computed(() => {
 	return props.data.find((item) => item.id === "size")?.value || 1;
 })
+
+const toolbar = inject('toolbar') as Toolbar;
+const modules = inject('modules') as Module[];
+
+const isUpperToolsOpened = ref(false);
+const isLowerToolsOpened = ref(false);
 
 const onRemove = () => {
 	emits("remove");
@@ -75,5 +97,13 @@ const onColumnChange = (value: number) => {
 const onDuplicate = () => {
 	emits("duplicate");
 }
+const onToolClick = (tool: ToolbarTool, position?: "start" | "end") => {
+	emits("toolClick", tool, position);
+}
 
+
+const onOutsideClickTools = () => {
+	isUpperToolsOpened.value = false;
+	isLowerToolsOpened.value = false;
+}
 </script>
