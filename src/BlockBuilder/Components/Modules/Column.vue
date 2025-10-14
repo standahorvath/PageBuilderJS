@@ -14,7 +14,13 @@
 			</template>
 		</ModuleHeader>
 		<ModuleContent>
+			<button class="bb-module__new-module">
+				<IconPlus />
+			</button>
 			<slot />
+			<button class="bb-module__new-module">
+				<IconPlus />
+			</button>
 		</ModuleContent>
 	</div>
 </template>
@@ -23,6 +29,7 @@ import ModuleHeader from "@/BlockBuilder/Components/Modules/Common/Header.vue";
 import ModuleContent from "@/BlockBuilder/Components/Modules/Common/Content.vue";
 import IconChevronRight from "@/BlockBuilder/Icons/ChevronRight.vue";
 import IconChevronLeft from "@/BlockBuilder/Icons/ChevronLeft.vue";
+import IconPlus from "@/BlockBuilder/Icons/Plus.vue";
 
 import { computed, PropType } from "vue";
 import { AttributeData, Module } from "@/types";

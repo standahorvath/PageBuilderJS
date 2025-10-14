@@ -1,5 +1,5 @@
 <template>
-	<div class="bb-attribute">
+	<div class="bb-attribute" :class="[`bb-attribute-${attribute.type}`]">
 		<div class="bb-attribute__label">
 			{{ attribute.name }}
 		</div>
