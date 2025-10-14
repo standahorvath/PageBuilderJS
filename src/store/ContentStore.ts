@@ -146,5 +146,18 @@ export const useContentStore = defineStore('content', {
 				children: [],
 			})
 		},
+		addInstanceFromModuleToParent(module: Module, parent: InstanceModule, position: 'start' | 'end' = 'start') {
+			if (!parent.children) {
+				parent.children = []
+			}
+			const insertIndex = position === 'end' ? parent.children.length : 0
+			parent.children.splice(insertIndex, 0, {
+				id: module.id,
+				structureData: getDefaultData(module),
+				module: module,
+				nonce: Math.random().toString(36).substring(2),
+				children: [],
+			})
+		},
 	},
 })

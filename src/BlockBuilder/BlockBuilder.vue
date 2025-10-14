@@ -73,13 +73,21 @@ const uploader = ref<((cb: (url: string) => void) => void) | null>(null)
 
 
 const onToolClick = (tool: ToolbarTool, parent?: InstanceModule, position?: "start" | "end") => {
-	console.log({ tool, parent, position })
-	const module = props.modules.filter(module => module.id === tool.id)
-	if (!module) {
-		console.error(`Module ${tool.id} not found`);
-		return;
+	const contentStore = useContentStore()
+	const moduleDef = props.modules.find((m) => m.id === tool.id)
+	if (!moduleDef) {
+		console.error(`Module ${tool.id} not found`)
+		return
 	}
-	useContentStore().addInstanceFromModule(module[0])
+
+	if (parent) {
+		contentStore.addInstanceFromModuleToParent(moduleDef, parent, position === 'end' ? 'end' : 'start')
+		onContentUpdate()
+		return
+	}
+
+	const insertIndex = position === "end" ? contentStore.instances.length : 0
+	contentStore.addInstanceFromModule(moduleDef, insertIndex)
 	onContentUpdate()
 }
 
@@ -111,7 +119,9 @@ const editInstanceModule = computed(() => {
 
 useContentStore().import(props.content, props.modules)
 useContentStore().$subscribe((mutation) => {
-	if(history.currentIndex === history.history.length - 1 || mutation.events.type === 'add'){
+	const events = Array.isArray((mutation as any).events) ? (mutation as any).events : [(mutation as any).events]
+	const hasAddEvent = events?.some((e: any) => e && e.type === 'add')
+	if(history.currentIndex === history.history.length - 1 || hasAddEvent){
 		history.saveState(useContentStore().instances)
 	}
 	onContentUpdate()

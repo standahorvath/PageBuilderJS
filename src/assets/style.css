@@ -633,6 +633,10 @@
 	width: 100%;
 	filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
 	border: 1px solid var(--bb-border-color);
+	flex: 1;
+	display: flex;
+	justify-content: start;
+	text-align: left;
 }
 .bb-module__new-module__tooltip--top {
 	bottom: 100%;

@@ -48,7 +48,6 @@ import { computed, inject, PropType, ref } from "vue";
 import { AttributeData, Module, Toolbar, ToolbarTool } from "@/types";
 import SlideFromBottom from "../Transitions/SlideFromBottom.vue";
 import SlideFromTop from "../Transitions/SlideFromTop.vue";
-import { useContentStore } from "@/store/ContentStore";
 
 const emits = defineEmits(["remove", "edit", "duplicate", "toolClick"]);
 const props = defineProps({
@@ -99,6 +98,7 @@ const onDuplicate = () => {
 }
 const onToolClick = (tool: ToolbarTool, position?: "start" | "end") => {
 	emits("toolClick", tool, position);
+	onOutsideClickTools();
 }
 
 
