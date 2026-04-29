@@ -3,7 +3,7 @@
 		<EmptyContent v-if="!instances.length" />
 
 		<Draggable v-model="internalInstances" item-key="nonce" :group="{ name: 'blocks', pull: true, put: true }" :scroll="true" :swap-threshold="0.65"
-			:animation="200" ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="drag-drag" 
+			:animation="200" ghost-class="drag-ghost" chosen-class="drag-chosen" drag-class="drag-drag"
 			@end="onMoveInstance" @change="onChangeInstance($event)">
 			<template #item="{ element: instance }">
 				<Transition name="bb-scale">
@@ -190,7 +190,32 @@ function onDragEnd(evt: any) {
 </script>
 <style>
 .drag-ghost {
-	opacity: 0.4;
+	position: relative !important;
+	height: 0 !important;
+	min-height: 0 !important;
+	max-height: 0 !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	border: none !important;
+	background: transparent !important;
+	overflow: visible !important;
+	flex-basis: 100% !important;
+	opacity: 1 !important;
+}
+.drag-ghost > * {
+	display: none !important;
+}
+.drag-ghost::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: calc(var(--bb-module-gap-between) / -2 - 1px);
+	height: 3px;
+	background: var(--bb-primary-color);
+	border-radius: 2px;
+	pointer-events: none;
+	z-index: 999;
 }
 
 .drag-chosen {
