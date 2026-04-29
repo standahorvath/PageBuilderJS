@@ -61,10 +61,33 @@ export const useContentStore = defineStore('content', {
 
 		},
 		import(templateData: ModuleData[], modules: Module[]) {
+			const escapeHtml = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string))
+			const brokenModule = (id: string): Module => ({
+				id,
+				title: `Broken: ${id}`,
+				icon: '',
+				render: [
+					`<div style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;`,
+					`background:#fafafa;border:1px dashed #d4d4d8;border-radius:6px;color:#52525b;`,
+					`font-family:system-ui,-apple-system,sans-serif;line-height:1.45;">`,
+					`<span style="flex-shrink:0;width:24px;height:24px;display:inline-flex;align-items:center;`,
+					`justify-content:center;color:#dc2626;font-size:16px;">⚠</span>`,
+					`<div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:0;">`,
+					`<span style="font-size:14px;font-weight:600;color:#3f3f46;">Broken module</span>`,
+					`<span style="font-size:12px;font-weight:400;color:#71717a;">`,
+					`Component <code style="display:inline-block;background:#f4f4f5;border:1px solid #e4e4e7;`,
+					`color:#3f3f46;padding:1px 6px;border-radius:3px;font-family:'Fira Code','Courier New',monospace;`,
+					`font-size:11px;font-weight:500;">${escapeHtml(id)}</code> `,
+					`was not found — it may have been deleted, renamed, or is not registered in the modules list.`,
+					`</span></div></div>`,
+				].join(''),
+				structure: { tabs: [] },
+			})
 			const createInstance = (data: ModuleData): InstanceModule => {
-				const module = modules.find((m) => m.id === data.id)
+				let module = modules.find((m) => m.id === data.id)
 				if (!module) {
-					throw new Error(`Module with id ${data.id} not found`)
+					console.warn(`Module with id "${data.id}" not found, rendering as broken module`)
+					module = brokenModule(data.id)
 				}
 				return {
 					nonce: Math.random().toString(36).substring(2),

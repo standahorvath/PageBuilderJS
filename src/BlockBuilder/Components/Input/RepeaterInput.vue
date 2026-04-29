@@ -142,6 +142,7 @@ function addItem() {
   })
   assignKey(newItem)
   localValue.value.push(newItem)
+  onLocalValueChange()
 }
 
 function confirmRemove(index: number) {
@@ -152,5 +153,6 @@ function confirmRemove(index: number) {
 
 function removeItem(index: number) {
   localValue.value.splice(index, 1)
+  onLocalValueChange()
 }
 </script>
