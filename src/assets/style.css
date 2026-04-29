@@ -1042,6 +1042,7 @@
 	color: var(--bb-label-color);
 	padding: var(--bb-section-padding) calc(var(--bb-section-padding));
 	border-bottom: none;
+	flex: 0;
 }
 .bb-attribute__description {
 	font-size: 12px;

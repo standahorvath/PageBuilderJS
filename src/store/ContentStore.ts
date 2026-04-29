@@ -159,5 +159,8 @@ export const useContentStore = defineStore('content', {
 				children: [],
 			})
 		},
+		clear() {
+			this.instances = []
+		}
 	},
 })

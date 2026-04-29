@@ -186,4 +186,10 @@ onMounted(() => {
 	}
 })
 
+watch(() => props.content, (newContent) => {
+		useContentStore().clear()
+		useContentStore().import(newContent, props.modules)
+		onContentUpdate()
+	}, { deep: true })
+
 </script>
